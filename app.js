@@ -11,6 +11,14 @@ var mongoose = require('mongoose');
 mongoose.connect(dbConfig.url);
 
 var app = express();
+app.set('port', process.env.PORT || 3000);
+
+server = require('http').createServer(app);
+server.listen(app.get('port'), function(){
+    console.log("Express server listening on port " + app.get('port'));
+});
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -61,6 +69,8 @@ if (app.get('env') === 'development') {
         });
     });
 }
+
+
 
 
 module.exports = app;
