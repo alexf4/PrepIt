@@ -49,6 +49,38 @@ module.exports = function(passport){
 		res.redirect('/');
 	});
 
+	// route for facebook authentication and login
+	// different scopes while logging in
+	router.get('/login/facebook', 
+		passport.authenticate('facebook', { scope : 'email' }
+	));
+
+	// handle the callback after facebook has authenticated the user
+	router.get('/login/facebook/callback',
+		passport.authenticate('facebook', {
+			successRedirect : '/home',
+			failureRedirect : '/'
+		})
+	);
+
+	// route for twitter authentication and login
+	// different scopes while logging in
+	router.get('/login/twitter', 
+		passport.authenticate('twitter'));
+
+	// handle the callback after facebook has authenticated the user
+	router.get('/login/twitter/callback',
+		passport.authenticate('twitter', {
+			successRedirect : '/twitter',
+			failureRedirect : '/'
+		})
+	);
+
+	/* GET Twitter View Page */
+	router.get('/twitter', isAuthenticated, function(req, res){
+		res.render('twitter', { user: req.user });
+	});
+
 	return router;
 }
 
