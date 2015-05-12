@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 mongoose.connect(dbConfig.url);
 
 var app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 
 server = require('http').createServer(app);
 server.listen(app.get('port'), function(){
