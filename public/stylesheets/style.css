@@ -80,3 +80,11 @@ h1.error-message{
 ul.user-details{
     list-style: none;
 }
+#horizontalBar{
+    display: inline;
+}
+#horizontalBar.ul{
+    background-color: #f7f7f7;
+    display: inline-block;
+
+}
