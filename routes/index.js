@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mailer = require('./mailer');
+var login = require('./login2');
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler 
@@ -10,7 +11,7 @@ var isAuthenticated = function (req, res, next) {
 		return next();
 	// if the user is not authenticated then redirect him to the login page
 	res.redirect('/');
-}
+};
 
 module.exports = function(passport){
 
@@ -21,15 +22,24 @@ module.exports = function(passport){
 	});
 
 	/* Handle Login POST */
-	router.post('/login', passport.authenticate('login', {
-		successRedirect: '/home',
-		failureRedirect: '/',
-		failureFlash : true  
-	}));
+	//router.post('/login', passport.authenticate('login', {
+	//	successRedirect: '/home',
+	//	failureRedirect: '/',
+	//	failureFlash : true
+	//}));
 
 
 	/* Handle singup POSt */
 	router.post("/signup", mailer.sendmail);
+
+
+	/* handle signin post
+	* Need to check the user email in the db*/
+	//router.post("/login",function(req, res){
+	//	res.render('home',{message: req.flash('message'), user: "alex"});
+	//});
+
+	router.post("/login", login.auth);
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
@@ -87,7 +97,7 @@ module.exports = function(passport){
 	});
 
 	return router;
-}
+};
 
 
 
