@@ -35,11 +35,11 @@ module.exports = function(passport){
 
 	/* handle signin post
 	* Need to check the user email in the db*/
-	//router.post("/login",function(req, res){
-	//	res.render('home',{message: req.flash('message'), user: "alex"});
-	//});
+	router.get("/login",function(req, res){
+		res.render('login',{message: req.flash('message'), user: "alex"});
+	});
 
-	router.post("/login", login.auth);
+	//router.post("/login", login.auth);
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
