@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mailer = require('./mailer');
 var login = require('./login2');
+var register = require('./registration');
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler 
@@ -31,6 +32,9 @@ module.exports = function(passport){
 
 	/* Handle singup POSt */
 	router.post("/signup", mailer.sendmail);
+
+	/*Handle Registration */
+	router.get("/register", register.registrationpage);
 
 
 	/* handle signin post
