@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mailer = require('./mailer');
 var login = require('./login2');
+var teacher = require('./teacher');
 var register = require('./registration');
 
 var isAuthenticated = function (req, res, next) {
@@ -31,10 +32,14 @@ module.exports = function(passport){
 
 
 	/* Handle singup POSt */
-	router.post("/signup", mailer.sendmail);
+	//router.post("/signup", mailer.sendmail);
+	router.post("/signup", register.createUser);
 
 	/*Handle Registration */
 	router.get("/register", register.registrationpage);
+
+	/*handle teacher */
+	router.get("/teacher", teacher.teacherPage);
 
 
 	/* handle signin post
