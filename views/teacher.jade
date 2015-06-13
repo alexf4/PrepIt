@@ -5,21 +5,33 @@ doctype html
 html
    head
       link(rel='stylesheet', href='/stylesheets/style.css')
-
+      link(rel='stylesheet', href='/css/bootstrap.css')
+      link(rel='stylesheet', href='/css/animate.css')
       title Hello
    body
-      .col-lg-6
-         .ibox.float-e-margins
-            .ibox-title
-               h5 Pie
-               div(ibox-tools='')
-            .ibox-content
-               div
-                  canvas#doughnutChart(height='140')
+       .wrapper.wrapper-content.animated.fadeInRight
+           .row
+              .col-lg-6
+                 .ibox.float-e-margins
+                    .ibox-title
+                       h5 Pie
+                       div(ibox-tools='')
+                    .ibox-content
+                       div
+                          canvas#CUChart(height='140')
+              .col-lg-6
+                 .ibox.float-e-margins
+                    .ibox-title
+                       h5 Pie
+                       div(ibox-tools='')
+                    .ibox-content
+                       div
+                           canvas#CUChart2(height='140')
       script(src='js/plugins/chartjs/Chart.min.js')
+      script(src="js/plugins/slimscroll/jquery.slimscroll.min.js")
       script(type='text/javascript').
-        var ctx = document.getElementById("doughnutChart").getContext("2d");
-        var temp = !{JSON.stringify(data)};
-        alert(!{JSON.stringify(data)});
-        var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(data)}, !{JSON.stringify(options)});
-      //script(src='js/chartjs-teacher.js')
+        var ctx = document.getElementById("CUChart").getContext("2d");
+        var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
+        var ctx2 = document.getElementById("CUChart2").getContext("2d");
+        var myNewChart2 = new Chart(ctx2).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
+

@@ -5,8 +5,8 @@
 
 exports.teacherPage = function(req, res ){
 
-
-  var doughnutData = [
+//This is the Constitiutional Underpinnings
+  var CUData = [
     {
       value: 300,
       color: "#a3e1d4",
@@ -27,7 +27,7 @@ exports.teacherPage = function(req, res ){
     }
   ];
 
-  var doughnutOptions = {
+  var CUOptions = {
     segmentShowStroke: true,
     segmentStrokeColor: "#fff",
     segmentStrokeWidth: 2,
@@ -39,9 +39,7 @@ exports.teacherPage = function(req, res ){
     responsive: true,
   };
 
-
-
-  res.render("teacher", {data: doughnutData, options: doughnutOptions});
+  res.render("teacher", {CUData: CUData, CUOptions: CUOptions});
 
 };
 
