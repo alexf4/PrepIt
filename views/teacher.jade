@@ -11,7 +11,7 @@ html
    body
        .wrapper.wrapper-content.animated.fadeInRight
            .row
-               .col-lg-12
+               .col-lg-6
                    .ibox.float-e-margins
                        .ibox-title
                            h5 Total
@@ -19,56 +19,68 @@ html
                        .ibox-content
                            div
                                canvas#TotalChart(height='140')
+               .col-lg-6
+                   .row
+                      .col-lg-4
+                         .ibox.float-e-margins
+                            .ibox-title
+                               h5 Pie
+                               div(ibox-tools='')
+                            .ibox-content
+                               div
+                                  canvas#CUChart(height='140')
+                      .col-lg-4
+                         .ibox.float-e-margins
+                            .ibox-title
+                               h5 Pie
+                               div(ibox-tools='')
+                            .ibox-content
+                               div
+                                   canvas#CUChart2(height='140')
+                      .col-lg-4
+                         .ibox.float-e-margins
+                            .ibox-title
+                               h5 Pie
+                               div(ibox-tools='')
+                            .ibox-content
+                                div
+                                   canvas#CUChart3(height='140')
+                   .row
+                       .col-lg-4
+                           .ibox.float-e-margins
+                               .ibox-title
+                                   h5 Pie
+                                   div(ibox-tools='')
+                               .ibox-content
+                                   div
+                                       canvas#CUChart4(height='140')
+                       .col-lg-4
+                           .ibox.float-e-margins
+                               .ibox-title
+                                   h5 Pie
+                                   div(ibox-tools='')
+                               .ibox-content
+                                   div
+                                       canvas#CUChart5(height='140')
+                       .col-lg-4
+                           .ibox.float-e-margins
+                               .ibox-title
+                                   h5 Pie
+                                   div(ibox-tools='')
+                               .ibox-content
+                                   div
+                                       canvas#CUChart6(height='140')
            .row
-              .col-lg-4
-                 .ibox.float-e-margins
-                    .ibox-title
-                       h5 Pie
-                       div(ibox-tools='')
-                    .ibox-content
-                       div
-                          canvas#CUChart(height='140')
-              .col-lg-4
-                 .ibox.float-e-margins
-                    .ibox-title
-                       h5 Pie
-                       div(ibox-tools='')
-                    .ibox-content
-                       div
-                           canvas#CUChart2(height='140')
-              .col-lg-4
-                 .ibox.float-e-margins
-                    .ibox-title
-                       h5 Pie
-                       div(ibox-tools='')
-                    .ibox-content
-                        div
-                           canvas#CUChart3(height='140')
-           .row
-               .col-lg-4
-                   .ibox.float-e-margins
-                       .ibox-title
-                           h5 Pie
-                           div(ibox-tools='')
-                       .ibox-content
-                           div
-                               canvas#CUChart4(height='140')
-               .col-lg-4
-                   .ibox.float-e-margins
-                       .ibox-title
-                           h5 Pie
-                           div(ibox-tools='')
-                       .ibox-content
-                           div
-                               canvas#CUChart5(height='140')
-               .col-lg-4
-                   .ibox.float-e-margins
-                       .ibox-title
-                           h5 Pie
-                           div(ibox-tools='')
-                       .ibox-content
-                           div
-                               canvas#CUChart6(height='140')
+               h5 Top 3 missed questions in class
+               .col-md-4
+                   h4 What was the main conflict between Federalists and Antifederalists?
+                   h6 10 students missed this
+               .col-md-4
+                   h4 Who is the mayor of crazy town
+                   h6 8 students missed this
+               .col-md-4
+                   h4 What is the War Powers Resolution
+                   h6 6 students missed this
       script(src='js/plugins/chartjs/Chart.min.js')
       script(src="js/plugins/slimscroll/jquery.slimscroll.min.js")
       script(type='text/javascript').
