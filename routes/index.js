@@ -21,7 +21,7 @@ module.exports = function(passport){
 	/* GET login page. */
 	router.get('/', function(req, res) {
     	// Display the Login page with any flash message, if any
-		res.render('index', { message: req.flash('message') });
+		res.render('login');
 	});
 
 	/* Handle Login POST */
@@ -34,7 +34,7 @@ module.exports = function(passport){
 
 	/* Handle singup POSt */
 	//router.post("/signup", mailer.sendmail);
-	router.post("/signup", register.createUser);
+	router.post("/signup", teacher.teacherPage);
 
 	/*Handle Registration */
 	router.get("/register", register.registrationpage);

@@ -5,6 +5,5 @@ exports.studentPage = function(req, res ) {
 
   res.render("student")
 
-//res.send("hello student");
 
 };

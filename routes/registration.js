@@ -13,5 +13,5 @@ exports.registrationpage = function(req, res ){
 exports.createUser = function(req, res){
 
 
-  res.send("hello");
+  res.render("teacher");
 }
