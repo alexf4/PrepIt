@@ -31,12 +31,12 @@ body.gray-bg
 
          p Login in. To see it in action.
 
-         form.m-t(role='form', action='index.html')
+         form.m-t(role='form', action='/login', method='POST')
             .form-group
-               input.form-control(type='email', placeholder='Username', required='')
+               input.form-control(type='email', name='email', placeholder='Email', required='')
 
             .form-group
-               input.form-control(type='password', placeholder='Password', required='')
+               input.form-control(type='password', name='password', placeholder='Password', required='')
 
             button.btn.btn-primary.block.full-width.m-b(type='submit') Login
 

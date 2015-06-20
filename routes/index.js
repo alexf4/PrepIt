@@ -5,6 +5,7 @@ var login = require('./login2');
 var teacher = require('./teacher');
 var register = require('./registration');
 var student = require('./student');
+var signup = require('./signup');
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler 
@@ -34,7 +35,7 @@ module.exports = function(passport){
 
 	/* Handle singup POSt */
 	//router.post("/signup", mailer.sendmail);
-	router.post("/signup", teacher.teacherPage);
+	router.post("/signup", signup.signup);
 
 	/*Handle Registration */
 	router.get("/register", register.registrationpage);
@@ -66,6 +67,15 @@ module.exports = function(passport){
 		failureRedirect: '/signup',
 		failureFlash : true  
 	}));
+
+	router.post("/login", login.auth);
+
+
+	//router.post("/login", passport.authenticate('login',{
+	//	successRedirect: '/teacher',
+	//	failureRedirect: '/signup',
+	//	failureFlash : true
+	//}));
 
 	/* GET Home Page */
 	router.get('/home', isAuthenticated, function(req, res){
