@@ -1,104 +1,157 @@
-//
-   Created by alexf4 on 6/8/15.
-
 doctype html
 html
-   head
-      link(rel='stylesheet', href='/stylesheets/style.css')
-      link(rel='stylesheet', href='/css/bootstrap.css')
-      link(rel='stylesheet', href='/css/animate.css')
-      link(rel='script', href='/js/plugins/chartjs/Chart.min.js')
-      title Hello
-   body
-       .wrapper.wrapper-content.animated.fadeInRight
-           .row
-               .col-lg-6
-                   .ibox.float-e-margins
-                       .ibox-title
-                           h5 Total
-                           div(ibox-tools='')
-                       .ibox-content
-                           div
-                               canvas#TotalChart(height='140')
-               .col-lg-6
-                   .row
-                      .col-lg-4
-                         .ibox.float-e-margins
-                            .ibox-title
-                               h5 Pie
-                               div(ibox-tools='')
-                            .ibox-content
-                               div
-                                  canvas#CUChart(height='140')
-                      .col-lg-4
-                         .ibox.float-e-margins
-                            .ibox-title
-                               h5 Pie
-                               div(ibox-tools='')
-                            .ibox-content
-                               div
-                                   canvas#CUChart2(height='140')
-                      .col-lg-4
-                         .ibox.float-e-margins
-                            .ibox-title
-                               h5 Pie
-                               div(ibox-tools='')
-                            .ibox-content
-                                div
-                                   canvas#CUChart3(height='140')
-                   .row
-                       .col-lg-4
-                           .ibox.float-e-margins
-                               .ibox-title
-                                   h5 Pie
-                                   div(ibox-tools='')
-                               .ibox-content
-                                   div
-                                       canvas#CUChart4(height='140')
-                       .col-lg-4
-                           .ibox.float-e-margins
-                               .ibox-title
-                                   h5 Pie
-                                   div(ibox-tools='')
-                               .ibox-content
-                                   div
-                                       canvas#CUChart5(height='140')
-                       .col-lg-4
-                           .ibox.float-e-margins
-                               .ibox-title
-                                   h5 Pie
-                                   div(ibox-tools='')
-                               .ibox-content
-                                   div
-                                       canvas#CUChart6(height='140')
-           .row
-               h5 Top 3 missed questions in class
-               .col-md-4
-                   h4 What was the main conflict between Federalists and Antifederalists?
-                   h6 10 students missed this
-               .col-md-4
-                   h4 Who is the mayor of crazy town
-                   h6 8 students missed this
-               .col-md-4
-                   h4 What is the War Powers Resolution
-                   h6 6 students missed this
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js')
-      script(src="js/plugins/slimscroll/jquery.slimscroll.min.js")
-      script(type='text/javascript').
-         var ctx = document.getElementById("TotalChart").getContext("2d");
-         var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(totalData)}, !{JSON.stringify(totalOptions)});
-         var ctx = document.getElementById("CUChart").getContext("2d");
-         var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
-         var ctx2 = document.getElementById("CUChart2").getContext("2d");
-         var myNewChart2 = new Chart(ctx2).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
-         var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(totalData)}, !{JSON.stringify(totalOptions)});
-         var ctx = document.getElementById("CUChart3").getContext("2d");
-         var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
-         var ctx2 = document.getElementById("CUChart4").getContext("2d");
-         var myNewChart2 = new Chart(ctx2).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
-         var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(totalData)}, !{JSON.stringify(totalOptions)});
-         var ctx = document.getElementById("CUChart5").getContext("2d");
-         var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
-         var ctx2 = document.getElementById("CUChart6").getContext("2d");
-         var myNewChart2 = new Chart(ctx2).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
-
+    head
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        title INSPINIA | Main view
+        link(href='css/bootstrap.min.css', rel='stylesheet')
+        link(href='font-awesome/css/font-awesome.css', rel='stylesheet')
+        link(href='css/animate.css', rel='stylesheet')
+        link(href='css/style.css', rel='stylesheet')
+    body
+        #wrapper
+            nav.navbar-default.navbar-static-side(role='navigation')
+                .sidebar-collapse
+                    ul#side-menu.nav
+                        li.nav-header
+                            .dropdown.profile-element
+                                a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                    span.clear
+                                        span.block.m-t-xs
+                                            strong.font-bold David Williams
+                                        span.text-muted.text-xs.block
+                                            | Art Director
+                                            b.caret
+                                ul.dropdown-menu.animated.fadeInRight.m-t-xs
+                                    li
+                                        a(href='#') Logout
+                            .logo-element
+                                | IN+
+                        li.active
+                            a(href='index.html')
+                                i.fa.fa-th-large
+                                span.nav-label Main view
+                        li
+                            a(href='minor.html')
+                                i.fa.fa-th-large
+                                span.nav-label Minor view
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top.white-bg(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='#')
+                                .form-group
+                                    input#top-search.form-control(type='text', placeholder='Search for something...', name='top-search')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                a(href='#')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .row
+                        .col-lg-6
+                            .ibox.float-e-margins
+                                .ibox-title
+                                    h5 Total
+                                    div(ibox-tools='')
+                                .ibox-content
+                                    div
+                                        canvas#TotalChart(height='140')
+                        .col-lg-6
+                            .row
+                                .col-lg-4
+                                    .ibox.float-e-margins
+                                        .ibox-title
+                                            h5 Pie
+                                            div(ibox-tools='')
+                                        .ibox-content
+                                            div
+                                                canvas#CUChart(height='140')
+                                .col-lg-4
+                                    .ibox.float-e-margins
+                                        .ibox-title
+                                            h5 Pie
+                                            div(ibox-tools='')
+                                        .ibox-content
+                                            div
+                                                canvas#CUChart2(height='140')
+                                .col-lg-4
+                                    .ibox.float-e-margins
+                                        .ibox-title
+                                            h5 Pie
+                                            div(ibox-tools='')
+                                        .ibox-content
+                                            div
+                                                canvas#CUChart3(height='140')
+                            .row
+                                .col-lg-4
+                                    .ibox.float-e-margins
+                                        .ibox-title
+                                            h5 Pie
+                                            div(ibox-tools='')
+                                        .ibox-content
+                                            div
+                                                canvas#CUChart4(height='140')
+                                .col-lg-4
+                                    .ibox.float-e-margins
+                                        .ibox-title
+                                            h5 Pie
+                                            div(ibox-tools='')
+                                        .ibox-content
+                                            div
+                                                canvas#CUChart5(height='140')
+                                .col-lg-4
+                                    .ibox.float-e-margins
+                                        .ibox-title
+                                            h5 Pie
+                                            div(ibox-tools='')
+                                        .ibox-content
+                                            div
+                                                canvas#CUChart6(height='140')
+                        .row
+                            h5 Top 3 missed questions in class
+                            .col-md-4
+                                h4 What was the main conflict between Federalists and Antifederalists?
+                                h6 10 students missed this
+                            .col-md-4
+                                h4 Who is the mayor of crazy town
+                                h6 8 students missed this
+                            .col-md-4
+                                h4 What is the War Powers Resolution
+                                h6 6 students missed this
+                .footer
+                    .pull-right
+                        | 10GB of
+                        strong 250GB
+                        |  Free.
+                    div
+                        strong Copyright
+                        |  Example Company &copy; 2014-2015
+        // Mainly scripts
+        script(src='js/jquery-2.1.1.js')
+        script(src='js/bootstrap.min.js')
+        script(src='js/plugins/metisMenu/jquery.metisMenu.js')
+        script(src='js/plugins/slimscroll/jquery.slimscroll.min.js')
+        // Custom and plugin javascript
+        script(src='js/inspinia.js')
+        script(src='js/plugins/pace/pace.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js')
+        script(type='text/javascript').
+            var ctx = document.getElementById("TotalChart").getContext("2d");
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(totalData)}, !{JSON.stringify(totalOptions)});
+            var ctx = document.getElementById("CUChart").getContext("2d");
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
+            var ctx2 = document.getElementById("CUChart2").getContext("2d");
+            var myNewChart2 = new Chart(ctx2).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(totalData)}, !{JSON.stringify(totalOptions)});
+            var ctx = document.getElementById("CUChart3").getContext("2d");
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
+            var ctx2 = document.getElementById("CUChart4").getContext("2d");
+            var myNewChart2 = new Chart(ctx2).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(totalData)}, !{JSON.stringify(totalOptions)});
+            var ctx = document.getElementById("CUChart5").getContext("2d");
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
+            var ctx2 = document.getElementById("CUChart6").getContext("2d");
+            var myNewChart2 = new Chart(ctx2).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(CUOptions)});
