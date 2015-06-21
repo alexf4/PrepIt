@@ -28,11 +28,7 @@ body.gray-bg
          h3 Register to PrepIT
 
          p Create account to see it in action.
-
          form.m-t(role='form', action='/signup', method='POST')
-            .form-group
-               input.form-control(type='text', name='username' placeholder='User Name', required, autofocus)
-
             .form-group
                input.form-control(type='email', name='email', placeholder='Email', required)
 
@@ -42,9 +38,8 @@ body.gray-bg
             .form-group
                .checkbox.i-checks
                   label
-                     input(type='checkbox')
-                     i
-                       Agree I am a teacher
+                     input(type='checkbox', name='isTeacher', value='true')
+                     Agree I am a physical therapist
 
             button.btn.btn-primary.block.full-width.m-b(type='submit') Register
 
