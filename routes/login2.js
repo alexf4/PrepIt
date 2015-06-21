@@ -30,8 +30,12 @@ exports.auth = function(req, res) {
         // which will be treated like success
         //res.render('home',{message: req.flash('message'), user: "alex"});
         //Save the user!
-
-        res.redirect("/teacher");
+        if (user.isteacher) {
+          res.redirect("/teacher");
+        }
+        else {
+          res.redirect("/student");
+        }
       });
   //res.render('home',{message: req.flash('message'), user: "alex"});
 

@@ -25,13 +25,6 @@ module.exports = function(passport){
 		res.render('login');
 	});
 
-	/* Handle Login POST */
-	//router.post('/login', passport.authenticate('login', {
-	//	successRedirect: '/home',
-	//	failureRedirect: '/',
-	//	failureFlash : true
-	//}));
-
 
 	/* Handle singup POSt */
 	//router.post("/signup", mailer.sendmail);
@@ -54,8 +47,6 @@ module.exports = function(passport){
 		res.render('login',{message: req.flash('message'), user: "alex"});
 	});
 
-	//router.post("/login", login.auth);
-
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
 		res.render('register',{message: req.flash('message')});
@@ -69,13 +60,6 @@ module.exports = function(passport){
 	}));
 
 	router.post("/login", login.auth);
-
-
-	//router.post("/login", passport.authenticate('login',{
-	//	successRedirect: '/teacher',
-	//	failureRedirect: '/signup',
-	//	failureFlash : true
-	//}));
 
 	/* GET Home Page */
 	router.get('/home', isAuthenticated, function(req, res){
