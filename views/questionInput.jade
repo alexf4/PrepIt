@@ -1,0 +1,213 @@
+//
+   Created by alexf4 on 7/11/15.
+
+doctype html
+html
+   head
+      meta(charset='utf-8')
+      meta(name='viewport', content='width=device-width, initial-scale=1.0')
+      title INSPINIA  Wizards
+      link(href='css/bootstrap.min.css', rel='stylesheet')
+      link(href='font-awesome/css/font-awesome.css', rel='stylesheet')
+      link(href='css/plugins/iCheck/custom.css', rel='stylesheet')
+      link(href='css/plugins/steps/jquery.steps.css', rel='stylesheet')
+      link(href='css/animate.css', rel='stylesheet')
+      link(href='css/style.css', rel='stylesheet')
+   body
+      #wrapper
+         #page-wrapper.gray-bg
+            .wrapper.wrapper-content.animated.fadeInRight
+               .row
+                  .col-lg-12
+                     .ibox
+                        .ibox-title
+                           h5 Question Wizard
+                        
+                        .ibox-content
+                           h2
+                               Validation Question Wizard Form
+                           
+                           p
+                               |This will allow admin to add questions
+                           
+                           form#form.wizard-big(action='#')
+                              h1 Category
+                              
+                              fieldset
+                                 h2 Question Category Information
+                                 
+                                 .row
+                                    .col-lg-8
+                                       .form-group
+                                          label Category *
+
+                                          //Change to drop down from backend data
+                                          input#userName.form-control.required(name='Category', type='text')
+                                       
+                                       .form-group
+                                          label SubCategory *
+
+                                          //Need to do some logic to only show the correct sub category
+                                          input#userName.form-control.required(name='SubCategory', type='text')
+
+                                    
+                                    .col-lg-4
+                                       .text-center
+                                          div(style='margin-top: 20px')
+                                             i.fa.fa-sign-in(style='font-size: 180px;color: #e5e5e5 ')
+                              
+                              h1 Profile
+                              
+                              fieldset
+                                 h2 Question Text
+                                 
+                                 .row
+                                    .col-lg-6
+                                       .form-group
+                                          label Question Text *
+                                          
+                                          input#name.form-control.required(name='QuestionText', type='text')
+
+                              
+                              h1 Answers
+                              
+                              fieldset
+                                 h2 Question Text
+
+                                 .row
+                                    .col-lg-6
+                                       .form-group
+                                          label Answer A *
+
+                                          input#name.form-control.required(name='A', type='text')
+
+                                       .form-group
+                                          label Answer B *
+
+                                          input#name.form-control.required(name='B', type='text')
+
+                                    .col-lg-6
+                                       .form-group
+                                          label Answer C *
+
+                                          input#name.form-control.required(name='C', type='text')
+
+                                       .form-group
+                                          label Answer D *
+
+                                          input#name.form-control.required(name='D', type='text')
+                              
+                              h1 Solution
+                              
+                              fieldset
+                                 h2 Solution
+                                 //Drop down of abcd
+
+                                 |A
+                                 input(type='radio', name='solution', value='a', checked='')
+                                 br
+                                 |B
+                                 input(type='radio', name='solution', value='b')
+                                 br
+                                 |C
+                                 input(type='radio', name='solution', value='c')
+                                 br
+                                 |D
+                                 input(type='radio', name='solution', value='d')
+            
+            .footer
+               .pull-right
+                  | 10GB of
+                  strong 250GB
+                    Free.
+               
+               div
+                  strong Copyright
+                    Example Company &copy; 2014-2015
+      // Mainly scripts
+      script(src='js/jquery-2.1.1.js')
+      
+      script(src='js/bootstrap.min.js')
+      
+      script(src='js/plugins/metisMenu/jquery.metisMenu.js')
+      
+      script(src='js/plugins/slimscroll/jquery.slimscroll.min.js')
+      // Custom and plugin javascript
+      script(src='js/inspinia.js')
+      
+      script(src='js/plugins/pace/pace.min.js')
+      // Steps
+      script(src='js/plugins/staps/jquery.steps.min.js')
+      // Jquery Validate
+      script(src='js/plugins/validate/jquery.validate.min.js')
+      
+      script.
+         $(document).ready(function(){
+            $("#wizard").steps();
+            $("#form").steps({
+               bodyTag: "fieldset",
+               onStepChanging: function (event, currentIndex, newIndex)
+               {
+                  // Always allow going backward even if the current step contains invalid fields!
+                  if (currentIndex > newIndex)
+                  {
+                     return true;
+                  }
+                  // Forbid suppressing "Warning" step if the user is to young
+                  if (newIndex === 3 && Number($("#age").val()) < 18)
+                  {
+                     return false;
+                  }
+                  var form = $(this);
+                  // Clean up if user went backward before
+                  if (currentIndex < newIndex)
+                  {
+                     // To remove error styles
+                     $(".body:eq(" + newIndex + ") label.error", form).remove();
+                     $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                  }
+                  // Disable validation on fields that are disabled or hidden.
+                  form.validate().settings.ignore = ":disabled,:hidden";
+                  // Start validation; Prevent going forward if false
+                  return form.valid();
+               },
+               onStepChanged: function (event, currentIndex, priorIndex)
+               {
+                  // Suppress (skip) "Warning" step if the user is old enough.
+                  if (currentIndex === 2 && Number($("#age").val()) >= 18)
+                  {
+                     $(this).steps("next");
+                  }
+                  // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+                  if (currentIndex === 2 && priorIndex === 3)
+                  {
+                     $(this).steps("previous");
+                  }
+               },
+               onFinishing: function (event, currentIndex)
+               {
+                  var form = $(this);
+                  // Disable validation on fields that are disabled.
+                  // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+                  form.validate().settings.ignore = ":disabled";
+                  // Start validation; Prevent form submission if false
+                  return form.valid();
+               },
+               onFinished: function (event, currentIndex)
+               {
+                  var form = $(this);
+                  // Submit form input
+                  form.submit();
+               }
+            }).validate({
+               errorPlacement: function (error, element)
+               {
+                  element.before(error);
+               },
+               rules: {
+                  confirm: {
+                     equalTo: "#password"
+                  }
+               }
+            });
+         });

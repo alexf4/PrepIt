@@ -6,6 +6,7 @@ var teacher = require('./teacher');
 var register = require('./registration');
 var student = require('./student');
 var signup = require('./signup');
+var question = require('./questionInput');
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler 
@@ -40,6 +41,13 @@ module.exports = function(passport){
 	 */
 	router.get("/student", student.studentPage);
 
+	/**
+	 * Handle adding a question
+	 */
+	//TODO Switch back
+	//router.get("/question", question.addQuestion);
+
+	router.get("/question", question.temp);
 
 	/* handle signin post
 	* Need to check the user email in the db*/

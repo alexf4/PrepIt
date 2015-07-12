@@ -10,3 +10,12 @@ module.exports = mongoose.model('User',{
 	email: String,
 	isteacher: Boolean
 });
+
+
+
+module.exports = mongoose.model('QuestionSet',{
+	id: String,
+	password: String,
+	email: String,
+	isteacher: Boolean
+});
