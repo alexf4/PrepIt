@@ -44,10 +44,9 @@ module.exports = function(passport){
 	/**
 	 * Handle adding a question
 	 */
-	//TODO Switch back
-	//router.get("/question", question.addQuestion);
 
 	router.get("/question", question.temp);
+	router.post("/addQuestion" , question.addQuestion)
 
 	/* handle signin post
 	* Need to check the user email in the db*/
