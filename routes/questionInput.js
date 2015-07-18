@@ -7,6 +7,9 @@
 var question = require("../models/question");
 
 
+
+
+
 exports.addQuestion = function(req, res){
 
     var newQuestion = new question();
@@ -18,7 +21,7 @@ exports.addQuestion = function(req, res){
     //newQuestion.subcategory = "space";
 
     //newQuestion.text ="Which sector of the bureaucracy is NASA a part of?";
-    newQuestion.text = req.param("QuestionText");
+    newQuestion.questionText = req.param("QuestionText");
 
     //newQuestion.answers = {"a": "Cabinet Department" , b: "Government Corporation",
     //    c: "Independent Executive Agency" , d:"Independent Regulatory Commission" };
@@ -34,6 +37,9 @@ exports.addQuestion = function(req, res){
 
         console.log('Question saved successfully!');
         res.redirect("/question");
+
+        //TODO Need to update all questions sets of users
+        //For each user add a copy of this question
     });
 
 }

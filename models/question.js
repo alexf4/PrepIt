@@ -11,10 +11,11 @@ var questionSchema = new Schema({
     //Change to [{ type : ObjectId, ref: 'category' }]
     subcategory: String,
     //[{ type : ObjectId, ref: 'subcategory' }]
-    questionsText: String,
+    questionText: String,
     solution: String,
     percentRight: Number,
-    answers: {a : String, b: String, c: String, d:String}
+    answers: {a : String, b: String, c: String, d:String},
+    correct: Boolean
 
 });
 

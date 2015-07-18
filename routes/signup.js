@@ -27,7 +27,13 @@ exports.signup = function(req, res) {
             //newUser.username = req.body.username;
             newUser.password = createHash(req.body.password);
             newUser.email = req.param('email');
-            newUser.isteacher = req.param('isTeacher');
+            if (req.param('isTeacher')){
+                newUser.isteacher = true;
+            }
+            else{
+                newUser.isteacher = false;
+            }
+            //newUser.isteacher = req.param('isTeacher');
             //newUser.firstName = req.param('firstName');
             //newUser.lastName = req.param('lastName');
 
@@ -39,7 +45,14 @@ exports.signup = function(req, res) {
                 }
                 console.log('User Registration succesful');
 
-                res.redirect("/teacher");
+                if (newUser.isteacher) {
+                    res.redirect("/teacher");
+                }else{
+                    res.redirect("/student");
+                }
+
+                //TODO Add a copy of all exisiting questions to the new user
+
             });
         }
     });
