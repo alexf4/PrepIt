@@ -3,6 +3,7 @@
  */
 var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
+var DBFunctions = require("../DBWork/DBFunctions");
 
 
 exports.signup = function(req, res) {
@@ -33,17 +34,17 @@ exports.signup = function(req, res) {
             else{
                 newUser.isteacher = false;
             }
-            //newUser.isteacher = req.param('isTeacher');
-            //newUser.firstName = req.param('firstName');
-            //newUser.lastName = req.param('lastName');
 
             // save the user
-            newUser.save(function(err) {
+            newUser.save(function(err , product) {
                 if (err){
                     console.log('Error in Saving user: '+err);
                     throw err;
                 }
                 console.log('User Registration succesful');
+
+
+                DBFunctions.addQuestionsToUser(product._id.toString());
 
                 if (newUser.isteacher) {
                     res.redirect("/teacher");
@@ -52,6 +53,8 @@ exports.signup = function(req, res) {
                 }
 
                 //TODO Add a copy of all exisiting questions to the new user
+
+
 
             });
         }

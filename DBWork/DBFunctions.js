@@ -34,7 +34,6 @@ exports.addQuestionToAllUsers = function (inputID){
             console.log(users);
 
             //For each user add a new question that is a copy of the question, but has a new id
-
             users.forEach(function(user) {
 
                 //Create new question
@@ -46,10 +45,8 @@ exports.addQuestionToAllUsers = function (inputID){
                 user.questions.push(userQuestion);
 
                 user.save(function(error, data){});
-                
+
             });
-
-
 
         });
 
@@ -58,5 +55,46 @@ exports.addQuestionToAllUsers = function (inputID){
 
 
 };
+
+
+exports.addQuestionsToUser = function (inputID){
+
+    foundUser = null;
+
+    //Find the new user
+    user.findById(inputID, function(err, user) {
+
+        if (err) throw err;
+
+        foundUser = user;
+
+
+        //Find all of the questions in the question set
+        questionModel.find({}, function(err, questionsList){
+
+            //For each question create a clone and add it to the users set
+            questionsList.forEach(function (question){
+                newQuestion = new questionModel(question);
+                newQuestion._id = mongoose.Types.ObjectId().toString();
+
+                foundUser.questions.push(newQuestion);
+
+            });
+
+            foundUser.save(function(error, data){
+
+                newQuestion = null;
+            });
+        });
+
+
+
+
+
+    });
+
+
+}
+
 
 
