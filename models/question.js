@@ -15,7 +15,8 @@ var questionSchema = new Schema({
     solution: String,
     percentRight: Number,
     answers: {a : String, b: String, c: String, d:String},
-    correct: Boolean
+    correct: Boolean,
+    _questionID: Number
 
 });
 
