@@ -29,6 +29,8 @@ exports.addQuestion = function(req, res){
 
     newQuestion.solution = req.param("solution");
 
+    newQuestion.correct = false;
+
 
     newQuestion.save(function(err , product) {
         if (err) throw err;

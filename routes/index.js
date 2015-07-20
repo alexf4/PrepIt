@@ -7,6 +7,9 @@ var register = require('./registration');
 var student = require('./student');
 var signup = require('./signup');
 var question = require('./questionInput');
+var freeplay = require('../GameLogic/FreePlay');
+
+
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler 
@@ -35,7 +38,7 @@ module.exports = function(passport){
 	router.get("/register", register.registrationpage);
 
 	/*handle teacher */
-	router.get("/teacher", teacher.teacherPage);
+	router.get("/teacher", isAuthenticated, teacher.teacherPage);
 
 	/* Handle student
 	 */
@@ -46,7 +49,7 @@ module.exports = function(passport){
 	 */
 
 	router.get("/question", question.temp);
-	router.post("/addQuestion" , question.addQuestion)
+	router.post("/addQuestion" , question.addQuestion);
 
 	/* handle signin post
 	* Need to check the user email in the db*/
@@ -66,7 +69,43 @@ module.exports = function(passport){
 		failureFlash : true  
 	}));
 
-	router.post("/login", login.auth);
+	
+	router.post("/login" , loginPost);
+
+	function loginPost(req, res, next) {
+		// ask passport to authenticate
+		passport.authenticate('local-login', function(err, user, info) {
+			if (err) {
+				// if error happens
+				return next(err);
+			}
+
+			if (!user) {
+				// if authentication fail, get the error message that we set
+				// from previous (info.message) step, assign it into to
+				// req.session and redirect to the login page again to display
+				req.session.messages = info.message;
+				return res.redirect('/login');
+			}
+
+			// if everything's OK
+			req.logIn(user, function(err) {
+				if (err) {
+					req.session.messages = "Error";
+					return next(err);
+				}
+
+				// set the message
+				req.session.messages = "Login successfully";
+				if(user.isTeacher){
+					return res.redirect('./teacher');
+				}
+
+				return res.redirect('/student');
+			});
+
+		})(req, res, next);
+	}
 
 	/* GET Home Page */
 	router.get('/home', isAuthenticated, function(req, res){
@@ -74,10 +113,18 @@ module.exports = function(passport){
 	});
 
 	/* Handle Logout */
+	//TODO Logout
 	router.get('/signout', function(req, res) {
 		req.logout();
 		res.redirect('/');
 	});
+
+	//Handle the free play request
+	router.get('/freeplay' , isAuthenticated, freeplay.startFreePlay);
+
+
+	//Handle the freeplay sumbit
+	router.post('/freeplaySubmit', isAuthenticated, freeplay.submitAnswer);
 
 	// route for facebook authentication and login
 	// different scopes while logging in

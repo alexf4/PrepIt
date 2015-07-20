@@ -3,6 +3,10 @@
  */
 exports.studentPage = function(req, res ) {
 
+
+  //TODO use req.user.toString()
+
+  //find user by session id
   res.render("student")
 
 
