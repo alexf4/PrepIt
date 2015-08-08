@@ -2,8 +2,12 @@
  * Created by beckyedithbrooker on 7/18/15.
  */
 var questionModel = require("../models/question");
-var user = require("../models/user");
+var categoryModel = require("../models/category");
+var category = require("../models/category");
+var userModel = require("../models/user");
 var mongoose = require('mongoose');
+var async = require('async');
+var Dict = require("collections/dict");
 
 /**
  * This method will add a new question to all users question sets
@@ -27,7 +31,7 @@ exports.addQuestionToAllUsers = function (inputID){
 
         //Get a list of all users
         // get all the users
-        user.find({}, function(err, users) {
+        userModel.find({}, function(err, users) {
             if (err) throw err;
 
             // object of all the users
@@ -62,7 +66,7 @@ exports.addQuestionsToUser = function (inputID){
     foundUser = null;
 
     //Find the new user
-    user.findById(inputID, function(err, user) {
+    userModel.findById(inputID, function(err, user) {
 
         if (err) throw err;
 
@@ -96,5 +100,103 @@ exports.addQuestionsToUser = function (inputID){
 
 }
 
+exports.getUserScores = function (inputID, callback) {
+
+    var retDict = new Dict;
+
+    var foundUser = null;
+
+    async.parallel([
+            function(callback){
+                userModel.findById(inputID, function(err, user) {
+                    if (err){
+                        callback(err, null);
+                    }
+                    callback(null, user);
+
+                });
+            },
+            function(callback){
+                categoryModel.find({}, function (err, categories){
+                    if (err){
+                        callback(err, null);
+                    }
+                    callback(null, categories);
+
+                });
+
+            }
+        ],
+        // callback
+        function(err, results){
+
+            //Find how many questions there are
+            foundUser = results[0];
+            categories = results[1];
+
+
+            categories.forEach(function(entry){
+                var numberOfQuestionsPerCategory = countNumberOfQuestionsPerCategory(entry.Title, foundUser.questions);
+                var numberOfQuestionsCorrectPerCategory = countNumberOfQuestionsCorrectPerCategory(entry.Title , foundUser.questions)
+
+                retDict.set(entry.Title + "totalQuestions" , numberOfQuestionsPerCategory);
+                retDict.set(entry.Title + "totalCorrect", numberOfQuestionsCorrectPerCategory);
+            })
+
+            //Add the total number of questions
+            var totalQuestions = foundUser.questions.length;
+
+            retDict.set("totalQuestions" , totalQuestions);
+
+
+            callback(retDict);
+            //return retDict;
+
+        });
+
+    //return retDict;
+}
+
+//TODO Move these to user models
+function countNumberOfQuestionsPerCategory(inputCategory , questionSet){
+
+    var numberOfQuestions = 0;
+
+    for (questionItem in questionSet){
+        if (questionItem.category == inputCategory){
+            numberOfQuestions + 1;
+        }
+    }
+
+    return numberOfQuestions;
+
+}
+
+function countNumberOfQuestionsCorrectPerCategory(inputCategory , questionSet){
+
+    var numberOfQuestionsCorrect = 0;
+
+    for (questionItem in questionSet){
+        if ((questionItem.category == inputCategory) && (questionItem.correct == true)) {
+            numberOfQuestionsCorrect + 1;
+        }
+    }
+
+    return numberOfQuestionsCorrect;
+
+}
+
+function numberOfCorrectAnswersForUser(questionSet){
+
+    var numberOfQuestionsRight = 0;
+
+    for (questionItem in questionSet){
+        if (questionItem.correct == true){
+            numberOfQuestionsRight + 1;
+        }
+    }
+
+    return numberOfQuestionsRight;
+}
 
 

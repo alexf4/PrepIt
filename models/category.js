@@ -6,8 +6,8 @@ var Schema = mongoose.Schema;
 
 
 var categorySchema = new Schema({
-    categoryTitle: String,
-    subcategories : [{ type : ObjectId, ref: 'subcategory' }]
+    Title: String
+    //subcategories : [{ type : mongoose.Schema.Types.ObjectId, ref: 'subcategory' }]
 
 });
 
