@@ -4,6 +4,7 @@
 
 var DBFunctions = require("../DBWork/DBFunctions");
 var Dict = require("collections/dict");
+var dataToChartHelper = require("../views/dataToChartHelper");
 
 
 exports.studentPage = function(req, res ) {
@@ -15,11 +16,14 @@ exports.studentPage = function(req, res ) {
   userId = req.session.passport.user;
 
   //Get the stats of the user
-  userScores = DBFunctions.getUserScores(userId, function(Scores){
+  userScores = DBFunctions.getUserScores(userId, function(scores){
 
+    chartData = dataToChartHelper.createStudentChart(scores);
 
-
-    res.render("student");
+    //TODO Switch back
+    //res.render("student");
+    res.render("teacher", {totalData:chartData.get("totalData"), totalOptions:chartData.get("totalOptions"),
+      CUData: chartData.get("totalData"), CUOptions: chartData.get("totalOptions")});
   });
 
 

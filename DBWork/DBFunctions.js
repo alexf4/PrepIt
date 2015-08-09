@@ -139,8 +139,14 @@ exports.getUserScores = function (inputID, callback) {
                 var numberOfQuestionsPerCategory = countNumberOfQuestionsPerCategory(entry.Title, foundUser.questions);
                 var numberOfQuestionsCorrectPerCategory = countNumberOfQuestionsCorrectPerCategory(entry.Title , foundUser.questions)
 
-                retDict.set(entry.Title + "totalQuestions" , numberOfQuestionsPerCategory);
-                retDict.set(entry.Title + "totalCorrect", numberOfQuestionsCorrectPerCategory);
+                var questionData = {
+                    questions : numberOfQuestionsPerCategory,
+                    correct : numberOfQuestionsCorrectPerCategory,
+                    testPercent : entry.TestPercent
+                }
+
+                retDict.set(entry.Title , questionData);
+
             })
 
             //Add the total number of questions
@@ -149,12 +155,13 @@ exports.getUserScores = function (inputID, callback) {
             retDict.set("totalQuestions" , totalQuestions);
 
 
+            var totalCorrectQuestions = numberOfCorrectAnswersForUser(foundUser.questions);
+
+            retDict.set("totalCorrect" , totalCorrectQuestions);
+
             callback(retDict);
-            //return retDict;
 
         });
-
-    //return retDict;
 }
 
 //TODO Move these to user models
@@ -162,11 +169,11 @@ function countNumberOfQuestionsPerCategory(inputCategory , questionSet){
 
     var numberOfQuestions = 0;
 
-    for (questionItem in questionSet){
-        if (questionItem.category == inputCategory){
-            numberOfQuestions + 1;
+    questionSet.forEach(function (entry){
+        if (entry.category == inputCategory){
+            numberOfQuestions ++;
         }
-    }
+    });
 
     return numberOfQuestions;
 
@@ -176,11 +183,13 @@ function countNumberOfQuestionsCorrectPerCategory(inputCategory , questionSet){
 
     var numberOfQuestionsCorrect = 0;
 
-    for (questionItem in questionSet){
-        if ((questionItem.category == inputCategory) && (questionItem.correct == true)) {
-            numberOfQuestionsCorrect + 1;
+
+    questionSet.forEach(function (entry){
+        if ((entry.category == inputCategory) && (entry.correct == true)) {
+            numberOfQuestionsCorrect ++;
         }
-    }
+    });
+
 
     return numberOfQuestionsCorrect;
 
@@ -190,11 +199,11 @@ function numberOfCorrectAnswersForUser(questionSet){
 
     var numberOfQuestionsRight = 0;
 
-    for (questionItem in questionSet){
-        if (questionItem.correct == true){
-            numberOfQuestionsRight + 1;
+    questionSet.forEach(function(entry) {
+        if (entry.correct == true){
+            numberOfQuestionsRight ++;
         }
-    }
+    });
 
     return numberOfQuestionsRight;
 }
