@@ -165,7 +165,7 @@ exports.getUserScores = function (inputID, callback) {
         });
 }
 
-exports.getStudentsScores = function (inputID, test, callback){
+exports.getStudentsScores = function (inputID, test, routeCallback){
 
 
     var retDict = new Dict;
@@ -190,6 +190,20 @@ exports.getStudentsScores = function (inputID, test, callback){
                 }
 
                 //Setup dictionary
+                categories.forEach(function (entry){
+                    var questionData = {
+                        questions : 0,
+                        correct : 0,
+                        testPercent : entry.TestPercent
+                    }
+
+                    retDict.set(entry.Title , questionData);
+                })
+
+                //ser the total number of questions
+                retDict.set("totalQuestions" , 0);
+
+                retDict.set("totalCorrect" , 0);
 
                 callback(null, user);
 
@@ -216,7 +230,13 @@ exports.getStudentsScores = function (inputID, test, callback){
             test.getUserScores(value._id.toString(), function(scores){
                 //merge all the scores
 
-                console.log("here2");
+
+                addStudentScoresToTotal(numStudents , retDict , scores);
+
+                //scores.forEach( function (entry){
+                //    console.log("here2");
+                //})
+
                 callback();
 
 
@@ -228,6 +248,7 @@ exports.getStudentsScores = function (inputID, test, callback){
             console.log("here");
 
             //return the scores with callback(scores);
+            routeCallback(retDict);
         })
 
     });
@@ -278,6 +299,54 @@ function numberOfCorrectAnswersForUser(questionSet){
     });
 
     return numberOfQuestionsRight;
+}
+
+function addStudentScoresToTotal ( numStudents, totalScores, studentScore){
+
+    //Create an array of each key
+    keys = totalScores.keys();
+
+    tempValue = null;
+
+    //get values for each key
+    keys.forEach(function (entry){
+        if (entry == "totalCorrect") {
+            tempValue = studentScore.get("totalCorrect") / numStudents;
+
+            tempValue = tempValue + totalScores.get(entry);
+
+
+          //  totalScores.set(entry , tempValue);
+
+        }else if (entry == "totalQuestions"){
+            tempValue = studentScore.get("totalQuestions") / numStudents;
+
+            tempValue = tempValue + totalScores.get(entry);
+
+           // totalScores.set(entry , tempValue);
+
+        }else{
+            console.log("last");
+
+            var sectionScore = studentScore.get(entry);
+            var runningTotalScore = totalScores.get(entry);
+
+            tempValue = {
+                questions : (sectionScore.questions / numStudents) + runningTotalScore.questions,
+                correct : (sectionScore.correct /numStudents) + runningTotalScore.correct,
+                testPercent : (sectionScore.testPercent /numStudents) + runningTotalScore.testPercent
+            }
+
+            //totalScores.set(entry , tempValue);
+
+        }
+
+        totalScores.set(entry , tempValue);
+
+
+
+    })
+
 }
 
 
