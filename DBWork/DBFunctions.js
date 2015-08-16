@@ -128,6 +128,7 @@ exports.getUserScores = function (inputID, callback) {
             }
         ],
         // callback
+        //TODO make this into a function
         function(err, results){
 
             //Find how many questions there are
@@ -166,6 +167,11 @@ exports.getUserScores = function (inputID, callback) {
 
 exports.getStudentsScores = function (inputID, test, callback){
 
+
+    var retDict = new Dict;
+
+    //TODO need to dynamiclly populate the dict add another step in the waterfall
+
     //Find the users token
     async.waterfall([
         function(callback) {
@@ -177,8 +183,20 @@ exports.getStudentsScores = function (inputID, test, callback){
 
             });
         },
-        function(user, callback) {
-            // arg1 now equals 'one' and arg2 now equals 'two'
+        function (user, callback){
+            categoryModel.find({}, function (err, categories){
+                if (err){
+                    callback(err, null);
+                }
+
+                //Setup dictionary
+
+                callback(null, user);
+
+            });
+        },
+        function( user, callback) {
+            // find all students that have the same teacher token
             userModel.find({ teacherToken: user.token }, function (err, users){
                 if (err){
                     callback(err, null);
@@ -193,27 +211,25 @@ exports.getStudentsScores = function (inputID, test, callback){
         var numStudents = users.length;
 
 
+        async.forEachOf(users , function (value, key, callback){
 
-
-        //get the scores for each student
-        users.forEach (function (entity){
-            test.getUserScores(entity._id.toString(), function(scores){
+            test.getUserScores(value._id.toString(), function(scores){
                 //merge all the scores
 
                 console.log("here2");
-
+                callback();
 
 
             })
 
-            //divide them by total number of students
+
+
+        }, function(err){
+            console.log("here");
+
+            //return the scores with callback(scores);
         })
 
-
-
-
-        console.log("here");
-        // result now equals 'done'
     });
 
 }
