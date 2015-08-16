@@ -164,6 +164,62 @@ exports.getUserScores = function (inputID, callback) {
         });
 }
 
+exports.getStudentsScores = function (inputID, test, callback){
+
+    //Find the users token
+    async.waterfall([
+        function(callback) {
+            userModel.findById(inputID, function(err, user) {
+                if (err){
+                    callback(err, null);
+                }
+                callback(null, user);
+
+            });
+        },
+        function(user, callback) {
+            // arg1 now equals 'one' and arg2 now equals 'two'
+            userModel.find({ teacherToken: user.token }, function (err, users){
+                if (err){
+                    callback(err, null);
+                }
+              callback(null, users);
+            });
+        }
+    ], function (err, users) {
+
+        //Count how many students the teacher has
+
+        var numStudents = users.length;
+
+
+
+
+        //get the scores for each student
+        users.forEach (function (entity){
+            test.getUserScores(entity._id.toString(), function(scores){
+                //merge all the scores
+
+                console.log("here2");
+
+
+
+            })
+
+            //divide them by total number of students
+        })
+
+
+
+
+        console.log("here");
+        // result now equals 'done'
+    });
+
+}
+
+
+
 //TODO Move these to user models
 function countNumberOfQuestionsPerCategory(inputCategory , questionSet){
 

@@ -3,7 +3,6 @@
  */
 
 var DBFunctions = require("../DBWork/DBFunctions");
-var Dict = require("collections/dict");
 var dataToChartHelper = require("../views/dataToChartHelper");
 
 
@@ -16,7 +15,7 @@ exports.studentPage = function(req, res ) {
   userId = req.session.passport.user;
 
   //Get the stats of the user
-  userScores = DBFunctions.getUserScores(userId, function(scores){
+  DBFunctions.getUserScores(userId, function(scores){
 
     chartData = dataToChartHelper.createStudentChart(scores);
 
@@ -32,10 +31,8 @@ exports.studentPage = function(req, res ) {
       Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
       Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,
       Public_Policy_Data : chartData.Public_Policy_Data
-
     });
 
-    //res.render("teacher", {totalData: chartData.get("totalData") , totalOptions: chartData.get("totalOptions"), CUData : chartData.get("totalData"), CUOptions : chartData.get("totalOptions")});
   });
 
 

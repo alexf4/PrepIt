@@ -97,7 +97,7 @@ module.exports = function(passport){
 
 				// set the message
 				req.session.messages = "Login successfully";
-				if(user.isTeacher){
+				if(user.isteacher){
 					return res.redirect('./teacher');
 				}
 
