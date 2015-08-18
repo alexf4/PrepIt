@@ -7,7 +7,7 @@ var register = require('./registration');
 var student = require('./student');
 var signup = require('./signup');
 var question = require('./questionInput');
-var freeplay = require('../GameLogic/FreePlay');
+var freeplay = require('./freePlay');
 
 
 

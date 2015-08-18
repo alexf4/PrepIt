@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a0bf6ba-2bd0-4b07-9132-01237d42fe43" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/freePlay.js" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/npm-debug.log" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/GameLogic/FreePlay.js" afterPath="$PROJECT_DIR$/GameLogic/FreePlayLogic.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/student.jade" afterPath="$PROJECT_DIR$/views/student.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/student.js" afterPath="$PROJECT_DIR$/routes/student.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/teacher.js" afterPath="$PROJECT_DIR$/routes/teacher.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PrepIt.iws" />
@@ -43,7 +44,17 @@
             <entry file="file://$PROJECT_DIR$/routes/index.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="100" column="16" selection-start-line="100" selection-start-column="16" selection-end-line="100" selection-end-column="16" />
+                  <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="FreePlayLogic.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/GameLogic/FreePlayLogic.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.34397164">
+                  <caret line="74" column="44" selection-start-line="74" selection-start-column="44" selection-end-line="74" selection-end-column="44" />
                   <folding />
                 </state>
               </provider>
@@ -59,10 +70,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="student.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="student.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/routes/student.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.44469783">
+                <state vertical-scroll-proportion="0.0">
                   <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
                   <folding />
                 </state>
@@ -79,24 +90,44 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="DBFunctions.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/dbWork/DBFunctions.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="247" column="12" selection-start-line="247" selection-start-column="12" selection-end-line="247" selection-end-column="12" />
-                  <folding>
-                    <element signature="e#0#51#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="teacher.jade" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/views/teacher.jade">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-                  <folding />
+                  <folding>
+                    <marker date="1439187445000" expanded="true" signature="17:8721" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="26:412" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="421:8721" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="454:1743" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="564:1743" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="605:1371" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="704:1116" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="795:1116" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="846:935" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="980:1116" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="1151:1291" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="1232:1291" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="1398:1560" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="1435:1560" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="1587:1743" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="1617:1743" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="1836:2602" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="1984:2091" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="2124:2366" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="2393:2602" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="2458:2602" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="2492:2602" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="3003:3075" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="3510:3587" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="3955:4033" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="4401:4479" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="4880:4958" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="5326:5404" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="5772:5850" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="6653:6754" placeholder="..." />
+                    <marker date="1439187445000" expanded="true" signature="7222:8721" placeholder="..." />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -109,7 +140,17 @@
             <entry file="file://$PROJECT_DIR$/routes/teacher.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+                  <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="51" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="freePlay.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/routes/freePlay.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.8333333">
+                  <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -135,12 +176,24 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="student.jade" pinned="false" current-in-tab="true">
+          <file leaf-file-name="student.jade" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/views/student.jade">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-0.686431">
-                  <caret line="26" column="58" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="34" column="44" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="DBFunctions.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/dbWork/DBFunctions.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="273" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#51#0" expanded="false" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -166,7 +219,6 @@
         <option value="$PROJECT_DIR$/models/question.js" />
         <option value="$PROJECT_DIR$/routes/signup.js" />
         <option value="$PROJECT_DIR$/DBWork/DBFunctions.js" />
-        <option value="$PROJECT_DIR$/GameLogic/FreePlay.js" />
         <option value="$PROJECT_DIR$/routes/questionInput.js" />
         <option value="$PROJECT_DIR$/middleware/middleware.js" />
         <option value="$PROJECT_DIR$/db.js" />
@@ -178,11 +230,14 @@
         <option value="$PROJECT_DIR$/views/dataToChartHelper.js" />
         <option value="$PROJECT_DIR$/views/teacher.jade" />
         <option value="$PROJECT_DIR$/models/user.js" />
-        <option value="$PROJECT_DIR$/routes/index.js" />
-        <option value="$PROJECT_DIR$/routes/teacher.js" />
         <option value="$PROJECT_DIR$/dbWork/DBFunctions.js" />
-        <option value="$PROJECT_DIR$/views/student.jade" />
         <option value="$PROJECT_DIR$/routes/student.js" />
+        <option value="$PROJECT_DIR$/routes/teacher.js" />
+        <option value="$PROJECT_DIR$/GameLogic/FreePlay.js" />
+        <option value="$PROJECT_DIR$/routes/index.js" />
+        <option value="$PROJECT_DIR$/views/student.jade" />
+        <option value="$PROJECT_DIR$/routes/freePlay.js" />
+        <option value="$PROJECT_DIR$/GameLogic/FreePlayLogic.js" />
       </list>
     </option>
   </component>
@@ -239,7 +294,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -359,6 +413,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -449,8 +504,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12682158" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35066864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32763743" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35066864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32763743" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296131" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -546,30 +601,22 @@
           <line>239</line>
           <option name="timeStamp" value="153" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/GameLogic/FreePlayLogic.js</url>
+          <line>21</line>
+          <option name="timeStamp" value="161" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/routes/freePlay.js</url>
+          <line>10</line>
+          <option name="timeStamp" value="162" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="161" />
+      <option name="time" value="163" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="NodeJSConfigurationType">
-        <watch expression="scores.toJSON()" language="JavaScript" />
-        <watch expression="retDict.toJSON()" language="JavaScript" />
-        <watch expression="totalScores.toJSON()" language="JavaScript" />
-        <watch expression="studentScore.toJSON()" language="JavaScript" />
-        <watch expression="tempValue" />
-        <watch expression="entry" />
-        <watch expression="sectionScore" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="46" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/passport/login.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -791,13 +838,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GameLogic/FreePlay.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34026465">
-          <caret line="14" column="20" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/FreePlayQuestion.jade">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -878,18 +918,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="100" column="16" selection-start-line="100" selection-start-column="16" selection-end-line="100" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/passport/login.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/dataToChartHelper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.42857143">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/teacher.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+          <folding>
+            <marker date="1439187445000" expanded="true" signature="17:8721" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="26:412" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="421:8721" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="454:1743" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="564:1743" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="605:1371" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="704:1116" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="795:1116" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="846:935" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="980:1116" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="1151:1291" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="1232:1291" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="1398:1560" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="1435:1560" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="1587:1743" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="1617:1743" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="1836:2602" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="1984:2091" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="2124:2366" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="2393:2602" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="2458:2602" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="2492:2602" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="3003:3075" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="3510:3587" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="3955:4033" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="4401:4479" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="4880:4958" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="5326:5404" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="5772:5850" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="6653:6754" placeholder="..." />
+            <marker date="1439187445000" expanded="true" signature="7222:8721" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/student.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -902,54 +989,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/teacher.js">
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/dataToChartHelper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.42857143">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dbWork/DBFunctions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="247" column="12" selection-start-line="247" selection-start-column="12" selection-end-line="247" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#51#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/teacher.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/student.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.686431">
-          <caret line="26" column="58" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="44" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/student.js">
+    <entry file="file://$PROJECT_DIR$/routes/teacher.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44469783">
-          <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dbWork/DBFunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="273" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#51#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/freePlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8333333">
+          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GameLogic/FreePlayLogic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34397164">
+          <caret line="74" column="44" selection-start-line="74" selection-start-column="44" selection-end-line="74" selection-end-column="44" />
           <folding />
         </state>
       </provider>
