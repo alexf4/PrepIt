@@ -19,13 +19,8 @@ exports.getQuestion = function(inputID , callback) {
             callback(err, null);
         }
 
-
-
         //Find a question that has an inccorect
         foundQuestion = findNextQuestion(user.questions);
-
-
-        console.log("here");
 
         callback(foundQuestion);
 
@@ -56,6 +51,11 @@ exports.getQuestionFromSubCategory = function(inputID, subCategory ,  callback){
 exports.checkAnswer = function(inputId, userAnswer, questionID, callback){
 
 
+    var result = {
+        correct : false,
+        question : null
+    }
+
     //grab the questions correct answer
     userModel.findById(inputID, function(err, user) {
         if (err){
@@ -63,31 +63,37 @@ exports.checkAnswer = function(inputId, userAnswer, questionID, callback){
         }
 
         //Find a question that has an inccorect
-        foundQuestion = findNextQuestion(user.questions);
+        //foundQuestion = findNextQuestion(user.questions);
 
         //find the question in the user item
         user.questions.forEach(function (entry){
 
             if (entry._id.toString() == questionID){
+
+                result.question = entry;
+
                 if (entry.solution == userAnswer){
                     //Mark question as correct
-
-                    //TODO find the DB Query
-                    user.update({});
-
-                    result = {
-                        correct : true,
-                        question : entry
-                    }
+                    entry.correct = true;
+                    result.correct = true;
 
                 }else{
-                    result = {
-                        correct : false,
-                        question : entry
-                    }
+                    entry.correct = false;
+                    result.correct = false;
                 }
-                callback(result);
+
             }
+        })
+
+        user.questions = null;
+
+        user.save(function (err , product, number) {
+
+            user.questions = questions;
+
+            user.save(function (err, product, number){
+                callback(result);
+            })
         })
     });
 
