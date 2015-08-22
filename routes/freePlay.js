@@ -13,7 +13,9 @@ exports.startFreePlay = function(req, res) {
 
 
     freePlayLogic.getQuestion(userId, function(question){
-        res.send (question.questionText);
+        //res.send (question.questionText);
+
+        res.render("FreePlayQuestion", {questionCategory : question.category , questionSubcategory : question.subcategory, questionText : question.questionText, question: question});
     })
 
 
@@ -66,9 +68,11 @@ exports.startFreePlay = function(req, res) {
         //IF result object has a correct then show answer
         if(result.correct){
             //res.render correct
-            res.send("correct");
+            //res.send("correct");
+            res.render("FreePlayReview");
         }else{
-            res.send("wrong");
+            //res.send("wrong");
+            res.render("FreePlayReview");
             //res.render incorrect
         }
         //res.render correct
