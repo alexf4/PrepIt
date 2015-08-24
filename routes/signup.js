@@ -46,11 +46,16 @@ exports.signup = function(req, res) {
 
                 DBFunctions.addQuestionsToUser(product._id.toString() , function (temp){
 
-                    if (newUser.isteacher) {
-                        res.redirect("/teacher");
-                    }else{
-                        res.redirect("/student");
-                    }
+
+                    //race case condition, req.session.pasporto.user is not set
+                    //TODO clean this up
+
+                    res.redirect("/");
+                    //if (newUser.isteacher) {
+                    //    res.redirect("/teacher");
+                    //}else{
+                    //    res.redirect("/student");
+                    //}
 
                 });
 

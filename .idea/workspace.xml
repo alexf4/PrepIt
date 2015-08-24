@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3a0bf6ba-2bd0-4b07-9132-01237d42fe43" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/npm-debug.log" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameLogic/FreePlayLogic.js" afterPath="$PROJECT_DIR$/GameLogic/FreePlayLogic.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/FreePlayQuestion.jade" afterPath="$PROJECT_DIR$/views/FreePlayQuestion.jade" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/FreePlayReview.jade" afterPath="$PROJECT_DIR$/views/FreePlayReview.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/freePlay.js" afterPath="$PROJECT_DIR$/routes/freePlay.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/signup.js" afterPath="$PROJECT_DIR$/routes/signup.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -31,61 +29,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.47406405">
       <split-first>
         <leaf>
-          <file leaf-file-name="freePlay.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/routes/freePlay.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="71" column="104" selection-start-line="71" selection-start-column="89" selection-end-line="71" selection-end-column="104" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/routes/index.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.49544418">
-                  <caret line="122" column="25" selection-start-line="122" selection-start-column="17" selection-end-line="122" selection-end-column="25" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="FreePlayLogic.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/GameLogic/FreePlayLogic.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="question.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/models/question.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="login2.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/routes/login2.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="DBFunctions.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/dbWork/DBFunctions.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="142" column="107" selection-start-line="142" selection-start-column="107" selection-end-line="142" selection-end-column="107" />
+                  <caret line="92" column="16" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
                   <folding>
                     <element signature="e#0#51#0" expanded="false" />
                   </folding>
@@ -107,7 +55,7 @@
             <entry file="file://$PROJECT_DIR$/routes/student.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+                  <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
                   <folding />
                 </state>
               </provider>
@@ -123,44 +71,12 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="teacher.jade" pinned="false" current-in-tab="false">
+          <file leaf-file-name="teacher.jade" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/views/teacher.jade">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-                  <folding>
-                    <marker date="1439187445000" expanded="true" signature="17:8721" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="26:412" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="421:8721" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="454:1743" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="564:1743" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="605:1371" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="704:1116" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="795:1116" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="846:935" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="980:1116" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="1151:1291" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="1232:1291" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="1398:1560" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="1435:1560" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="1587:1743" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="1617:1743" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="1836:2602" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="1984:2091" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="2124:2366" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="2393:2602" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="2458:2602" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="2492:2602" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="3003:3075" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="3510:3587" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="3955:4033" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="4401:4479" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="4880:4958" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="5326:5404" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="5772:5850" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="6653:6754" placeholder="..." />
-                    <marker date="1439187445000" expanded="true" signature="7222:8721" placeholder="..." />
-                  </folding>
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -169,41 +85,21 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="student.jade" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/views/student.jade">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="34" column="44" selection-start-line="0" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="FreePlayQuestion.jade" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/views/FreePlayQuestion.jade">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-17.074074">
-                  <caret line="98" column="94" selection-start-line="98" selection-start-column="94" selection-end-line="98" selection-end-column="94" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="FreePlayReview.jade" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/views/FreePlayReview.jade">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.506463">
-                  <caret line="71" column="56" selection-start-line="71" selection-start-column="56" selection-end-line="71" selection-end-column="56" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="signup.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="signup.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/signup.js">
               <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.8883827">
+                  <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/routes/index.js">
+              <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+                  <caret line="122" column="25" selection-start-line="122" selection-start-column="17" selection-end-line="122" selection-end-column="25" />
                   <folding />
                 </state>
               </provider>
@@ -246,11 +142,11 @@
         <option value="$PROJECT_DIR$/views/student.jade" />
         <option value="node.js" />
         <option value="$PROJECT_DIR$/GameLogic/FreePlayLogic.js" />
-        <option value="$PROJECT_DIR$/routes/signup.js" />
-        <option value="$PROJECT_DIR$/dbWork/DBFunctions.js" />
         <option value="$PROJECT_DIR$/routes/freePlay.js" />
         <option value="$PROJECT_DIR$/views/FreePlayQuestion.jade" />
         <option value="$PROJECT_DIR$/views/FreePlayReview.jade" />
+        <option value="$PROJECT_DIR$/dbWork/DBFunctions.js" />
+        <option value="$PROJECT_DIR$/routes/signup.js" />
       </list>
     </option>
   </component>
@@ -519,7 +415,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12682158" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3499257" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3268945" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3268945" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296131" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -606,12 +502,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/dbWork/DBFunctions.js</url>
-          <line>250</line>
+          <line>245</line>
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/dbWork/DBFunctions.js</url>
-          <line>242</line>
+          <line>237</line>
           <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -619,8 +515,23 @@
           <line>17</line>
           <option name="timeStamp" value="177" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/routes/signup.js</url>
+          <line>56</line>
+          <option name="timeStamp" value="178" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/dbWork/DBFunctions.js</url>
+          <line>92</line>
+          <option name="timeStamp" value="179" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/routes/student.js</url>
+          <line>17</line>
+          <option name="timeStamp" value="180" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="178" />
+      <option name="time" value="181" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -883,66 +794,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/student.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/teacher.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-          <folding>
-            <marker date="1439187445000" expanded="true" signature="17:8721" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="26:412" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="421:8721" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="454:1743" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="564:1743" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="605:1371" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="704:1116" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="795:1116" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="846:935" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="980:1116" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="1151:1291" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="1232:1291" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="1398:1560" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="1435:1560" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="1587:1743" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="1617:1743" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="1836:2602" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="1984:2091" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="2124:2366" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="2393:2602" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="2458:2602" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="2492:2602" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="3003:3075" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="3510:3587" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="3955:4033" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="4401:4479" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="4880:4958" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="5326:5404" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="5772:5850" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="6653:6754" placeholder="..." />
-            <marker date="1439187445000" expanded="true" signature="7222:8721" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/passport/login.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.017709563">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/login2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -963,14 +818,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/student.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="44" selection-start-line="0" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/passport/signup.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.09714286">
@@ -987,10 +834,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/signup.js">
+    <entry file="file://$PROJECT_DIR$/views/FreePlayReview.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.5640423">
+          <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/FreePlayQuestion.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2467685">
+          <caret line="33" column="36" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/student.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22209567">
+          <caret line="47" column="54" selection-start-line="47" selection-start-column="54" selection-end-line="47" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/freePlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7095672">
+          <caret line="71" column="104" selection-start-line="71" selection-start-column="89" selection-end-line="71" selection-end-column="104" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GameLogic/FreePlayLogic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.19589977">
+          <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/question.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32460135">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/login2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55580866">
+          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -998,57 +893,41 @@
     <entry file="file://$PROJECT_DIR$/dbWork/DBFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="142" column="107" selection-start-line="142" selection-start-column="107" selection-end-line="142" selection-end-column="107" />
+          <caret line="92" column="16" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
           <folding>
             <element signature="e#0#51#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/question.js">
+    <entry file="file://$PROJECT_DIR$/routes/student.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GameLogic/FreePlayLogic.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/freePlay.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="104" selection-start-line="71" selection-start-column="89" selection-end-line="71" selection-end-column="104" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/FreePlayQuestion.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.074074">
-          <caret line="98" column="94" selection-start-line="98" selection-start-column="94" selection-end-line="98" selection-end-column="94" />
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49544418">
+        <state vertical-scroll-proportion="0.0">
           <caret line="122" column="25" selection-start-line="122" selection-start-column="17" selection-end-line="122" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/FreePlayReview.jade">
+    <entry file="file://$PROJECT_DIR$/views/teacher.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.506463">
-          <caret line="71" column="56" selection-start-line="71" selection-start-column="56" selection-end-line="71" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/signup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8883827">
+          <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
           <folding />
         </state>
       </provider>
