@@ -61,7 +61,7 @@ exports.addQuestionToAllUsers = function (inputID){
 };
 
 
-exports.addQuestionsToUser = function (inputID){
+exports.addQuestionsToUser = function (inputID, callback){
 
     foundUser = null;
 
@@ -88,6 +88,9 @@ exports.addQuestionsToUser = function (inputID){
             foundUser.save(function(error, data){
 
                 newQuestion = null;
+
+
+                callback(null);
             });
         });
 

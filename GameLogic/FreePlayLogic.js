@@ -57,10 +57,13 @@ exports.checkAnswer = function(inputId, userAnswer, questionID, callback){
     }
 
     //grab the questions correct answer
-    userModel.findById(inputID, function(err, user) {
+    userModel.findById(inputId, function(err, user) {
         if (err){
             callback(err, null);
         }
+
+
+        var questions = user.questions;
 
         //Find a question that has an inccorect
         //foundQuestion = findNextQuestion(user.questions);

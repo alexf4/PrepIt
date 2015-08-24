@@ -66,7 +66,8 @@ html
                         div
                            .wrapper.wrapper-content.animated.fadeInRight
                               .row
-                                 form(role='form')
+                                 form(role='form', action='/freeplaySubmit', method = 'POST')
+                                    input(type='hidden', value=questionID, name='questionId')
                                     .col-sm-6.b-r
                                        h3.m-t-none.m-b #{question.category}
                                        p #{question.subcategory}
@@ -74,31 +75,30 @@ html
                                           div
                                              button.btn.btn-sm.btn-primary.pull-right.m-t-n-xs(type='submit')
                                                 strong Submit Answer
-                                             //label
-                                             //   input.i-checks(type='checkbox')
-                                             //   |  Remember me
                                     .col-sm-6
                                        .ibox.float-e-margins
                                           .ibox-content
                                              .list-group
                                                 a.list-group-item(href='#')
                                                    h3.list-group-item-heading A
+                                                   input(type='radio', name='answer', value='a', checked='')
                                                    p.list-group-item-text
                                                       | #{question.answers.a}
                                                 a.list-group-item(href='#')
                                                    h3.list-group-item-heading B
+                                                   input(type='radio', name='answer', value='b', checked='')
                                                    p.list-group-item-text
                                                       | #{question.answers.b}
                                                 a.list-group-item(href='#')
                                                    h3.list-group-item-heading C
+                                                   input(type='radio', name='answer', value='c', checked='')
                                                    p.list-group-item-text
                                                       | #{question.answers.c}
                                                 a.list-group-item(href='#')
                                                    h3.list-group-item-heading D
+                                                   input(type='radio', name='answer', value='d', checked='')
                                                    p.list-group-item-text
                                                       | #{question.answers.d}
-
-
                   .footer
                .pull-right
                   | 10GB of

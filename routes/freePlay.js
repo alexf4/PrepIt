@@ -15,7 +15,7 @@ exports.startFreePlay = function(req, res) {
     freePlayLogic.getQuestion(userId, function(question){
         //res.send (question.questionText);
 
-        res.render("FreePlayQuestion", {questionCategory : question.category , questionSubcategory : question.subcategory, questionText : question.questionText, question: question});
+        res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
     })
 
 
@@ -63,16 +63,16 @@ exports.startFreePlay = function(req, res) {
 
     //compare to users input
 
-    freePlayLogic.checkAnswer(userId, userAnswer, questionID ,  function(result){
+    freePlayLogic.checkAnswer(userId, req.body.answer, req.body.questionId ,  function(result){
 
         //IF result object has a correct then show answer
         if(result.correct){
             //res.render correct
             //res.send("correct");
-            res.render("FreePlayReview");
+            res.render("FreePlayReview" , {question : result.question , correct : true , correctSolution : result.question.solution});
         }else{
             //res.send("wrong");
-            res.render("FreePlayReview");
+            res.render("FreePlayReview" , {question : result.question , correct: false, correctSolution : result.question.solution});
             //res.render incorrect
         }
         //res.render correct

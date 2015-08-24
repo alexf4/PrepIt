@@ -44,13 +44,16 @@ exports.signup = function(req, res) {
                 console.log('User Registration succesful');
 
 
-                DBFunctions.addQuestionsToUser(product._id.toString());
+                DBFunctions.addQuestionsToUser(product._id.toString() , function (temp){
 
-                if (newUser.isteacher) {
-                    res.redirect("/teacher");
-                }else{
-                    res.redirect("/student");
-                }
+                    if (newUser.isteacher) {
+                        res.redirect("/teacher");
+                    }else{
+                        res.redirect("/student");
+                    }
+
+                });
+
 
                 //TODO Add a copy of all exisiting questions to the new user
 
