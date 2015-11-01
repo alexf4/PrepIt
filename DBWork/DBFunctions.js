@@ -126,7 +126,6 @@ exports.getUserScores = function (inputID, callback) {
             }
         ],
         // callback
-        //TODO make this into a function
         function(err, results){
 
             //Find how many questions there are
@@ -135,8 +134,10 @@ exports.getUserScores = function (inputID, callback) {
 
 
             categories.forEach(function(entry){
-                var numberOfQuestionsPerCategory = countNumberOfQuestionsPerCategory(entry.Title, foundUser.questions);
-                var numberOfQuestionsCorrectPerCategory = countNumberOfQuestionsCorrectPerCategory(entry.Title , foundUser.questions)
+
+                var numberOfQuestionsPerCategory = foundUser.countNumberOfQuestionsPerCategory(entry.Title);
+                var numberOfQuestionsCorrectPerCategory = foundUser.numberOfQuestionsCorrectPerCategory(entry.Title);
+
 
                 var questionData = {
                     questions : numberOfQuestionsPerCategory,
@@ -153,8 +154,7 @@ exports.getUserScores = function (inputID, callback) {
 
             retDict.set("totalQuestions" , totalQuestions);
 
-
-            var totalCorrectQuestions = numberOfCorrectAnswersForUser(foundUser.questions);
+            var totalCorrectQuestions = foundUser.numberOfCorrectAnswersForUser();
 
             retDict.set("totalCorrect" , totalCorrectQuestions);
 
@@ -167,8 +167,6 @@ exports.getStudentsScores = function (inputID, test, routeCallback){
 
 
     var retDict = new Dict;
-
-    //TODO need to dynamiclly populate the dict add another step in the waterfall
 
     //Find the users token
     async.waterfall([
@@ -253,51 +251,6 @@ exports.getStudentsScores = function (inputID, test, routeCallback){
 
 }
 
-
-
-//TODO Move these to user models
-function countNumberOfQuestionsPerCategory(inputCategory , questionSet){
-
-    var numberOfQuestions = 0;
-
-    questionSet.forEach(function (entry){
-        if (entry.category == inputCategory){
-            numberOfQuestions ++;
-        }
-    });
-
-    return numberOfQuestions;
-
-}
-
-function countNumberOfQuestionsCorrectPerCategory(inputCategory , questionSet){
-
-    var numberOfQuestionsCorrect = 0;
-
-
-    questionSet.forEach(function (entry){
-        if ((entry.category == inputCategory) && (entry.correct == true)) {
-            numberOfQuestionsCorrect ++;
-        }
-    });
-
-
-    return numberOfQuestionsCorrect;
-
-}
-
-function numberOfCorrectAnswersForUser(questionSet){
-
-    var numberOfQuestionsRight = 0;
-
-    questionSet.forEach(function(entry) {
-        if (entry.correct == true){
-            numberOfQuestionsRight ++;
-        }
-    });
-
-    return numberOfQuestionsRight;
-}
 
 function addStudentScoresToTotal ( numStudents, totalScores, studentScore){
 
