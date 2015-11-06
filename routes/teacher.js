@@ -17,8 +17,8 @@ exports.teacherPage = function(req, res ){
 
     //TODO: Make this dynamic
     res.render("teacher", {totalData : chartData.totalData , totalOptions : chartData.totalOptions ,
-      CUData : chartData.Civil_Rights_and_Liberites_Data, SectionOptions : chartData.sectionOptions,
-      Civil_Rights_and_Liberites_Data : chartData.Civil_Rights_and_Liberites_Data,
+      CUData : chartData.Constitutional_Underpinnings_Data, SectionOptions : chartData.sectionOptions,
+      Civil_Rights_and_Liberties_Data : chartData.Civil_Rights_and_Liberties_Data,
       Political_Beliefs_and_Behaviors_Data : chartData.Political_Beliefs_and_Behaviors_Data,
       Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
       Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,

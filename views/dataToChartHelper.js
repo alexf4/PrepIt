@@ -19,7 +19,7 @@ exports.createStudentChart = function (scores){
         animationEasing: "easeOutBounce",
         animateRotate: true,
         animateScale: false,
-        responsive: true,
+        responsive: true
     };
 
     var sectionOptions = {
@@ -31,7 +31,7 @@ exports.createStudentChart = function (scores){
         animationEasing: "easeOutBounce",
         animateRotate: true,
         animateScale: false,
-        responsive: true,
+        responsive: true
     };
 
 
@@ -40,7 +40,9 @@ exports.createStudentChart = function (scores){
     retDict.set("sectionOptions", sectionOptions);
 
 
-    //For each section calculate the score
+
+    formatedChartData2 = {};
+
 
     sectionArray = scores.entries();
 
@@ -52,7 +54,29 @@ exports.createStudentChart = function (scores){
                 retDict.set(entry[0]+ " Data", calculateSectionScore(sectionData , entry[0]))
             }
         }
+
+
     });
+
+
+    formatedChartData2["totalData"] = retDict.get("totalData");
+    formatedChartData2["totalOptions"]= retDict.get("totalOptions");
+    formatedChartData2["sectionOptions"] = retDict.get("sectionOptions");
+
+    sectionArray.forEach (function (entry){
+
+        if (entry[0] != "totalQuestions"){
+            if (entry[0] != "totalCorrect") {
+                formatedChartData2[entry[0].replace(/\s/g, "_") + "_Data"] = retDict.get(entry[0] + " Data");
+            }
+        }
+
+
+    })
+
+    //formatedChartData2["totalData"] = retDict.get("totalData");
+    //formatedChartData2["totalOptions"]= retDict.get("totalOptions")
+    //formatedChartData2["sectionOptions"] = retDict.get("sectionOptions");
 
 
     //TODO: Make this dynamic
@@ -61,17 +85,20 @@ exports.createStudentChart = function (scores){
         totalData: retDict.get("totalData"),
         totalOptions: retDict.get("totalOptions"),
         sectionOptions: retDict.get("sectionOptions"),
-        Civil_Rights_and_Liberites_Data: retDict.get("Civil Rights and Liberties Data"),
-        Constitutional_Underpinnings_Data : retDict.get("Constitutional Underpinnings Data"),
         Political_Beliefs_and_Behaviors_Data : retDict.get("Political Beliefs and Behaviors Data"),
         Linkage_Institutions_Data : retDict.get("Linkage Institutions Data"),
         Institutions_of_National_Government_Data : retDict.get("Institutions of National Government Data"),
-        Public_Policy_Data : retDict.get("Public Policy Data")
+        Public_Policy_Data : retDict.get("Public Policy Data"),
+        Civil_Rights_and_Liberties_Data: retDict.get("Civil Rights and Liberties Data"),
+        Constitutional_Underpinnings_Data : retDict.get("Constitutional Underpinnings Data")
 
 
     };
 
-    return formatedChartData
+
+
+
+    return formatedChartData2
 
 }
 
@@ -106,15 +133,6 @@ function calculateTotalScore(scores){
         }
     });
 
-    //TODO This should work, skipping for time.
-    ////Setup the total chart data
-    //scores.forEach(function (entry){
-    //    sectionValue = entry.correct * entry.testPercent * .1;
-    //    totalChartData = {
-    //        value : sectionValue,
-    //        label : entry
-    //    }
-    //})
 
     //Change color depending on how many they have got right
 
