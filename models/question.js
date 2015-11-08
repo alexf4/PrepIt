@@ -7,18 +7,25 @@ var Schema = mongoose.Schema;
 
 var questionSchema = new Schema({
 
-    category:String,
+    category: String,
     //Change to [{ type : ObjectId, ref: 'category' }]
     subcategory: String,
     //[{ type : ObjectId, ref: 'subcategory' }]
     questionText: String,
     solution: String,
     percentRight: Number,
-    answers: {a : String, b: String, c: String, d:String},
+    answers: {a: String, b: String, c: String, d: String},
     correct: Boolean,
-    _questionID: Number
+    _questionID: Number,
+    dateUsed: Date
 
 });
+
+
+questionSchema.methods.updateTimeStamp = function () {
+    this.dateUsed = new Date();
+
+};
 
 // the schema is useless so far
 // we need to create a model using it
