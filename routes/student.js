@@ -19,10 +19,6 @@ exports.studentPage = function (req, res) {
 
         var chartData = dataToChartHelper.createStudentChart(scores);
 
-        //TODO Switch back
-        //res.render("student");
-
-
         //TODO: Make this dynamic
         res.render("student",
             {

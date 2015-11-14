@@ -59,11 +59,6 @@ exports.signup = function(req, res) {
 
                 });
 
-
-                //TODO Add a copy of all exisiting questions to the new user
-
-
-
             });
         }
     });
