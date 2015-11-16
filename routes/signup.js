@@ -17,11 +17,6 @@ exports.signup = function(req, res) {
         }
         // already exists
         if (user) {
-            //console.log('User already exists with username: '+username);
-            //TODO: Need to catch this
-            //return done(null, false, req.flash('message','User Already Exists'));
-
-            //req.session.messages = info.message;
             req.flash('error', "User Already Exists");
             return res.redirect('/register');
         } else {
