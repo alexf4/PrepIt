@@ -18,7 +18,6 @@ exports.auth = function(req, res) {
       function (err, user) {
         // In case of any error, return using the done method
         if (err)
-        //TODO Make errors on login known to user
           res.redirect("/login");
         // Username does not exist, log the error and redirect back
         if (!user){

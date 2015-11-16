@@ -8,6 +8,7 @@ var student = require('./student');
 var signup = require('./signup');
 var question = require('./questionInput');
 var freeplay = require('./freePlay');
+var flash = require('connect-flash');
 
 
 
@@ -54,7 +55,9 @@ module.exports = function(passport){
 	/* handle signin post
 	* Need to check the user email in the db*/
 	router.get("/login",function(req, res){
-		res.render('login',{message: req.flash('message'), user: "alex"});
+		//console.log(flash('error'));
+		//{message: req.flash('error')}
+		res.render('login',{message: req.flash("error"), user: "alex"});
 	});
 
 	/* GET Registration Page */
@@ -74,7 +77,7 @@ module.exports = function(passport){
 
 	function loginPost(req, res, next) {
 		// ask passport to authenticate
-		passport.authenticate('local-login', function(err, user, info) {
+		passport.authenticate('local-login',  {failureFlash: true}, function(err, user, info) {
 			if (err) {
 				// if error happens
 				return next(err);
@@ -85,6 +88,7 @@ module.exports = function(passport){
 				// from previous (info.message) step, assign it into to
 				// req.session and redirect to the login page again to display
 				req.session.messages = info.message;
+				req.flash('error', info.message);
 				return res.redirect('/login');
 			}
 
@@ -113,7 +117,6 @@ module.exports = function(passport){
 	});
 
 	/* Handle Logout */
-	//TODO Logout
 	router.get('/signout', function(req, res) {
 		req.logout();
 		res.redirect('/');

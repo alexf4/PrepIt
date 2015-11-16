@@ -39,6 +39,8 @@ app.use(passport.session());
 
 
 
+
+
  // Using the flash middleware provided by connect-flash to store messages in session
  // and displaying in templates
 var flash = require('connect-flash');

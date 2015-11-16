@@ -30,6 +30,7 @@ body.gray-bg
             // Continually expanded and constantly improved Inspinia Admin Them (IN+)
 
          p Login in. To see it in action.
+         .alert-danger #{message}
 
          form.m-t(role='form', action='/login', method='POST')
             .form-group
@@ -52,3 +53,5 @@ body.gray-bg
    script(src='js/jquery-2.1.1.js')
 
    script(src='js/bootstrap.min.js')
+
+   script(src="js/plugins/toastr/toastr.min.js")
