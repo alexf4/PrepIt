@@ -57,7 +57,7 @@ module.exports = function(passport){
 	router.get("/login",function(req, res){
 		//console.log(flash('error'));
 		//{message: req.flash('error')}
-		res.render('login',{message: req.flash("error"), user: "alex"});
+		res.render('login',{error: req.flash("error"), success:req.flash("success") , user: "alex"});
 	});
 
 	/* GET Registration Page */

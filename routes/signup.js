@@ -4,6 +4,7 @@
 var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
 var DBFunctions = require("../DBWork/DBFunctions");
+var register = require('./registration');
 
 
 exports.signup = function(req, res) {
@@ -18,7 +19,11 @@ exports.signup = function(req, res) {
         if (user) {
             //console.log('User already exists with username: '+username);
             //TODO: Need to catch this
-            return done(null, false, req.flash('message','User Already Exists'));
+            //return done(null, false, req.flash('message','User Already Exists'));
+
+            //req.session.messages = info.message;
+            req.flash('error', "User Already Exists");
+            return res.redirect('/register');
         } else {
             // if there is no user with that email
             // create the user
@@ -46,16 +51,9 @@ exports.signup = function(req, res) {
 
                 DBFunctions.addQuestionsToUser(product._id.toString() , function (temp){
 
-
-                    //race case condition, req.session.pasporto.user is not set
-                    //TODO clean this up
-
-                    res.redirect("/");
-                    //if (newUser.isteacher) {
-                    //    res.redirect("/teacher");
-                    //}else{
-                    //    res.redirect("/student");
-                    //}
+                    //TODO race case condition, req.session.pasporto.user is not set
+                    req.flash('success', "Account Created");
+                    res.redirect("/login");
 
                 });
 

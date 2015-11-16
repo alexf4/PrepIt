@@ -28,6 +28,7 @@ body.gray-bg
          h3 Register to PrepIT
 
          p Create account to see it in action.
+         .alert-danger #{error}
          form.m-t(role='form', action='/signup', method='POST')
             .form-group
                input.form-control(type='email', name='email', placeholder='Email', required)

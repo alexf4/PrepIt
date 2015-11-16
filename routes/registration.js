@@ -6,7 +6,7 @@
 exports.registrationpage = function(req, res ){
 
 
-  res.render('register2',{message: req.flash('message'), user: "alex"});
+  res.render('register2',{error: req.flash('error'), user: "alex"});
 }
 
 
