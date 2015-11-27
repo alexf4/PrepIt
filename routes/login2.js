@@ -41,12 +41,8 @@ exports.auth = function(req, res) {
 
           res.redirect("/student");
         }
-
-
-
-
       });
-  //res.render('home',{message: req.flash('message'), user: "alex"});
+
 
   var isValidPassword = function(user, password){
     return bCrypt.compareSync(password, user.password);

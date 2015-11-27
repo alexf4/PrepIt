@@ -43,21 +43,20 @@ module.exports = function(passport){
 
 	/* Handle student
 	 */
-	router.get("/student", student.studentPage);
+	router.get("/student", isAuthenticated , student.studentPage);
 
 	/**
-	 * Handle adding a question
+	 * Admin for adding questions
 	 */
-
-	router.get("/question", question.temp);
-	router.post("/addQuestion" , question.addQuestion);
+	router.get("/question", isAuthenticated, question.temp);
+	router.post("/addQuestion" ,isAuthenticated, question.addQuestion);
 
 	/* handle signin post
 	* Need to check the user email in the db*/
 	router.get("/login",function(req, res){
 		//console.log(flash('error'));
 		//{message: req.flash('error')}
-		res.render('login',{error: req.flash("error"), success:req.flash("success") , user: "alex"});
+		res.render('login',{error: req.flash("error"), success:req.flash("success")});
 	});
 
 	/* GET Registration Page */
@@ -102,7 +101,7 @@ module.exports = function(passport){
 				// set the message
 				req.session.messages = "Login successfully";
 				if(user.isteacher){
-					return res.redirect('./teacher');
+					return res.redirect('/teacher');
 				}
 
 				return res.redirect('/student');

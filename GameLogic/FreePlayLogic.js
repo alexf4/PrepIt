@@ -43,7 +43,7 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
             callback(err, null);
         }
 
-
+        //TODO: Clean up this save code
         var questions = user.questions;
 
         //Find a question that has an incorrect

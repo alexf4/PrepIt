@@ -8,9 +8,6 @@ var dataToChartHelper = require("../views/dataToChartHelper");
 
 exports.studentPage = function (req, res) {
 
-    //TODO Need to get rid of req.user
-
-
     //Get the users logged in id
     var userId = req.session.passport.user;
 
