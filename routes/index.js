@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var mailer = require('./mailer');
+var flash = require('connect-flash');
+
+
+//Setup the routes
 var login = require('./login2');
 var teacher = require('./teacher');
 var register = require('./registration');
@@ -8,7 +11,7 @@ var student = require('./student');
 var signup = require('./signup');
 var question = require('./questionInput');
 var freeplay = require('./freePlay');
-var flash = require('connect-flash');
+var link = require('./link');
 
 
 
@@ -70,6 +73,11 @@ module.exports = function(passport){
 		failureRedirect: '/signup',
 		failureFlash : true  
 	}));
+
+	/**
+	 * Handle the student update link post
+	 */
+	router.post("/updateLink", link.updateStudentLink());
 
 	
 	router.post("/login" , loginPost);
