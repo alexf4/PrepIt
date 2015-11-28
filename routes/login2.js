@@ -5,11 +5,11 @@ var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
 
 
-
-
-//Needs acces to student or teachers.
-
-
+/**
+ * This method will handle the login of a student once they go through passport
+ * @param req
+ * @param res
+ */
 exports.auth = function(req, res) {
 
   //need to check db here

@@ -2,15 +2,21 @@
  * Created by alexf4 on 6/9/15.
  */
 
-var DBFunctions = require("../DBWork/DBFunctions");
+var teacherFunctions = require("../DBWork/teacherFunctions");
+
 var dataToChartHelper = require("../views/dataToChartHelper");
 
+/**
+ *
+ * @param req
+ * @param res
+ */
 exports.teacherPage = function(req, res ){
 
   //Get the users logged in id
   userId = req.session.passport.user;
 
-  DBFunctions.getStudentsScores(userId, DBFunctions, function(scores){
+  teacherFunctions.getStudentsScores(userId, function(scores){
 
     //TODO: Might have to switch this to a teacher chart later
     chartData = dataToChartHelper.createStudentChart(scores);

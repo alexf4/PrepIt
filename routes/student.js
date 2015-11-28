@@ -2,17 +2,22 @@
  * Created by alexf4 on 6/14/15.
  */
 
-var DBFunctions = require("../DBWork/DBFunctions");
+
 var dataToChartHelper = require("../views/dataToChartHelper");
+var studentFunctions = require("../DBWork/studentFunctions");
 
-
+/**
+ *
+ * @param req
+ * @param res
+ */
 exports.studentPage = function (req, res) {
 
     //Get the users logged in id
     var userId = req.session.passport.user;
 
     //Get the stats of the user
-    DBFunctions.getUserScores(userId, function (scores) {
+    studentFunctions.getUserScores(userId, function (scores) {
 
         var chartData = dataToChartHelper.createStudentChart(scores);
 
