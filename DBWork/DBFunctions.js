@@ -5,6 +5,7 @@ var questionModel = require("../models/question");
 var category = require("../models/category");
 var userModel = require("../models/user");
 var mongoose = require('mongoose');
+var arrays = require("collections/shim-array");
 
 
 /**
@@ -94,5 +95,28 @@ exports.addQuestionsToUser = function (inputID, callback){
     });
 
 
+}
+
+/**
+ * This method will get all the question Categories
+ * We had to do it this way because we cant get queires back from the category schema, those methods only
+ * pertain to data in one single instace of a category.
+ * @param callback The method that is called when this operation is complete.
+ */
+exports.getCategoryTitles = function (callback){
+    var returnArray = arrays();
+
+    category.find({}, {'Title':1, '_id':0}, function (err, categories){
+        if (err){
+            callback(err, null);
+        }
+
+        categories.forEach(function(entry) {
+            returnArray.push(entry.Title);
+        })
+
+        callback(null, returnArray);
+
+    });
 }
 
