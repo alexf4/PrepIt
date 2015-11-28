@@ -6,6 +6,10 @@
 var dataToChartHelper = require("../views/dataToChartHelper");
 var studentFunctions = require("../DBWork/studentFunctions");
 
+var DBFunctions = require("../DBWork/DBFunctions");
+var async = require('async');
+
+
 /**
  *
  * @param req
@@ -16,26 +20,38 @@ exports.studentPage = function (req, res) {
     //Get the users logged in id
     var userId = req.session.passport.user;
 
-    //Get the stats of the user
-    studentFunctions.getUserScores(userId, function (scores) {
+    /**
+     * This async call will cause a waterfall flow for getting the data from the DB
+     */
+    async.waterfall([
+        function(callback){
+            //Get the Category Titles
+            DBFunctions.getCategoryTitles(callback)
+        }
+    ],
+        //Once we have the Category titles we can dan do the rendering
+        function(err, categories){
+            //Get the stats of the user
+            studentFunctions.getUserScores(userId, function (scores) {
 
-        var chartData = dataToChartHelper.createStudentChart(scores);
+                var chartData = dataToChartHelper.createStudentChart(scores);
 
-        //TODO: Make this dynamic
-        res.render("student",
-            {
-                totalData: chartData.totalData,
-                totalOptions: chartData.totalOptions,
-                CUData: chartData.Constitutional_Underpinnings_Data,
-                SectionOptions: chartData.sectionOptions,
-                Civil_Rights_and_Liberties_Data: chartData.Civil_Rights_and_Liberties_Data,
-                Political_Beliefs_and_Behaviors_Data: chartData.Political_Beliefs_and_Behaviors_Data,
-                Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
-                Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
-                Public_Policy_Data: chartData.Public_Policy_Data
+                //TODO: Make this dynamic. We have a list of categories, but we need to clean up the names we use here
+                //TODO: Cody can now render pass into the student page the side bar information on the categories.
+                res.render("student",
+                    {
+                        totalData: chartData.totalData,
+                        totalOptions: chartData.totalOptions,
+                        CUData: chartData.Constitutional_Underpinnings_Data,
+                        SectionOptions: chartData.sectionOptions,
+                        Civil_Rights_and_Liberties_Data: chartData.Civil_Rights_and_Liberties_Data,
+                        Political_Beliefs_and_Behaviors_Data: chartData.Political_Beliefs_and_Behaviors_Data,
+                        Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
+                        Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
+                        Public_Policy_Data: chartData.Public_Policy_Data
+                    });
+
             });
 
-    });
-
-
+        });
 };
