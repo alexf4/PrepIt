@@ -10,7 +10,7 @@ var userSchema = new Schema({
     password: String,
     email: String,
     isteacher: Boolean,
-    token: String,
+    token: { type: String, unique: true},
     teacherToken: String,
     questions: []
 

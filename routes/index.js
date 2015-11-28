@@ -75,7 +75,7 @@ module.exports = function(passport){
 	/**
 	 * Handle the student update link post
 	 */
-	router.post("/updateLink", link.updateStudentLink);
+	router.post("/updateStudentLink", link.updateStudentLink);
 
 	router.post("/login" , loginPost);
 

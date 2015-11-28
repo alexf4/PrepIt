@@ -22,7 +22,6 @@ exports.updateStudentLink = function(inputID, newlink ,callback) {
         user.teacherToken = newlink;
 
         user.save(function (err , user) {
-            console.log("madeit");
             callback();
         })
     });
