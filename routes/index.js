@@ -57,8 +57,6 @@ module.exports = function(passport){
 	/* handle signin post
 	* Need to check the user email in the db*/
 	router.get("/login",function(req, res){
-		//console.log(flash('error'));
-		//{message: req.flash('error')}
 		res.render('login',{error: req.flash("error"), success:req.flash("success")});
 	});
 
@@ -77,9 +75,8 @@ module.exports = function(passport){
 	/**
 	 * Handle the student update link post
 	 */
-	router.post("/updateLink", link.updateStudentLink);
+	router.post("/updateStudentLink", link.updateStudentLink);
 
-	
 	router.post("/login" , loginPost);
 
 	function loginPost(req, res, next) {

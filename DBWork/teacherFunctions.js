@@ -18,7 +18,14 @@ var studentFunctions = require("./studentFunctions");
  * @param callback the function that should be called when this has been updated.
  */
 exports.updateTeacherLink = function (inputID, updatedLink, callback){
+    userModel.findById(userId , function (err, user){
 
+        user.token = newlink;
+
+        user.save(function (err , user) {
+            callback();
+        })
+    });
 }
 
 /**

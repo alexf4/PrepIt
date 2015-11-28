@@ -5,6 +5,7 @@ var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
 var DBFunctions = require("../DBWork/DBFunctions");
 var register = require('./registration');
+var randomString = require("randomstring");
 
 
 exports.signup = function(req, res) {
@@ -28,6 +29,12 @@ exports.signup = function(req, res) {
             //newUser.username = req.body.username;
             newUser.password = createHash(req.body.password);
             newUser.email = req.param('email');
+            newUser.token = randomString.generate({
+                length: 7,
+                charset: 'hex'
+            });
+
+
             if (req.param('isTeacher')){
                 newUser.isteacher = true;
             }

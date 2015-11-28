@@ -18,39 +18,6 @@ exports.startFreePlay = function(req, res) {
         res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
     })
 
-
-
-    //userModel.findById(userId , function (err, user){
-    //
-    //
-    //    var questions = user.questions;
-    //
-    //
-    //    questions.forEach(function (entry){
-    //
-    //        if (entry._id.toString() == "55b13b7689484e1300065781"){
-    //            entry.correct = true;
-    //        }
-    //    })
-    //
-    //    user.questions = null;
-    //
-    //    user.save(function (err , product, number) {
-    //        console.log("temp");
-    //
-    //        user.questions = questions;
-    //
-    //        user.save(function (err, product, number){
-    //            console.log("madeit");
-    //        })
-    //    })
-    //
-    //})
-
-
-
-
-
     //Pass the question to render
 
 };

@@ -1,6 +1,8 @@
 var LocalStrategy   = require('passport-local').Strategy;
 var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
+var randomstring = require("randomstring");
+
 
 module.exports = function(passport){
 
@@ -32,6 +34,10 @@ module.exports = function(passport){
                         newUser.email = req.param('email');
                         newUser.firstName = req.param('firstName');
                         newUser.lastName = req.param('lastName');
+                        newUser.token = randomstring.generate({
+                            length: 7,
+                            charset: 'hex'
+                        });
 
                         // save the user
                         newUser.save(function(err) {
