@@ -17,8 +17,15 @@ var Dict = require("collections/dict");
  * @param callback the function to be called after the update is done in db
  */
 exports.updateStudentLink = function(inputID, newlink ,callback) {
+    userModel.findById(userId , function (err, user){
 
+        user.teacherToken = newlink;
 
+        user.save(function (err , user) {
+            console.log("madeit");
+            callback();
+        })
+    });
 }
 
 /**

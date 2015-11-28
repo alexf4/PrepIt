@@ -12,11 +12,18 @@ var studentFunctions = require("../DBwork/studentFunctions");
 exports.updateStudentLink = function(req, res) {
 
     //Get the users id
+    userId = req.session.passport.user;
 
     //Get the form data
+    link = req.body.link;
 
     //call the update
+    studentFunctions.updateStudentLink( userId , link, function(){
 
-    //route back to student page
+        //TODO Cody to fill this in correctly.
+        //route back to student page
+        res.render('student');
+    })
+
 
 }
