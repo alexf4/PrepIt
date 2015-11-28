@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 
 var bcrypt = require('bcrypt-nodejs');
 
+//TODO: Might want to create a question que system
+
 
 var userSchema = new Schema({
 
@@ -88,6 +90,24 @@ userSchema.methods.findNextQuestion = function () {
     return returnQuestion;
 };
 
+//Return the next question the user should use
+userSchema.methods.findNextQuestionFromCategory = function (inputCategory) {
+
+
+    var returnQuestion = this.findIncorrectQuestionFromCategory(inputCategory);
+
+    if (returnQuestion == null) {
+        returnQuestion = this.findQuestionFromCategory(inputCategory);
+        //returnQuestion = this.findColdestQuestion;
+    }
+
+    //TODO this can be updated later
+    //returnQuestion.updateTimeStamp();
+
+
+    return returnQuestion;
+};
+
 //Need a method to open old questions for review
 
 //Find the question that was looked at last
@@ -115,6 +135,56 @@ userSchema.methods.findIncorrectQuestion = function () {
     }
 
     return null;
+};
+
+/**
+ *
+ * @returns {*}
+ */
+userSchema.methods.findIncorrectQuestionFromCategory = function (inputCategory) {
+    var possibleQuestions = [];
+
+    this.questions.forEach(function (entry) {
+        if (!entry.correct && entry.category == inputCategory) {
+            possibleQuestions.add(entry);
+        }
+    });
+
+
+    //If there are any unleft questions that are wrong choose from there
+    //Randomly choose a question
+
+    if (possibleQuestions.length > 0) {
+        return possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)];
+    }
+
+    return null;
+};
+
+/**
+ *
+ * @param inputCategory
+ * @returns {*}
+ */
+userSchema.methods.findQuestionFromCategory = function (inputCategory) {
+    var possibleQuestions = [];
+
+    this.questions.forEach(function (entry) {
+        if (entry.category == inputCategory) {
+            possibleQuestions.add(entry);
+        }
+    });
+
+
+    //If there are any unleft questions that are wrong choose from there
+    //Randomly choose a question
+
+    if (possibleQuestions.length > 0) {
+        return possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)];
+    }
+
+    return null;
+
 };
 
 module.exports = mongoose.model('User', userSchema);

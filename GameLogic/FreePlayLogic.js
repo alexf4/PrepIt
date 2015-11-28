@@ -20,8 +20,25 @@ exports.getQuestion = function (inputID, callback) {
 
 };
 
+/**
+ * This method will return a question with a specific category
+ * @param inputID the current user
+ * @param category the category to choose from
+ * @param callback the function ath will be called back
+ */
 exports.getQuestionFromCategory = function (inputID, category, callback) {
 
+    userModel.findById(inputID, function (err, user) {
+        if (err) {
+            callback(err, null);
+        }
+
+        //Find a question that has an incorrect
+        var foundQuestion = user.findNextQuestionFromCategory(category);
+
+        callback(foundQuestion);
+
+    });
 };
 
 exports.getQuestionFromSubCategory = function (inputID, subCategory, callback) {

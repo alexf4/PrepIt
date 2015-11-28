@@ -6,14 +6,13 @@ var userModel = require("../models/user");
 
 exports.startFreePlay = function(req, res) {
 
-
     //grab a question that the user has not gotten right
     //Get the users logged in id
     userId = req.session.passport.user;
 
 
     freePlayLogic.getQuestion(userId, function(question){
-        //res.send (question.questionText);
+
 
         res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
     })
@@ -21,6 +20,21 @@ exports.startFreePlay = function(req, res) {
     //Pass the question to render
 
 };
+
+//TODO: Cody, find a way to pass in what was clicked so we know what category was clicked
+exports.startCategoryPlay = function(req, res){
+    //grab a question that the user has not gotten right
+    //Get the users logged in id
+    userId = req.session.passport.user;
+
+    /**
+     * get a question from category "temp"
+     */
+    freePlayLogic.getQuestionFromCategory(userId, "temp", function(question){
+
+        res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
+    })
+}
 
     exports.submitAnswer = function(req, res){
 
