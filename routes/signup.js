@@ -25,21 +25,28 @@ exports.signup = function(req, res) {
             // create the user
             var newUser = new User();
 
-            // set the user's local credentials
-            //newUser.username = req.body.username;
-            newUser.password = createHash(req.body.password);
-            newUser.email = req.param('email');
-            newUser.token = randomString.generate({
+            var token = randomString.generate({
                 length: 7,
                 charset: 'hex'
             });
 
+            // set the user's local credentials
+            //newUser.username = req.body.username;
+            newUser.password = createHash(req.body.password);
+            newUser.email = req.param('email');
+            newUser.token = token;
+
 
             if (req.param('isTeacher')){
                 newUser.isteacher = true;
+
+                //If this is a teacher set its teacher token to itself
+                newUser.classToken = token;
+
             }
             else{
                 newUser.isteacher = false;
+                newUser.classToken = 0;
             }
 
             // save the user

@@ -77,7 +77,7 @@ exports.getStudentsScores = function (inputID, routeCallback){
         },
         function( user, callback) {
             // find all students that have the same teacher token
-            userModel.find({ teacherToken: user.token }, function (err, users){
+            userModel.find({ classToken: user.token }, function (err, users){
                 if (err){
                     callback(err, null);
                 }

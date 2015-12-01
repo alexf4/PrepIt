@@ -13,7 +13,7 @@ var userSchema = new Schema({
     email: String,
     isteacher: Boolean,
     token: { type: String, unique: true},
-    teacherToken: String,
+    classToken: String,
     questions: []
 
 });

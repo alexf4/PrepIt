@@ -3,6 +3,8 @@
  */
 
 var userModel = require("../models/user");
+var studentFunctions = require("../dbWork/studentFunctions");
+var FreePlayLogic = require("./FreePlayLogic");
 
 exports.getQuestion = function (inputID, callback) {
 
@@ -60,6 +62,20 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
             callback(err, null);
         }
 
+        //Update the teachers question with metric data
+        //if (!user.isteacher && user.classToken != 0){
+        //    //if this is a student, call this method from the teachers account
+        //    studentFunctions.getTeacher(user.classToken, function(err, teacher){
+        //        //
+        //
+        //        studentFunctions.getTeacherQuestion(user.classToken , )
+        //
+        //        FreePlayLogic.checkAnswer(teacher[0]._id , userAnswer , questionID , function (result){
+        //            console.log("Question data added to teacher object");
+        //        })
+        //    });
+        //}
+
         //TODO: Clean up this save code
         var questions = user.questions;
 
@@ -69,18 +85,53 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
         //find the question in the user item
         user.questions.forEach(function (entry) {
 
+
+            /**
+             * TODO Teachers have different question id then the one being passed in. Need to update the DBfunction for
+             * adding new questions.
+             */
+
             if (entry._id.toString() == questionID) {
 
                 result.question = entry;
+
+                //update the count of the users answer
+                switch (userAnswer) {
+                    case "a":
+                        entry.responses.a ++;
+
+                        break;
+                    case "b":
+                        entry.responses.b ++;
+
+                        break;
+                    case "c":
+                        entry.responses.c ++;
+
+                        break;
+                    case "d":
+                        entry.responses.d ++;
+
+                        break;
+                }
+
+                entry.numberOfAttempts ++;
+
 
                 if (entry.solution == userAnswer) {
                     //Mark question as correct
                     entry.correct = true;
                     result.correct = true;
 
+                    entry.correctAttempts ++;
+
+
                 } else {
                     entry.correct = false;
                     result.correct = false;
+
+                    entry.incorrectAttempts ++;
+
                 }
 
             }
@@ -100,3 +151,8 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
 
 
 };
+
+
+//function updateTeacherData (){
+//
+//}

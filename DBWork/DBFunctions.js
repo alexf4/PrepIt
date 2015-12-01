@@ -79,6 +79,7 @@ exports.addQuestionsToUser = function (inputID, callback){
             questionsList.forEach(function (question){
                 newQuestion = new questionModel(question);
                 newQuestion._id = mongoose.Types.ObjectId().toString();
+                newQuestion.baseQuestionID = question._id;
 
                 foundUser.questions.push(newQuestion);
 

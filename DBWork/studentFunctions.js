@@ -10,6 +10,7 @@ var async = require('async');
 var Dict = require("collections/dict");
 
 
+
 /**
  * This method updates the user items teacher token slot
  * @param inputID the students id
@@ -19,13 +20,13 @@ var Dict = require("collections/dict");
 exports.updateStudentLink = function(inputID, newlink ,callback) {
     userModel.findById(userId , function (err, user){
 
-        user.teacherToken = newlink;
+        user.classToken = newlink;
 
         user.save(function (err , user) {
             callback();
         })
     });
-}
+};
 
 /**
  * This method will return the scores dictionary for this student
@@ -77,11 +78,11 @@ exports.getUserScores = function (inputID, callback) {
                     questions : numberOfQuestionsPerCategory,
                     correct : numberOfQuestionsCorrectPerCategory,
                     testPercent : entry.TestPercent
-                }
+                };
 
                 retDict.set(entry.Title , questionData);
 
-            })
+            });
 
             //Add the total number of questions
             var totalQuestions = foundUser.questions.length;
@@ -95,4 +96,41 @@ exports.getUserScores = function (inputID, callback) {
             callback(retDict);
 
         });
-}
+};
+
+/**
+ * This method will find the students teacher
+ * @param teacherToken, the coresponding teacher token to check the tokens of all the users.
+ * @param callback
+ */
+exports.getTeacher = function (classToken, callback) {
+    userModel.find({ token :classToken }, function (err, teacher){
+        if (err){
+            callback(err, null);
+        }
+        callback(null, teacher);
+
+    });
+};
+
+/**
+ * This method will find the students teacher
+ * @param teacherToken, the coresponding teacher token to check the tokens of all the users.
+ * @param callback
+ */
+exports.getTeacherQuestion = function (classToken, questionID, callback) {
+    userModel.find({ token :classToken }, function (err, teacher){
+        if (err){
+            callback(err, null);
+        }
+
+        teacher.questions.forEach(function(entry){
+            if (entry.baseQuestionID == questionID) {
+                callback(null, entry._id.toString());
+            }
+        });
+
+
+
+    });
+};

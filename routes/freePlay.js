@@ -48,17 +48,12 @@ exports.startCategoryPlay = function(req, res){
 
         //IF result object has a correct then show answer
         if(result.correct){
-            //res.render correct
-            //res.send("correct");
             res.render("FreePlayReview" , {question : result.question , correct : true , correctSolution : result.question.solution});
         }else{
-            //res.send("wrong");
             res.render("FreePlayReview" , {question : result.question , correct: false, correctSolution : result.question.solution});
-            //res.render incorrect
+
         }
-        //res.render correct
-        //else show the correct answer
-        //res.render incorrect
+
     })
 
 };
