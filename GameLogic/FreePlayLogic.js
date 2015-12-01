@@ -3,7 +3,7 @@
  */
 
 var userModel = require("../models/user");
-//var studentFunctions = require("../dbWork/studentFunctions");
+var studentFunctions = require("../dbWork/studentFunctions");
 var FreePlayLogic = require("./FreePlayLogic");
 
 exports.getQuestion = function (inputID, callback) {
