@@ -2,7 +2,7 @@
  * Created by alexf4 on 11/27/15.
  */
 
-var studentFunctions = require("../dbWork/studentFunctions");
+var studentFunctions = require("../DBWork/studentFunctions");
 
 /**
  * This method will catch posts to update the student link to teachers
