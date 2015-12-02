@@ -62,20 +62,6 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
             callback(err, null);
         }
 
-        //Update the teachers question with metric data
-        //if (!user.isteacher && user.classToken != 0){
-        //    //if this is a student, call this method from the teachers account
-        //    studentFunctions.getTeacher(user.classToken, function(err, teacher){
-        //        //
-        //
-        //        studentFunctions.getTeacherQuestion(user.classToken , )
-        //
-        //        FreePlayLogic.checkAnswer(teacher[0]._id , userAnswer , questionID , function (result){
-        //            console.log("Question data added to teacher object");
-        //        })
-        //    });
-        //}
-
         //TODO: Clean up this save code
         var questions = user.questions;
 
@@ -87,11 +73,16 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
 
 
             /**
-             * TODO Teachers have different question id then the one being passed in. Need to update the DBfunction for
              * adding new questions.
              */
 
             if (entry._id.toString() == questionID) {
+
+                //Update the teachers question with metric data
+                if (!user.isteacher && user.classToken != 0){
+                    updateTeacherData( user.classToken, entry.baseQuestionID, userAnswer);
+                }
+
 
                 result.question = entry;
 
@@ -137,6 +128,9 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
             }
         });
 
+
+
+
         user.questions = null;
 
         user.save(function (err, product, number) {
@@ -152,7 +146,25 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
 
 };
 
+/**
+ * This method will update the teachers question set with information from the student
+ * @param inputClassToken the class token is used to find the teacher
+ * @param inputBaseQuestionID the base question id links the student and teacher questions together.
+ * @param userAnswer what the student entered
+ */
+function updateTeacherData (inputClassToken, inputBaseQuestionID , userAnswer){
+    //get the Teacher
+    studentFunctions.getTeacher(inputClassToken, function(err, teacher){
+        // Get the teachers question
+        studentFunctions.getTeacherQuestion(inputClassToken , inputBaseQuestionID,  function(err , questionID){
+            if(err){
+                console.log(err.toString());
+            }
 
-//function updateTeacherData (){
-//
-//}
+            //The the check anser method from the teacher object to update it
+            FreePlayLogic.checkAnswer(teacher[0]._id , userAnswer , questionID , function (result){
+                console.log("Question data added to teacher object");
+            })
+        } )
+    });
+}

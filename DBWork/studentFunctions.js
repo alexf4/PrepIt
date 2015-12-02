@@ -118,19 +118,16 @@ exports.getTeacher = function (classToken, callback) {
  * @param teacherToken, the coresponding teacher token to check the tokens of all the users.
  * @param callback
  */
-exports.getTeacherQuestion = function (classToken, questionID, callback) {
+exports.getTeacherQuestion = function (classToken, inputBaseQuestionID, callback) {
     userModel.find({ token :classToken }, function (err, teacher){
         if (err){
             callback(err, null);
         }
 
-        teacher.questions.forEach(function(entry){
-            if (entry.baseQuestionID == questionID) {
+        teacher[0].questions.forEach(function(entry){
+            if (entry.baseQuestionID == inputBaseQuestionID) {
                 callback(null, entry._id.toString());
             }
         });
-
-
-
     });
 };
