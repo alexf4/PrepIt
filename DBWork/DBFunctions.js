@@ -43,7 +43,6 @@ exports.addQuestionToAllUsers = function (inputID){
                 var userQuestion = new questionModel(foundQuestion);
                 userQuestion._id = mongoose.Types.ObjectId().toString();
 
-
                 //Add that question to that users question set
                 user.questions.push(userQuestion);
 
@@ -121,3 +120,36 @@ exports.getCategoryTitles = function (callback){
     });
 }
 
+/**
+ * This method will grab the n most missed questions from the users account.
+ * @param inputID the users id
+ * @param numberOfQuestions the number of questions to
+ * @param routeCallback the call back function
+ */
+exports.findNMissedQuestions = function (inputID, numberOfQuestions,  callback){
+
+    userModel.findById(inputID, function (err, user){
+        if (err){
+            callback(err, null);
+        }
+
+        //Sort the question array with our specific compare function
+        user.questions.sort(compare);
+        callback (null , user.questions.slice(0, numberOfQuestions -1));
+    })
+
+}
+
+/**
+ * Simple sort function. This proves that we need to move questions out of the user objects
+ * @param a
+ * @param b
+ * @returns {number}
+ */
+function compare(a,b) {
+    if (a.incorrectAttempts < b.incorrectAttempts)
+        return -1;
+    if (a.incorrectAttempts > b.incorrectAttempts)
+        return 1;
+    return 0;
+}

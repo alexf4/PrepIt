@@ -169,3 +169,4 @@ function addStudentScoresToTotal ( numStudents, totalScores, studentScore){
     })
 
 }
+
