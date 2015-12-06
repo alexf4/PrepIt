@@ -29,6 +29,25 @@ exports.updateStudentLink = function(inputID, newlink ,callback) {
 };
 
 /**
+ * This method removes the student teacher link and sets it to 0
+ * @param inputID the students input id
+ * @param callback the method to be called when its done.
+ */
+exports.removeStudentLink = function (inputID , callback){
+    userModel.findById(inputID, function (err, user){
+        if(err){
+            callback(err, null);
+        }
+
+        user.classToken = 0;
+
+        user.save(function (err, user){
+            callback();
+        })
+    })
+}
+
+/**
  * This method will return the scores dictionary for this student
  * @param inputID the id of the student
  * @param callback the function to be called when the data is ready.
