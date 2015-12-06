@@ -11,13 +11,13 @@ var arrays = require("collections/shim-array");
 /**
  * This method will add a new question to all users question sets
  */
-exports.addQuestionToAllUsers = function (inputID){
+exports.addQuestionToAllUsers = function (inputID) {
 
 
     var foundQuestion = null;
 
     //Get the question via question id
-    questionModel.findById(inputID, function(err, question) {
+    questionModel.findById(inputID, function (err, question) {
         if (err) throw err;
 
         // show the one user
@@ -30,14 +30,14 @@ exports.addQuestionToAllUsers = function (inputID){
 
         //Get a list of all users
         // get all the users
-        userModel.find({}, function(err, users) {
+        userModel.find({}, function (err, users) {
             if (err) throw err;
 
             // object of all the users
             console.log(users);
 
             //For each user add a new question that is a copy of the question, but has a new id
-            users.forEach(function(user) {
+            users.forEach(function (user) {
 
                 //Create new question
                 var userQuestion = new questionModel(foundQuestion);
@@ -46,7 +46,8 @@ exports.addQuestionToAllUsers = function (inputID){
                 //Add that question to that users question set
                 user.questions.push(userQuestion);
 
-                user.save(function(error, data){});
+                user.save(function (error, data) {
+                });
 
             });
 
@@ -59,12 +60,12 @@ exports.addQuestionToAllUsers = function (inputID){
 };
 
 
-exports.addQuestionsToUser = function (inputID, callback){
+exports.addQuestionsToUser = function (inputID, callback) {
 
     foundUser = null;
 
     //Find the new user
-    userModel.findById(inputID, function(err, user) {
+    userModel.findById(inputID, function (err, user) {
 
         if (err) throw err;
 
@@ -72,10 +73,10 @@ exports.addQuestionsToUser = function (inputID, callback){
 
 
         //Find all of the questions in the question set
-        questionModel.find({}, function(err, questionsList){
+        questionModel.find({}, function (err, questionsList) {
 
             //For each question create a clone and add it to the users set
-            questionsList.forEach(function (question){
+            questionsList.forEach(function (question) {
                 newQuestion = new questionModel(question);
                 newQuestion._id = mongoose.Types.ObjectId().toString();
                 newQuestion.baseQuestionID = question._id;
@@ -84,7 +85,7 @@ exports.addQuestionsToUser = function (inputID, callback){
 
             });
 
-            foundUser.save(function(error, data){
+            foundUser.save(function (error, data) {
 
                 newQuestion = null;
 
@@ -93,9 +94,7 @@ exports.addQuestionsToUser = function (inputID, callback){
             });
         });
     });
-
-
-}
+};
 
 /**
  * This method will get all the question Categories
@@ -103,22 +102,22 @@ exports.addQuestionsToUser = function (inputID, callback){
  * pertain to data in one single instace of a category.
  * @param callback The method that is called when this operation is complete.
  */
-exports.getCategoryTitles = function (callback){
+exports.getCategoryTitles = function (callback) {
     var returnArray = arrays();
 
-    category.find({}, {'Title':1, '_id':0}, function (err, categories){
-        if (err){
+    category.find({}, {'Title': 1, '_id': 0}, function (err, categories) {
+        if (err) {
             callback(err, null);
         }
 
-        categories.forEach(function(entry) {
+        categories.forEach(function (entry) {
             returnArray.push(entry.Title);
-        })
+        });
 
         callback(null, returnArray);
 
     });
-}
+};
 
 /**
  * This method will grab the n most missed questions from the users account.
@@ -126,19 +125,19 @@ exports.getCategoryTitles = function (callback){
  * @param numberOfQuestions the number of questions to
  * @param routeCallback the call back function
  */
-exports.findNMissedQuestions = function (inputID, numberOfQuestions,  callback){
+exports.findNMissedQuestions = function (inputID, numberOfQuestions, callback) {
 
-    userModel.findById(inputID, function (err, user){
-        if (err){
+    userModel.findById(inputID, function (err, user) {
+        if (err) {
             callback(err, null);
         }
 
         //Sort the question array with our specific compare function
         user.questions.sort(compare);
-        callback (null , user.questions.slice(0, numberOfQuestions -1));
+        callback(null, user.questions.slice(0, numberOfQuestions - 1));
     })
 
-}
+};
 
 /**
  * Simple sort function. This proves that we need to move questions out of the user objects
@@ -146,10 +145,37 @@ exports.findNMissedQuestions = function (inputID, numberOfQuestions,  callback){
  * @param b
  * @returns {number}
  */
-function compare(a,b) {
+function compare(a, b) {
     if (a.incorrectAttempts < b.incorrectAttempts)
         return -1;
     if (a.incorrectAttempts > b.incorrectAttempts)
         return 1;
     return 0;
 }
+/**
+ * This method will return all of the questions in the db category
+ * @param callback the method to be called when its done
+ */
+exports.getAllQuestions = function (callback) {
+    questionModel.find({}, function (err, questions) {
+        if (err) {
+            callback(err, null);
+        }
+        return questions;
+    });
+
+};
+
+/**
+ * This method will return all of the questions of a user
+ * @param inputID the ID of a user
+ * @param callback the method to be called when its done
+ */
+exports.getAllQuestionsPerUser = function (inputID, callback) {
+    userModel.findById(inputID, function (err, user) {
+        if (err) {
+            callback(err, null);
+        }
+        return user.questions;
+    });
+};
