@@ -26,7 +26,8 @@ exports.updateTeacherLink = function (inputID, updatedLink, callback){
             callback();
         })
     });
-}
+};
+
 
 /**
  * This method will get all the scores of the students that are linked to this user

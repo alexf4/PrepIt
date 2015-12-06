@@ -139,6 +139,37 @@ exports.findNMissedQuestions = function (inputID, numberOfQuestions, callback) {
 
 };
 
+
+/**
+ * This method will return the top missed questions in a category
+ * @param inputID the user to find
+ * @param numberOfQuestions the number of questions to return
+ * @param Category the category to return
+ * @param callback the method that is called
+ */
+exports.getMissedQuestionsPerCategory = function (inputID , numberOfQuestions,  Category, callback){
+
+    var retArray = new arrays();
+
+    userModel.findById(userId , function (err, user){
+        if(err){
+            callback(err, null);
+        }
+        //Sort the question array with our specific compare function
+        user.questions.sort(compare);
+
+        user.questions.forEach(function (entry){
+            if (entry.category == inputCategory){
+                retArray.add(entry);
+            }
+        });
+
+        callback(null, retArray.slice(0, numberOfQuestions -1));
+
+
+    });
+}
+
 /**
  * Simple sort function. This proves that we need to move questions out of the user objects
  * @param a
