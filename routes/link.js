@@ -22,14 +22,14 @@ exports.updateStudentLink = function(req, res) {
     userId = req.session.passport.user;
 
     //Get the form data
-    link = req.body.link;
+    link = req.body.TeacherID;
 
     //call the update
     studentFunctions.updateStudentLink( userId , link, function(){
 
         //TODO Cody to fill this in correctly.
         //route back to student page
-        res.render('student');
+        res.redirect('/student');
     })
 
 
