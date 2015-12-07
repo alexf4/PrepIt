@@ -79,8 +79,8 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
             if (entry._id.toString() == questionID) {
 
                 //Update the teachers question with metric data
-                if (!user.isteacher && user.classToken != 0){
-                    updateTeacherData( user.classToken, entry.baseQuestionID, userAnswer);
+                if (!user.isteacher && user.classToken != 0) {
+                    updateTeacherData(user.classToken, entry.baseQuestionID, userAnswer);
                 }
 
 
@@ -89,24 +89,24 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
                 //update the count of the users answer
                 switch (userAnswer) {
                     case "a":
-                        entry.responses.a ++;
+                        entry.responses.a++;
 
                         break;
                     case "b":
-                        entry.responses.b ++;
+                        entry.responses.b++;
 
                         break;
                     case "c":
-                        entry.responses.c ++;
+                        entry.responses.c++;
 
                         break;
                     case "d":
-                        entry.responses.d ++;
+                        entry.responses.d++;
 
                         break;
                 }
 
-                entry.numberOfAttempts ++;
+                entry.numberOfAttempts++;
 
 
                 if (entry.solution == userAnswer) {
@@ -114,21 +114,21 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
                     entry.correct = true;
                     result.correct = true;
 
-                    entry.correctAttempts ++;
+                    entry.correctAttempts++;
 
 
                 } else {
                     entry.correct = false;
                     result.correct = false;
 
-                    entry.incorrectAttempts ++;
+                    entry.incorrectAttempts++;
 
                 }
 
+                entry.comprehension = calcComprehension(entry.numberOfAttempts, entry.correctAttempts);
+
             }
         });
-
-
 
 
         user.questions = null;
@@ -152,19 +152,49 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
  * @param inputBaseQuestionID the base question id links the student and teacher questions together.
  * @param userAnswer what the student entered
  */
-function updateTeacherData (inputClassToken, inputBaseQuestionID , userAnswer){
+function updateTeacherData(inputClassToken, inputBaseQuestionID, userAnswer) {
     //get the Teacher
-    studentFunctions.getTeacher(inputClassToken, function(err, teacher){
+    studentFunctions.getTeacher(inputClassToken, function (err, teacher) {
         // Get the teachers question
-        studentFunctions.getTeacherQuestion(inputClassToken , inputBaseQuestionID,  function(err , questionID){
-            if(err){
+        studentFunctions.getTeacherQuestion(inputClassToken, inputBaseQuestionID, function (err, questionID) {
+            if (err) {
                 console.log(err.toString());
             }
 
             //The the check anser method from the teacher object to update it
-            FreePlayLogic.checkAnswer(teacher[0]._id , userAnswer , questionID , function (result){
+            FreePlayLogic.checkAnswer(teacher[0]._id, userAnswer, questionID, function (result) {
                 console.log("Question data added to teacher object");
             })
-        } )
+        })
     });
+}
+
+/**
+ * This method will return an comprehension object
+ * @param numAttempts this is the current number of attempts on this question
+ * @param numCorrect this is the number correct answers of this question
+ * @returns {{mastered: boolean, intermediate: boolean, novice: boolean}} a comprehension object
+ */
+function calcComprehension(numAttempts, numCorrect) {
+
+    var retComprehension = {
+        mastered: false,
+        intermediate: false,
+        novice: false
+    };
+
+    var compRatio = numCorrect / numAttempts;
+
+    if (compRatio > .75) {
+        retComprehension.mastered = true;
+    }
+    else if (compRatio < .75 && compRatio > .50) {
+        retComprehension.intermediate = true;
+    }
+    else {
+        retComprehension.novice = true;
+    }
+
+    return retComprehension;
+
 }
