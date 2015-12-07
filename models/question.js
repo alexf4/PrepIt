@@ -21,7 +21,8 @@ var questionSchema = new Schema({
     numberOfAttempts : Number,
     incorrectAttempts : Number,
     correctAttempts :Number,
-    responses : {a: Number, b: Number, c : Number, d : Number}
+    responses : {a: Number, b: Number, c : Number, d : Number},
+    comprehension : {mastered : Boolean , intermediate : Boolean, novice : Boolean  }
 
 });
 
