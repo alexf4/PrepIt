@@ -27,12 +27,10 @@ exports.startCategoryPlay = function(req, res){
     //Get the users logged in id
     userId = req.session.passport.user;
 
-    /**
-     * get a question from category "temp"
-     */
-    freePlayLogic.getQuestionFromCategory(userId, "temp", function(question){
+    freePlayLogic.getQuestionFromCategory(userId, req.params.category, function(question){
 
         res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
+
     })
 }
 

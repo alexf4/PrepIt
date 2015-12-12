@@ -133,6 +133,8 @@ module.exports = function(passport){
 	//Handle the free play request
 	router.get('/freeplay' , isAuthenticated, freeplay.startFreePlay);
 
+	//Handle the free play request with category
+	router.get('/freeplay/category/:category' , isAuthenticated, freeplay.startCategoryPlay);
 
 	//Handle the freeplay sumbit
 	router.post('/freeplaySubmit', isAuthenticated, freeplay.submitAnswer);
