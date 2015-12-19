@@ -28,6 +28,88 @@ exports.updateTeacherLink = function (inputID, updatedLink, callback){
     });
 };
 
+/**
+ * This method will return the class average master of a given category
+ * @param inputID the userid
+ * @param category the category to check
+ */
+exports.getClassAverageMasteryForCategory = function (inputID , category , routeCallback){
+    var retDict = new Dict;
+
+    var mastered = 0;
+
+    var intermediate = 0;
+
+    var novice = 0;
+
+    //Find the users token
+    async.waterfall([
+        function(callback) {
+            userModel.findById(inputID, function(err, user) {
+                if (err){
+                    callback(err, null);
+                }
+                callback(null, user);
+
+            });
+        },
+
+        // find all students that have the same teacher token
+        function( user, callback) {
+
+            userModel.find({ classToken: user.token }, function (err, users){
+                if (err){
+                    callback(err, null);
+                }
+                callback(null, users);
+            });
+        }
+    ], function (err, users) {
+
+        //Count how many students the teacher has
+        async.forEachOf(users , function (value, key, callback){
+
+            studentFunctions.getMasterOfCategory(value._id.toString() ,category,  function(comp){
+                //merge all the scores
+
+                switch (comp){
+                    case "mastered":
+                        mastered ++;
+                        break;
+                    case "intermediate":
+                        intermediate ++;
+                        break;
+                    case "novice":
+                        novice ++;
+                        break;
+                }
+
+                callback();
+            })
+
+
+        }, function(err){
+            console.log("here");
+
+            //return the scores with callback(scores);
+            routeCallback(retDict);
+
+
+            //Return the level of comp that has the most
+            if (mastered > intermediate && mastered > novice){
+                routeCallback (null, "mastered");
+            }
+            else if(intermediate >= mastered && intermediate > novice){
+                routeCallback (null, "intermediate");
+            }
+            else {
+                routeCallback ( null, "novice");
+            }
+        })
+
+    });
+}
+
 
 /**
  * This method will get all the scores of the students that are linked to this user
@@ -170,4 +252,22 @@ function addStudentScoresToTotal ( numStudents, totalScores, studentScore){
     })
 
 }
+
+/**
+ * This method will count all the students in a class
+ * @param teacherToken the class
+ */
+function numberOfStudentsInClass (teacherToken){
+    // find all students that have the same teacher token
+    userModel.find({ classToken: user.token }, function (err, users){
+        if (err){
+            callback(err, null);
+        }
+
+
+        callback(null, users.length);
+    });
+}
+
+
 

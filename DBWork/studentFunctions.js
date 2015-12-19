@@ -150,3 +150,53 @@ exports.getTeacherQuestion = function (classToken, inputBaseQuestionID, callback
         });
     });
 };
+
+/**
+ * This method will return the mastery level of category for a student.
+ * @param inputID the student id
+ * @param category the category to search on
+ * @param callback the method called back.
+ */
+exports.getMasterOfCategory = function (inputID, category , callback){
+    userModel.findById(userId , function (err, user){
+        if (err){
+            callback(err, null);
+        }
+
+        var mastered = 0;
+
+        var intermediate = 0;
+
+        var novice = 0;
+
+        //Find all the questions from a specific category
+        user.questions.forEach(function(entry){
+
+            //For each question tally its comp score
+            if (entry.category == category){
+                if(entry.comprehension.mastered){
+                    mastered ++;
+                }
+                else if (entry.comprehension.intermediate){
+                    intermediate ++;
+                }
+                else {
+                    novice ++;
+                }
+            }
+        })
+
+        //Return the level of comp that has the most
+        if (mastered > intermediate && mastered > novice){
+            callback (null, "mastered");
+        }
+        else if(intermediate >= mastered && intermediate > novice){
+            callback (null, "intermediate");
+        }
+        else {
+            callback ( null, "novice");
+        }
+
+
+    });
+}
