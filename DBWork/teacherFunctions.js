@@ -29,12 +29,88 @@ exports.updateTeacherLink = function (inputID, updatedLink, callback){
 };
 
 /**
+ * This method will return the average mastery for a specific question
+ * @param inputID the teachers ID
+ * @param questionid the basequestionID to look up
+ * @param routeCallback the callback.
+ */
+exports.getClassAverageMasteryForQuestion = function (inputID , questionid, routeCallback){
+    var mastered = 0;
+
+    var intermediate = 0;
+
+    var novice = 0;
+
+    //Find the users token
+    async.waterfall([
+        function(callback) {
+            userModel.findById(inputID, function(err, user) {
+                if (err){
+                    callback(err, null);
+                }
+                callback(null, user);
+
+            });
+        },
+
+        // find all students that have the same teacher token
+        function( user, callback) {
+
+            userModel.find({ classToken: user.token }, function (err, users){
+                if (err){
+                    callback(err, null);
+                }
+                callback(null, users);
+            });
+        }
+    ], function (err, users) {
+
+        //For each student in the teachers class, get the mastery of the question
+        async.forEachOf(users , function (value, key, callback){
+
+            studentFunctions.getMasteryOfQuestion(value._id.toString() ,questionid,  function(comp){
+                //merge all the scores
+
+                switch (comp){
+                    case "mastered":
+                        mastered ++;
+                        break;
+                    case "intermediate":
+                        intermediate ++;
+                        break;
+                    case "novice":
+                        novice ++;
+                        break;
+                }
+
+                callback();
+            })
+
+
+        }, function(err){
+            console.log("here");
+
+            //Return the level of comp that has the most
+            if (mastered > intermediate && mastered > novice){
+                routeCallback (null, "mastered");
+            }
+            else if(intermediate >= mastered && intermediate > novice){
+                routeCallback (null, "intermediate");
+            }
+            else {
+                routeCallback ( null, "novice");
+            }
+        })
+
+    });
+}
+
+/**
  * This method will return the class average master of a given category
  * @param inputID the userid
  * @param category the category to check
  */
 exports.getClassAverageMasteryForCategory = function (inputID , category , routeCallback){
-    var retDict = new Dict;
 
     var mastered = 0;
 
@@ -90,10 +166,6 @@ exports.getClassAverageMasteryForCategory = function (inputID , category , route
 
         }, function(err){
             console.log("here");
-
-            //return the scores with callback(scores);
-            routeCallback(retDict);
-
 
             //Return the level of comp that has the most
             if (mastered > intermediate && mastered > novice){
