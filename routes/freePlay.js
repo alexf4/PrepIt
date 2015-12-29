@@ -3,6 +3,11 @@
  */
 var freePlayLogic = require("../GameLogic/FreePlayLogic");
 var userModel = require("../models/user");
+var category=null;
+
+exports.setCategory=function(category){
+    this.category=category;
+};
 
 exports.startFreePlay = function(req, res) {
 
@@ -27,7 +32,7 @@ exports.startCategoryPlay = function(req, res){
     //Get the users logged in id
     userId = req.session.passport.user;
 
-    freePlayLogic.getQuestionFromCategory(userId, req.params.category, function(question){
+    freePlayLogic.getQuestionFromCategory(userId, category, function(question){
 
         res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
 
