@@ -88,7 +88,6 @@ exports.getClassAverageMasteryForQuestion = function (inputID , questionid, rout
 
 
         }, function(err){
-            console.log("here");
 
             //Return the level of comp that has the most
             if (mastered > intermediate && mastered > novice){
@@ -165,7 +164,6 @@ exports.getClassAverageMasteryForCategory = function (inputID , category , route
 
 
         }, function(err){
-            console.log("here");
 
             //Return the level of comp that has the most
             if (mastered > intermediate && mastered > novice){
@@ -265,7 +263,6 @@ exports.getStudentsScores = function (inputID, routeCallback){
 
 
         }, function(err){
-            console.log("here");
 
             //return the scores with callback(scores);
             routeCallback(retDict);
@@ -329,15 +326,15 @@ function addStudentScoresToTotal ( numStudents, totalScores, studentScore){
  * This method will count all the students in a class
  * @param teacherToken the class
  */
-function numberOfStudentsInClass (teacherToken){
+exports.numberOfStudentsInClass = function (teacherToken, callback){
     // find all students that have the same teacher token
-    userModel.find({ classToken: user.token }, function (err, users){
+    userModel.find({ classToken: teacherToken}, function (err, users){
         if (err){
             callback(err, null);
         }
 
 
-        callback(null, users.length);
+        callback(null, users.length -1);
     });
 }
 

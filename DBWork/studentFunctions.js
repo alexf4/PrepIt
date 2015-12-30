@@ -158,7 +158,7 @@ exports.getTeacherQuestion = function (classToken, inputBaseQuestionID, callback
  * @param callback the method called back.
  */
 exports.getMasterOfCategory = function (inputID, category , callback){
-    userModel.findById(userId , function (err, user){
+    userModel.findById(inputID , function (err, user){
         if (err){
             callback(err, null);
         }
@@ -208,7 +208,7 @@ exports.getMasterOfCategory = function (inputID, category , callback){
  * @param Callback the method to be called when its done.
  */
 exports.getMasteryOfQuestion = function (inputID, questionID, callback){
-    userModel.findById(userId , function (err, user){
+    userModel.findById(inputID , function (err, user){
         if (err){
             callback(err, null);
         }
