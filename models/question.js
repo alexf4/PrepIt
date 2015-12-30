@@ -8,9 +8,9 @@ var Schema = mongoose.Schema;
 var questionSchema = new Schema({
 
     category: String,
-    //Change to [{ type : ObjectId, ref: 'category' }]
+
     subcategory: String,
-    //[{ type : ObjectId, ref: 'subcategory' }]
+
     questionText: String,
     solution: String,
     percentRight: Number,
