@@ -1,5 +1,5 @@
 var expect = require("chai").expect;
-var teacherFunctions = require("../dbWork/teacherFunctions.js");
+var teacherFunctions = require("../DBWork/teacherFunctions.js");
 var assert = require('chai').assert;
 
 var db = require('../dbWork/db');
