@@ -41,7 +41,7 @@ describe("Teacher Functions", function(){
 
     });
     describe("#numberOfStudentsInClass()", function (){
-        it("should work", function(done){
+        it("returns the number of students in a class", function(done){
 
             var classToken = "72a1ddc";
             teacherFunctions.numberOfStudentsInClass(classToken, function(err, users){
