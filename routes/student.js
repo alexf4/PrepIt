@@ -29,7 +29,7 @@ exports.studentPage = function (req, res) {
             DBFunctions.getCategoryTitles(callback)
         }
     ],
-        //Once we have the Category titles we can dan do the rendering
+        //Once we have the Category titles we can do the rendering
         function(err, categories){
             //Get the stats of the user
             studentFunctions.getUserScores(userId, function (scores) {

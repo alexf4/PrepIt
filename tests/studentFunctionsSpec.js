@@ -8,12 +8,20 @@ db.connect();
 describe ("Student Functions", function(){
     describe("#getMasterOfCategory()", function (){
 
-        var studentID = "56843ba3a2d4c2e80cb75c62";
-        var category = "Linkage Institutions";
+        var studentID = "5684918fab13621200fe36bf";
+        var category = "Constitutional Underpinnings";
 
-        it("should return the mastery level of category for a student", function(done){
+        var expectedResults = {
+            mastered : 8,
+            intermediate : 0,
+            novice : 91
+        }
+
+        it("should return the mastery levels of category for a student", function(done){
             studentFunctions.getMasterOfCategory(studentID, category, function(err, scores){
-                assert.equal(scores , "novice", "should be novice");
+                assert.equal(scores.mastered, expectedResults.mastered, "mastered should be 8");
+                assert.equal(scores.intermediate, expectedResults.intermediate, "intermediate should be 0");
+                assert.equal(scores.novice, expectedResults.novice, "novice should be 91");
                 done();
             })
         })
@@ -21,13 +29,13 @@ describe ("Student Functions", function(){
 
     describe("#getMasteryOfQuestion()", function (){
 
-        var studentID = "56843ba3a2d4c2e80cb75c62";
-        var questionBaseID = "55ac17c9a49be01400db5339";
+        var studentID = "5684918fab13621200fe36bf";
+        var questionBaseID = "55b13ceb89484e1300065788";
 
         it("should return the mastery of a single question", function(done){
 
             studentFunctions.getMasteryOfQuestion(studentID , questionBaseID, function (err, scores){
-                assert.equal(scores, "novice", "should be novice");
+                assert.equal(scores, "mastered", "should be mastered");
                 done();
             })
         })

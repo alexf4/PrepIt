@@ -10,7 +10,8 @@ var mongoose = require('mongoose');
 var async = require('async');
 var Dict = require("collections/dict");
 var studentFunctions = require("./studentFunctions");
-
+var teacherFunctions = require("./teacherFunctions");
+var DBFunctions = require("../DBWork/DBFunctions.js");
 /**
  * This method will update the token element of the teacher
  * @param inputID the teacher to updated
@@ -35,11 +36,14 @@ exports.updateTeacherLink = function (inputID, updatedLink, callback){
  * @param routeCallback the callback.
  */
 exports.getClassAverageMasteryForQuestion = function (inputID , questionid, routeCallback){
-    var mastered = 0;
 
-    var intermediate = 0;
+    var scores = {
+        mastered : 0,
+        intermediate : 0,
+        novice : 0
+    };
 
-    var novice = 0;
+    var inputClassToken;
 
     //Find the users token
     async.waterfall([
@@ -48,6 +52,9 @@ exports.getClassAverageMasteryForQuestion = function (inputID , questionid, rout
                 if (err){
                     callback(err, null);
                 }
+
+                inputClassToken = user.token;
+
                 callback(null, user);
 
             });
@@ -56,7 +63,7 @@ exports.getClassAverageMasteryForQuestion = function (inputID , questionid, rout
         // find all students that have the same teacher token
         function( user, callback) {
 
-            userModel.find({ classToken: user.token }, function (err, users){
+            userModel.find({ classToken: user.token , $and: [ { "isteacher": false } ] }, function (err, users){
                 if (err){
                     callback(err, null);
                 }
@@ -66,39 +73,44 @@ exports.getClassAverageMasteryForQuestion = function (inputID , questionid, rout
     ], function (err, users) {
 
         //For each student in the teachers class, get the mastery of the question
-        async.forEachOf(users , function (value, key, callback){
+        async.forEachOf(users , function (student, key, callback) {
 
-            studentFunctions.getMasteryOfQuestion(value._id.toString() ,questionid,  function(comp){
-                //merge all the scores
+            if (!student.isTeacher) {
 
-                switch (comp){
-                    case "mastered":
-                        mastered ++;
-                        break;
-                    case "intermediate":
-                        intermediate ++;
-                        break;
-                    case "novice":
-                        novice ++;
-                        break;
-                }
 
-                callback();
-            })
+                studentFunctions.getMasteryOfQuestion(student._id.toString(), questionid, function (err, comp) {
+                    //merge all the scores
+
+                    switch (comp) {
+                        case "mastered":
+                            scores.mastered++;
+                            break;
+                        case "intermediate":
+                            scores.intermediate++;
+                            break;
+                        case "novice":
+                            scores.novice++;
+                            break;
+                    }
+
+                    callback();
+                })
+            }
 
 
         }, function(err){
 
-            //Return the level of comp that has the most
-            if (mastered > intermediate && mastered > novice){
-                routeCallback (null, "mastered");
-            }
-            else if(intermediate >= mastered && intermediate > novice){
-                routeCallback (null, "intermediate");
-            }
-            else {
-                routeCallback ( null, "novice");
-            }
+
+
+            //Get the number of students
+            teacherFunctions.numberOfStudentsInClass(inputClassToken, function(err, students){
+                scores.mastered  = Math.floor(scores.mastered / students *100);
+                scores.intermediate  = Math.floor(scores.intermediate / students *100);
+                scores.novice  = Math.floor(scores.novice / students *100);
+
+                routeCallback(null, scores);
+            })
+
         })
 
     });
@@ -111,11 +123,16 @@ exports.getClassAverageMasteryForQuestion = function (inputID , questionid, rout
  */
 exports.getClassAverageMasteryForCategory = function (inputID , category , routeCallback){
 
-    var mastered = 0;
 
-    var intermediate = 0;
+    var scores = {
+        mastered : 0,
+        intermediate : 0,
+        novice : 0
+    };
 
-    var novice = 0;
+    var inputClassToken;
+
+    var numberOfStudents;
 
     //Find the users token
     async.waterfall([
@@ -124,15 +141,24 @@ exports.getClassAverageMasteryForCategory = function (inputID , category , route
                 if (err){
                     callback(err, null);
                 }
-                callback(null, user);
+                inputClassToken = user.token;
 
+                callback(null, user);
+                
             });
+        },
+
+        function (user, callback){
+            teacherFunctions.numberOfStudentsInClass(inputClassToken, function(err, students){
+                numberOfStudents = students;
+                callback(null,user);
+            })
         },
 
         // find all students that have the same teacher token
         function( user, callback) {
 
-            userModel.find({ classToken: user.token }, function (err, users){
+            userModel.find({ classToken: user.token , $and: [ { "isteacher": false } ]  }, function (err, users){
                 if (err){
                     callback(err, null);
                 }
@@ -141,40 +167,33 @@ exports.getClassAverageMasteryForCategory = function (inputID , category , route
         }
     ], function (err, users) {
 
-        //Count how many students the teacher has
-        async.forEachOf(users , function (value, key, callback){
 
-            studentFunctions.getMasterOfCategory(value._id.toString() ,category,  function(comp){
-                //merge all the scores
+        async.forEachOf(users , function (student, key, callback){
 
-                switch (comp){
-                    case "mastered":
-                        mastered ++;
-                        break;
-                    case "intermediate":
-                        intermediate ++;
-                        break;
-                    case "novice":
-                        novice ++;
-                        break;
-                }
+            if(!student.isTeacher) {
 
-                callback();
-            })
+                studentFunctions.getMasterOfCategoryInts(student._id.toString(), category, function (err, retScores) {
+
+                    scores.mastered = scores.mastered + retScores.mastered;
+                    scores.intermediate = scores.intermediate + retScores.intermediate;
+                    scores.novice = scores.novice + retScores.novice;
+
+                    callback();
+                })
+            }
 
 
         }, function(err){
 
-            //Return the level of comp that has the most
-            if (mastered > intermediate && mastered > novice){
-                routeCallback (null, "mastered");
-            }
-            else if(intermediate >= mastered && intermediate > novice){
-                routeCallback (null, "intermediate");
-            }
-            else {
-                routeCallback ( null, "novice");
-            }
+                DBFunctions.getNumberOfQuestionsPerCategory(category, function(err, questionCount){
+                    var totalQuestionsAsked = questionCount * numberOfStudents;
+                    scores.mastered  = Math.floor(scores.mastered /totalQuestionsAsked *100);
+                    scores.intermediate  = Math.floor(scores.intermediate /totalQuestionsAsked *100);
+                    scores.novice  = Math.floor(scores.novice/ totalQuestionsAsked *100);
+
+                    routeCallback(null, scores);
+                }
+            );
         })
 
     });
@@ -230,7 +249,7 @@ exports.getStudentsScores = function (inputID, routeCallback){
         },
         function( user, callback) {
             // find all students that have the same teacher token
-            userModel.find({ classToken: user.token }, function (err, users){
+            userModel.find({ classToken: user.token , $and: [ { "isteacher": false } ]  }, function (err, users){
                 if (err){
                     callback(err, null);
                 }
@@ -328,13 +347,13 @@ function addStudentScoresToTotal ( numStudents, totalScores, studentScore){
  */
 exports.numberOfStudentsInClass = function (teacherToken, callback){
     // find all students that have the same teacher token
-    userModel.find({ classToken: teacherToken}, function (err, users){
+    userModel.find({ classToken: teacherToken , $and: [ { "isteacher": false } ] }, function (err, users){
         if (err){
             callback(err, null);
         }
 
 
-        callback(null, users.length -1);
+        callback(null, users.length);
     });
 }
 
