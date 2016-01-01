@@ -15,7 +15,7 @@ describe ("Student Functions", function(){
             mastered : 8,
             intermediate : 0,
             novice : 91
-        }
+        };
 
         it("should return the mastery levels of category for a student", function(done){
             studentFunctions.getMasterOfCategory(studentID, category, function(err, scores){
@@ -40,4 +40,28 @@ describe ("Student Functions", function(){
             })
         })
     });
+
+    describe("#getUserScores", function (){
+
+        var studentID = "5684918fab13621200fe36bf";
+        it("should return the scores for a user", function (done){
+            studentFunctions.getUserScores(studentID , function(scores){
+                //console.log(scores);
+                done();
+
+            })
+        })
+    })
+
+    describe("#getMasteryScores", function (){
+
+        var studentID = "5684918fab13621200fe36bf";
+        it("should return the scores for a user", function (done){
+            studentFunctions.getMasteryScores(studentID , function(scores){
+                console.log(scores);
+                done();
+
+            })
+        })
+    })
 });

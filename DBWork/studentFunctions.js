@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var async = require('async');
 var Dict = require("collections/dict");
 var DBFunctions = require("../DBWork/DBFunctions.js");
+var studentFunctions = require("./studentFunctions");
 
 
 
@@ -237,14 +238,7 @@ exports.getMasterOfCategoryInts = function (inputID, category , callback){
 
         callback(null, scores);
 
-        //find out the number of questions in that category
-        //DBFunctions.getNumberOfQuestionsPerCategory(category, function(err, questionCount){
-        //    scores.mastered  = Math.floor(scores.mastered / questionCount *100);
-        //    scores.intermediate  = Math.floor(scores.intermediate / questionCount *100);
-        //    scores.novice  = Math.floor(scores.novice / questionCount *100);
-        //
-        //    callback(null, scores);
-        //});
+
     });
 };
 
@@ -278,4 +272,67 @@ exports.getMasteryOfQuestion = function (inputID, questionID, callback){
         })
 
     });
+};
+
+exports.getMasteryScores = function (studentID , routeCallback ){
+    var retDict = new Dict;
+
+    var foundUser = null;
+
+    async.parallel([
+            function(callback){
+                userModel.findById(studentID, function(err, user) {
+                    if (err){
+                        callback(err, null);
+                    }
+                    callback(null, user);
+
+                });
+            },
+            function(callback){
+                categoryModel.find({}, function (err, categories){
+                    if (err){
+                        callback(err, null);
+                    }
+                    callback(null, categories);
+
+                });
+
+            }
+        ],
+        // callback
+        function(err, results){
+
+            //Find how many questions there are
+            foundUser = results[0];
+            categories = results[1];
+
+
+            async.forEachOf(categories, function(category, counter , callback){
+
+                studentFunctions.getMasterOfCategoryInts(foundUser._id , category.Title, function (err, scores){
+                    var  categoryData = {
+                        mastered : scores.mastered,
+                        intermediate : scores.intermediate,
+                        novice : scores.novice,
+                        testPercent : category.TestPercent
+                    };
+
+                    retDict.set(category.Title, categoryData);
+                    callback();
+                })
+            }, function(err){
+                //Add the total number of questions
+                var totalQuestions = foundUser.questions.length;
+
+                retDict.set("totalQuestions" , totalQuestions);
+
+                var totalCorrectQuestions = foundUser.numberOfCorrectAnswersForUser();
+
+                retDict.set("totalCorrect" , totalCorrectQuestions);
+
+                routeCallback(retDict);
+
+            });
+        });
 }
