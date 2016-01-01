@@ -8,6 +8,7 @@ var userModel = require("../models/user");
 var mongoose = require('mongoose');
 var async = require('async');
 var Dict = require("collections/dict");
+var DBFunctions = require("../DBWork/DBFunctions.js");
 
 
 
@@ -163,11 +164,12 @@ exports.getMasterOfCategory = function (inputID, category , callback){
             callback(err, null);
         }
 
-        var mastered = 0;
+        var scores = {
+            mastered : 0,
+            intermediate : 0,
+            novice : 0
+        }
 
-        var intermediate = 0;
-
-        var novice = 0;
 
         //Find all the questions from a specific category
         user.questions.forEach(function(entry){
@@ -175,31 +177,76 @@ exports.getMasterOfCategory = function (inputID, category , callback){
             //For each question tally its comp score
             if (entry.category == category){
                 if(entry.comprehension.mastered){
-                    mastered ++;
+                    scores.mastered ++;
                 }
                 else if (entry.comprehension.intermediate){
-                    intermediate ++;
+                    scores.intermediate ++;
                 }
-                else {
-                    novice ++;
+                else if (entry.comprehension.novice) {
+                    scores.novice ++;
                 }
             }
         })
 
-        //Return the level of comp that has the most
-        if (mastered > intermediate && mastered > novice){
-            callback (null, "mastered");
-        }
-        else if(intermediate >= mastered && intermediate > novice){
-            callback (null, "intermediate");
-        }
-        else {
-            callback ( null, "novice");
-        }
+        //find out the number of questions in that category
+        DBFunctions.getNumberOfQuestionsPerCategory(category, function(err, questionCount){
+            scores.mastered  = Math.floor(scores.mastered / questionCount *100);
+            scores.intermediate  = Math.floor(scores.intermediate / questionCount *100);
+            scores.novice  = Math.floor(scores.novice / questionCount *100);
 
-
+            callback(null, scores);
+        });
     });
-}
+};
+
+/**
+ *
+ * @param inputID
+ * @param category
+ * @param callback
+ */
+exports.getMasterOfCategoryInts = function (inputID, category , callback){
+    userModel.findById(inputID , function (err, user){
+        if (err){
+            callback(err, null);
+        }
+
+        var scores = {
+            mastered : 0,
+            intermediate : 0,
+            novice : 0
+        }
+
+
+        //Find all the questions from a specific category
+        user.questions.forEach(function(entry){
+
+            //For each question tally its comp score
+            if (entry.category == category){
+                if(entry.comprehension.mastered){
+                    scores.mastered ++;
+                }
+                else if (entry.comprehension.intermediate){
+                    scores.intermediate ++;
+                }
+                else if (entry.comprehension.novice) {
+                    scores.novice ++;
+                }
+            }
+        })
+
+        callback(null, scores);
+
+        //find out the number of questions in that category
+        //DBFunctions.getNumberOfQuestionsPerCategory(category, function(err, questionCount){
+        //    scores.mastered  = Math.floor(scores.mastered / questionCount *100);
+        //    scores.intermediate  = Math.floor(scores.intermediate / questionCount *100);
+        //    scores.novice  = Math.floor(scores.novice / questionCount *100);
+        //
+        //    callback(null, scores);
+        //});
+    });
+};
 
 /**
  * This method will return the mastery of a single question

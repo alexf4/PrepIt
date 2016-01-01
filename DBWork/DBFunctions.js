@@ -7,7 +7,6 @@ var userModel = require("../models/user");
 var mongoose = require('mongoose');
 var arrays = require("collections/shim-array");
 
-
 /**
  * This method will add a new question to all users question sets
  */
@@ -210,3 +209,19 @@ exports.getAllQuestionsPerUser = function (inputID, callback) {
         return user.questions;
     });
 };
+
+/**
+ * This method will return the number of questions in a category
+ * @param category the category that is searched for
+ * @param callback the method that is called
+ * @returns {number}
+ */
+exports.getNumberOfQuestionsPerCategory = function (inputCategory , callback){
+    questionModel.find({category : inputCategory}, function(err, questions){
+        if (err){
+            callback(err, null);
+        }
+
+        callback(err, questions.length);
+    })
+}
