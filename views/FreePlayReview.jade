@@ -36,11 +36,27 @@ html
                         li.active
                             a(href='freeplay')
                                 i.fa.fa-th-large
-                                span.nav-label Free Play
-                        //li
-                        //    a(href='settings.html')
-                        //        i.fa.fa-th-large
-                        //        span.nav-label settings
+                                span.nav-label Freeplay
+                                span.fa.arrow
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='freeplay') All Categories
+                                li
+                                    a(href='freeplay/category/Political Beliefs and Behaviors') Political Beliefs and Behaviors
+                                li
+                                    a(href='freeplay/category/Linkage Institutions') Linkage Institutions
+                                li
+                                    a(href='freeplay/category/Institutions of National Government') Institutions of National Government
+                                li
+                                    a(href='freeplay/category/Public Policy') Public Policy
+                                li
+                                    a(href='freeplay/category/Civil Rights and Liberties') Civil Rights and Liberties
+                                li
+                                    a(href='freeplay/category/Constitutional Underpinnings') Constitutional Underpinnings
+                        li
+                            a(href='StudentLink')
+                                i.fa.fa-th-large
+                                span.nav-label Add Class
             #page-wrapper.gray-bg
                 .row.border-bottom
                     nav.navbar.navbar-static-top.white-bg(role='navigation', style='margin-bottom: 0')
@@ -70,7 +86,7 @@ html
                                                  p #{question.subcategory}
                                                      p #{question.questionText}
                                                      div
-                                                         a(href='/freeplay')
+                                                         a(href='/freeplaySameCategory')
                                                             button.btn.btn-sm.btn-primary.pull-right.m-t-n-xs()
                                                                 strong Next Question
                                              .col-sm-6

@@ -133,6 +133,9 @@ module.exports = function(passport){
 	//Handle the free play request
 	router.get('/freeplay' , isAuthenticated, freeplay.startFreePlay);
 
+	//keeps same category as before
+	router.get('/freeplaySameCategory' , isAuthenticated, freeplay.startCategoryPlay);
+
 	//Handle the free play request with category
 	router.get('/freeplay/category/:category' , isAuthenticated, function(req, res) {
 		//freeplay.setCategory(req.params.category);

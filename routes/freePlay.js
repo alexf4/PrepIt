@@ -15,7 +15,9 @@ exports.startFreePlay = function(req, res) {
     //Get the users logged in id
     userId = req.session.passport.user;
 
+    req.session.category=null;
 
+    //TODO: try to clean this up and not need it (figure out how to call category play)
     freePlayLogic.getQuestion(userId, function(question){
 
 
@@ -26,17 +28,27 @@ exports.startFreePlay = function(req, res) {
 
 };
 
-//TODO: Cody, find a way to pass in what was clicked so we know what category was clicked
 exports.startCategoryPlay = function(req, res){
     //grab a question that the user has not gotten right
     //Get the users logged in id
     userId = req.session.passport.user;
 
-    freePlayLogic.getQuestionFromCategory(userId, req.session.category, function(question){
+    //TODO: try to not make only one render call and add suport for highlighting what the current category is
+    if (req.session.category===null)
+    {
+        freePlayLogic.getQuestion(userId, function(question){
 
-        res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
+            res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
 
-    })
+        })
+    }
+    else {
+        freePlayLogic.getQuestionFromCategory(userId, req.session.category, function (question) {
+
+            res.render("FreePlayQuestion", {question: question, questionID: question._id.toString()});
+
+        })
+    }
 }
 
     exports.submitAnswer = function(req, res){
