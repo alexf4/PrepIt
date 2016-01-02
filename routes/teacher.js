@@ -16,10 +16,10 @@ exports.teacherPage = function(req, res ){
   //Get the users logged in id
   userId = req.session.passport.user;
 
-  teacherFunctions.getStudentsScores(userId, function(scores){
+  teacherFunctions.getStudentsMasterys(userId, function(scores){
 
     //TODO: Might have to switch this to a teacher chart later
-    chartData = dataToChartHelper.createStudentChart(scores);
+    chartData = dataToChartHelper.createStudentMasteryChart(scores);
 
     //TODO: Make this dynamic
     res.render("teacher", {totalData : chartData.totalData , totalOptions : chartData.totalOptions ,

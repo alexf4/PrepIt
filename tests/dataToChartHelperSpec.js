@@ -18,7 +18,7 @@ describe("Data to Chart Helper Functions", function(){
             studentFunctions.getUserScores(studentID , function(scores){
 
                 temp = dataToChartHelper.createStudentChart(scores);
-                console.log(temp);
+                //console.log(temp);
                 done();
             })
         })

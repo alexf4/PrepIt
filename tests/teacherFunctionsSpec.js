@@ -1,6 +1,8 @@
 var expect = require("chai").expect;
 var teacherFunctions = require("../DBWork/teacherFunctions.js");
+var studentFunctions = require("../DBWork/studentFunctions.js");
 var assert = require('chai').assert;
+var async = require('async');
 
 var db = require('../dbWork/db');
 
@@ -66,6 +68,94 @@ describe("Teacher Functions", function(){
             });
         })
 
+    })
+
+    describe("#getStudentScores()", function (){
+
+        var teacherID = "5684903dab13621200fe364f";
+
+        it("returns the scores for all the students that are in the teachers class.", function (done){
+            teacherFunctions.getStudentsScores(teacherID, function(retDict){
+                //console.log(retDict);
+                done();
+
+            })
+
+        })
+    })
+
+    describe("#addStudentScoresToTotal", function(){
+
+        var numStudents = 0;
+
+        var classToken = "74fb18a";
+
+        var studentID = "5684918fab13621200fe36bf";
+
+        var totalScores;
+
+        var studentScore;
+
+        it("adds all the students scores together", function(done){
+
+            async.waterfall([
+                function(callback){
+                    teacherFunctions.numberOfStudentsInClass(classToken , function(err, studentCount){
+                        numStudents = studentCount;
+                        callback();
+                    })
+                },
+                function(callback){
+                    studentFunctions.getUserScores(studentID, function(scores){
+                        totalScores = scores;
+                        studentScore = scores;
+                        callback();
+                    })
+                }
+                ],
+                function(callback){
+                    teacherFunctions.addStudentScoresToTotal(numStudents, totalScores, studentScore);
+                    //console.log(totalScores);
+                    done();
+                });
+        })
+    });
+
+    describe("#getStudentMasteries()", function (){
+
+        var teacherID = "5684903dab13621200fe364f";
+
+        it("returns the scores for all the students that are in the teachers class.", function (done){
+
+            teacherFunctions.getStudentsMasterys(teacherID, function(retDict){
+                //console.log(retDict);
+                done();
+
+            })
+        })
+    })
+
+    describe("#addStudentMasteriesToTotal()", function(){
+
+        var numStudents = 2;
+        var classToken = "74fb18a";
+        var studentID = "5684918fab13621200fe36bf";
+
+        var totalMastery;
+
+        var studentMastery;
+
+        it("adds all the students scores together", function(done){
+
+            studentFunctions.getMasteryScores(studentID, function(scores){
+                totalMastery = scores;
+                studentMastery = scores;
+
+                teacherFunctions.addStudentMasteryToTotal(numStudents, totalMastery, studentMastery);
+                //console.log(totalMastery);
+                done();
+            })
+        })
     })
 
 });

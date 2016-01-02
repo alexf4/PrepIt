@@ -279,6 +279,12 @@ exports.getMasteryScores = function (studentID , routeCallback ){
 
     var foundUser = null;
 
+    var totalMastery = 0;
+
+    var totalIntermediate = 0;
+
+    var totalNovice = 0;
+
     async.parallel([
             function(callback){
                 userModel.findById(studentID, function(err, user) {
@@ -318,18 +324,22 @@ exports.getMasteryScores = function (studentID , routeCallback ){
                         testPercent : category.TestPercent
                     };
 
+                    totalMastery += scores.mastered * categoryData.testPercent *.1;
+                    totalIntermediate += scores.intermediate * categoryData.testPercent *.1 ;
+                    totalNovice += scores.novice * categoryData.testPercent *.1;
+
                     retDict.set(category.Title, categoryData);
                     callback();
                 })
             }, function(err){
-                //Add the total number of questions
-                var totalQuestions = foundUser.questions.length;
 
-                retDict.set("totalQuestions" , totalQuestions);
 
-                var totalCorrectQuestions = foundUser.numberOfCorrectAnswersForUser();
+                retDict.set("TotalMastery", totalMastery);
 
-                retDict.set("totalCorrect" , totalCorrectQuestions);
+                retDict.set("TotalIntermediate", totalIntermediate);
+
+                retDict.set("TotalNovice", totalNovice);
+
 
                 routeCallback(retDict);
 

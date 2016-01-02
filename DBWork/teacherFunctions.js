@@ -269,7 +269,7 @@ exports.getStudentsScores = function (inputID, routeCallback){
                 //merge all the scores
 
 
-                addStudentScoresToTotal(numStudents , retDict , scores);
+                teacherFunctions.addStudentScoresToTotal(numStudents , retDict , scores);
 
                 //scores.forEach( function (entry){
                 //    console.log("here2");
@@ -297,7 +297,7 @@ exports.getStudentsScores = function (inputID, routeCallback){
  * @param totalScores the total scores dictionary
  * @param studentScore the new student score to be added
  */
-function addStudentScoresToTotal ( numStudents, totalScores, studentScore){
+exports.addStudentScoresToTotal = function ( numStudents, totalScores, studentScore){
 
     //Create an array of each key
     keys = totalScores.keys();
@@ -322,7 +322,6 @@ function addStudentScoresToTotal ( numStudents, totalScores, studentScore){
             // totalScores.set(entry , tempValue);
 
         }else{
-            console.log("last");
 
             var sectionScore = studentScore.get(entry);
             var runningTotalScore = totalScores.get(entry);
@@ -358,4 +357,148 @@ exports.numberOfStudentsInClass = function (teacherToken, callback){
 }
 
 
+/**
+ * This method will get all the scores of the students that are linked to this user
+ * @param inputID the teachers id
+ * @param routeCallback the function that is called back when this is ready
+ */
+exports.getStudentsMasterys = function (inputID, routeCallback){
+
+
+    var retDict = new Dict;
+
+    //Find the users token
+    async.waterfall([
+        function(callback) {
+            userModel.findById(inputID, function(err, user) {
+                if (err){
+                    callback(err, null);
+                }
+                callback(null, user);
+
+            });
+        },
+        function (user, callback){
+            categoryModel.find({}, function (err, categories){
+                if (err){
+                    callback(err, null);
+                }
+
+                //Setup dictionary
+                categories.forEach(function (entry){
+                    var questionData = {
+                        mastered : 0,
+                        intermediate : 0,
+                        novice : 0,
+                        testPercent : entry.TestPercent
+                    }
+
+                    retDict.set(entry.Title , questionData);
+                })
+
+
+                //ser the total number of questions
+                retDict.set("TotalMastery" , 0);
+
+                retDict.set("TotalIntermediate" , 0);
+
+                retDict.set("TotalNovice" , 0);
+
+                callback(null, user);
+
+            });
+        },
+        function( user, callback) {
+            // find all students that have the same teacher token
+            userModel.find({ classToken: user.token , $and: [ { "isteacher": false } ]  }, function (err, users){
+                if (err){
+                    callback(err, null);
+                }
+                callback(null, users);
+            });
+        }
+    ], function (err, users) {
+
+        //Count how many students the teacher has
+
+        var numStudents = users.length;
+
+
+        async.forEachOf(users , function (value, key, callback){
+
+            studentFunctions.getMasteryScores(value._id.toString(), function(scores){
+                //merge all the scores
+
+                teacherFunctions.addStudentMasteryToTotal(numStudents , retDict , scores);
+
+                callback();
+
+
+            })
+
+
+        }, function(err){
+
+
+            //return the scores with callback(scores);
+            routeCallback(retDict);
+        })
+
+    });
+
+}
+
+/**
+ * This method will compile the students data into one source
+ * @param numStudents the total number of students
+ * @param totalScores the total scores dictionary
+ * @param studentScore the new student score to be added
+ */
+exports.addStudentMasteryToTotal = function ( numStudents, totalScores, studentScore){
+
+    //Create an array of each key
+    keys = totalScores.keys();
+
+    tempValue = null;
+
+    //get values for each key
+    keys.forEach(function (entry){
+
+       if (entry == "TotalMastery"){
+            tempValue = studentScore.get("TotalMastery") / numStudents;
+
+            tempValue = tempValue + totalScores.get(entry);
+
+             totalScores.set(entry , tempValue);
+
+        }else if (entry == "TotalIntermediate"){
+            tempValue = studentScore.get("TotalIntermediate") / numStudents;
+
+            tempValue = tempValue + totalScores.get(entry);
+
+             totalScores.set(entry , tempValue);
+
+
+        }else if (entry == "TotalNovice"){
+            tempValue = studentScore.get("TotalNovice") / numStudents;
+
+            tempValue = tempValue + totalScores.get(entry);
+
+            totalScores.set(entry , tempValue);
+
+        }else {
+            var sectionScore = studentScore.get(entry);
+            var runningTotalScore = totalScores.get(entry);
+
+            var scores = {
+                mastered: (sectionScore.mastered / numStudents ) + runningTotalScore.mastered,
+                intermediate: (sectionScore.intermediate / numStudents ) + runningTotalScore.intermediate,
+                novice: (sectionScore.novice / numStudents ) + runningTotalScore.novice,
+            };
+
+            totalScores.set(entry, scores);
+        }
+    })
+
+}
 
