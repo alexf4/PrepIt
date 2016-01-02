@@ -133,14 +133,14 @@ function calculateTotalMastery(scores) {
     var scoresArray = scores.entries();
 
     var masteredData = {
-        value: 0,
+        value: scores.get("TotalMastery") ,
         label: "Mastered",
         color: "#a3e1d4",
         highlight: "#1ab394"
     };
 
     var intermediateData = {
-        value: 0,
+        value: scores.get("TotalIntermediate") ,
         label: "Intermediate",
         color: "#777777",
         highlight: "#1ab394"
@@ -148,43 +148,28 @@ function calculateTotalMastery(scores) {
 
 
     var noviceData = {
-        value: 0,
+        value: scores.get("TotalNovice") ,
         label: "Novice",
         color: "#FF0000",
         highlight: "#1ab394"
     };
 
 
-    scoresArray.forEach(function (entry) {
-        var sectionData = entry[1];
-
-        if (entry[0] != "totalQuestions") {
-            if (entry[0] != "totalCorrect") {
-
-                noviceData.value += sectionData.novice * sectionData.testPercent;
-
-                intermediateData.value += sectionData.intermediate * sectionData.testPercent;
-
-                masteredData.value += sectionData.mastered * sectionData.testPercent;
-
-
-
-                //var sectionValue = sectionData.correct / sectionData.questions * sectionData.testPercent * .1;
-                //
-                ////add to total correct count
-                //totalPercentCorrect += sectionValue;
-                //
-                //var totalChartData = {
-                //    value: sectionValue,
-                //    label: entry[0],
-                //    color: "#a3e1d4",
-                //    highlight: "#1ab394"
-                //};
-                //
-                //totalDataList.push(totalChartData);
-            }
-        }
-    });
+    //scoresArray.forEach(function (entry) {
+    //    var sectionData = entry[1];
+    //
+    //    if (entry[0] != "totalQuestions") {
+    //        if (entry[0] != "totalCorrect") {
+    //
+    //            noviceData.value += sectionData.novice * sectionData.testPercent *.1;
+    //
+    //            intermediateData.value += sectionData.intermediate * sectionData.testPercent *.1;
+    //
+    //            masteredData.value += sectionData.mastered * sectionData.testPercent *.1;
+    //
+    //        }
+    //    }
+    //});
 
 
     //Change color depending on how many they have got right
@@ -203,6 +188,7 @@ function calculateTotalMastery(scores) {
     totalDataList.push(intermediateData);
     totalDataList.push(masteredData);
 
+    //needs to be three things
     return totalDataList;
 }
 
@@ -328,10 +314,9 @@ exports.createStudentMasteryChart = function (scores){
         //For each question section in scores object add it to the return object.
         sectionArray.forEach(function (entry) {
 
-            if (entry[0] != "totalQuestions") {
-                if (entry[0] != "totalCorrect") {
+            if ((entry[0] != "TotalMastery") || ((entry[0] != "TotalIntermediate")) ||((entry[0] != "TotalNovice"))){
+
                     formattedChartData[entry[0].replace(/\s/g, "_") + "_Data"] = retDict.get(entry[0] + " Data");
-                }
             }
         });
 

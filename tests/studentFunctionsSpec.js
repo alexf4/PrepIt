@@ -58,7 +58,7 @@ describe ("Student Functions", function(){
         var studentID = "5684918fab13621200fe36bf";
         it("should return the scores for a user", function (done){
             studentFunctions.getMasteryScores(studentID , function(scores){
-                console.log(scores);
+                //console.log(scores);
                 done();
 
             })
