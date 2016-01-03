@@ -60,65 +60,137 @@ html
                 .wrapper.wrapper-content.animated.fadeInRight
                     .row
                         .col-lg-6
-                            .ibox.float-e-margins
-                                .ibox-title
-                                    h5 Total
-                                    div(ibox-tools='')
-                                .ibox-content
-                                    div
-                                        canvas#TotalChart(height='140')
+                            .panel.panel-primary
+                                .panel-heading.text-center
+                                    | Total
+                                .panel-body
+                                    .div
+                                        canvas#TotalChart(height='190')
+                            //.ibox.float-e-margins
+                            //    .ibox-title
+                            //        h5 Total
+                            //        div(ibox-tools='')
+                            //    .ibox-content
+                            //        div
+                            //            canvas#TotalChart(height='140')
                         .col-lg-6
                             .row
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Constitutional Underpinnings
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart(height='140')
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Civil Rights and Liberties
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart2(height='140')
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Political Beliefs and Behaviors
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart3(height='140')
+
+                                .col-xs-4
+                                   .panel.panel-primary
+                                       .panel-heading.text-nowrap.text-center
+                                           |Constitutional<br />Underpinnings
+                                       .panel-body
+                                           .div
+                                               canvas#CUChart(height='220')
+                                   //.panel.panel-primary
+                                   //     .panel.panel-primary
+                                   //         .panel-heading
+                                   //             | Linkage Institutions
+                                   //         .panel-body
+                                   //             .div
+                                   //                 canvas#CUChart4(height='200')
+                                .col-xs-4
+                                    .panel.panel-primary
+                                        .panel-heading.text-nowrap.text-center
+                                            | Civil Rights<br />and Liberties
+                                        .panel-body
+                                            .div
+                                                canvas#CUChart2(height='220')
+                                    //.panel.panel-primary
+                                    //    .panel.panel-primary
+                                    //        .panel-heading
+                                    //            | Public Policy
+                                    //        .panel-body
+                                    //            .div
+                                    //                canvas#CUChart5(height='200')
+                                .col-xs-4
+                                    .panel.panel-primary
+                                        .panel-heading.text-nowrap.text-center
+                                            | Political Beliefs<br />and Behaviors
+                                        .panel-body
+                                            .div
+                                                canvas#CUChart3(height='220')
+                                    //.panel.panel-primary
+                                    //    .panel.panel-primary
+                                    //        .panel-heading
+                                    //            | Institutions of National Government
+                                    //        .panel-body
+                                    //            .div
+                                    //                canvas#CUChart6(height='200')
+
+
+                                //.col-lg-4
+                                //    .ibox.float-e-margins
+                                //        .ibox-title
+                                //            h5 Constitutional Underpinnings
+                                //            div(ibox-tools='')
+                                //        .ibox-content
+                                //            div
+                                //                canvas#CUChart(height='140')
+                                //.col-lg-4
+                                //    .ibox.float-e-margins
+                                //        .ibox-title
+                                //            h5 Civil Rights and Liberties
+                                //            div(ibox-tools='')
+                                //        .ibox-content
+                                //            div
+                                //                canvas#CUChart2(height='140')
+                                //.col-lg-4
+                                //    .ibox.float-e-margins
+                                //        .ibox-title
+                                //            h5 Political Beliefs and Behaviors
+                                //            div(ibox-tools='')
+                                //        .ibox-content
+                                //            div
+                                //                canvas#CUChart3(height='140')
                             .row
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Linkage Institutions
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart4(height='140')
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Public Policy
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart5(height='140')
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Institutions of National Government
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart6(height='140')
-                        //TODO: change to col -6
+                                .col-xs-4
+                                    .panel.panel-primary
+                                        .panel-heading.text-nowrap.text-center
+                                            | Linkage<br />Institutions
+                                        .panel-body
+                                            .div
+                                                canvas#CUChart4(height='220')
+                                .col-xs-4
+                                    .panel.panel-primary
+                                        .panel-heading.text-nowrap.text-center
+                                            | Public<br />Policy
+                                        .panel-body
+                                            .div
+                                                canvas#CUChart5(height='220')
+                                .col-xs-4
+                                    .panel.panel-primary
+                                        .panel-heading.text-nowrap.text-center
+                                            | Institutions of<br />National Government
+                                        .panel-body
+                                            .div
+                                                canvas#CUChart6(height='220')
+                            //.row
+                            //    .col-lg-4
+                            //        .ibox.float-e-margins
+                            //            .ibox-title
+                            //                h5 Linkage Institutions
+                            //                div(ibox-tools='')
+                            //            .ibox-content
+                            //                div
+                            //                    canvas#CUChart4(height='140')
+                            //    .col-lg-4
+                            //        .ibox.float-e-margins
+                            //            .ibox-title
+                            //                h5 Public Policy
+                            //                div(ibox-tools='')
+                            //            .ibox-content
+                            //                div
+                            //                    canvas#CUChart5(height='140')
+                            //    .col-lg-4
+                            //        .ibox.float-e-margins
+                            //            .ibox-title
+                            //                h5 Institutions of National Government
+                            //                div(ibox-tools='')
+                            //            .ibox-content
+                            //                div
+                            //                    canvas#CUChart6(height='140')
                     .row
                         .col-lg-6
                             .ibox.float-e-margins
