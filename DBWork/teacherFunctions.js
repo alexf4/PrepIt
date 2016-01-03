@@ -523,7 +523,7 @@ exports.listStudents = function (inputClassToken, routeCallback){
     //find all the students of the class
     userModel.find({ classToken: inputClassToken , $and: [ { "isteacher": false } ]  }, function (err, users){
         if (err){
-            callback(err, null);
+            routeCallback(err, null);
         }
 
         async.forEachOf(users , function (value, key, callback){
