@@ -450,6 +450,70 @@ exports.getStudentsMasterys = function (inputID, routeCallback){
 
 }
 
+exports.getMissedQuestionsList = function (teacherID, routeCallback){
+
+    var retList = new list;
+
+    //grab all the questions from the teacher object
+    userModel.findById(teacherID, function(err, user) {
+        if (err){
+            routeCallback(err, null);
+        }
+
+        //Sort the questions
+        user.questions.sort(compare);
+
+        //for each question create a new object then add it to the return list
+        user.questions.forEach(function (entry){
+
+
+            var questionData = {
+                questionString : entry.questionText,
+                questionMissed : entry.incorrectAttempts
+            }
+
+            if(entry.comprehension.mastered){
+                questionData.questionMastered = "Mastered";
+
+            }
+            else if (entry.comprehension.intermediate){
+                questionData.questionMastered = "Intermediate";
+            }
+            else {
+                questionData.questionMastered = "Novice";
+
+            }
+
+            retList.add(questionData);
+
+
+        })
+
+
+        routeCallback(null, retList.toJSON());
+
+    });
+
+
+
+
+
+}
+
+/**
+ * Simple sort function. This proves that we need to move questions out of the user objects
+ * @param a
+ * @param b
+ * @returns {number}
+ */
+function compare(a, b) {
+    if (a.incorrectAttempts < b.incorrectAttempts)
+        return 1;
+    if (a.incorrectAttempts > b.incorrectAttempts)
+        return -1;
+    return 0;
+}
+
 exports.listStudents = function (inputClassToken, routeCallback){
 
     var retList = new list;
