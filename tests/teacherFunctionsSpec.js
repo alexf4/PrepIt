@@ -158,4 +158,26 @@ describe("Teacher Functions", function(){
         })
     })
 
+    describe("#listStudents()", function(){
+        var classToken = "74fb18a";
+
+        var listData = [
+            { email: 'student2@google.com', totalMastery: 11.5 },
+            { email: 'student4@google.com', totalMastery: 6.5 },
+            { email: 'student1@google.com', totalMastery: 9 },
+            { email: 'student3@google.com', totalMastery: 19.5 }
+        ]
+
+        it("should return a list of student objects that hold name, and percent of all questions mastered", function (done){
+            teacherFunctions.listStudents(classToken, function(studentList){
+
+                assert.deepEqual(listData , studentList , "These should be equal");
+
+                //console.log(studentList);
+
+                done();
+            })
+        })
+    })
+
 });
