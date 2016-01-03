@@ -12,6 +12,8 @@ var Dict = require("collections/dict");
 var studentFunctions = require("./studentFunctions");
 var teacherFunctions = require("./teacherFunctions");
 var DBFunctions = require("../DBWork/DBFunctions.js");
+
+var list = require("collections/list");
 /**
  * This method will update the token element of the teacher
  * @param inputID the teacher to updated
@@ -445,6 +447,48 @@ exports.getStudentsMasterys = function (inputID, routeCallback){
         })
 
     });
+
+}
+
+exports.listStudents = function (inputClassToken, routeCallback){
+
+    var retList = new list;
+
+
+
+    //find all the students of the class
+    userModel.find({ classToken: inputClassToken , $and: [ { "isteacher": false } ]  }, function (err, users){
+        if (err){
+            callback(err, null);
+        }
+
+        async.forEachOf(users , function (value, key, callback){
+
+            var studentObject = {};
+
+            studentObject.email = value.email;
+
+            studentFunctions.getMasteryScores(value._id.toString(), function(scores){
+
+                studentObject.totalMastery = scores.get("TotalMastery");
+
+
+                retList.add(studentObject);
+
+                callback();
+
+            })
+
+        }, function(err){
+
+
+            //return the scores with callback(scores);
+            routeCallback(retList.toJSON());
+        })
+
+    });
+
+    //add each students email and total mastery to the ret dict
 
 }
 
