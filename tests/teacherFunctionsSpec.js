@@ -180,4 +180,17 @@ describe("Teacher Functions", function(){
         })
     })
 
+    describe("#getTeacherClassToken()", function(){
+        var teacherID = "5684903dab13621200fe364f";
+        var classToken = "74fb18a";
+
+        it("returns the class token of a the teacher", function(done){
+
+            teacherFunctions.getTeacherClassToken (teacherID, function(err, retClassToken){
+                assert.equal(classToken, retClassToken, "the Tokens should match")
+                done()
+            })
+        })
+    })
+
 });

@@ -492,6 +492,19 @@ exports.listStudents = function (inputClassToken, routeCallback){
 
 }
 
+
+exports.getTeacherClassToken = function (inputID , callback ){
+    userModel.findById(inputID, function(err, user) {
+        if (err){
+            callback(err, null);
+        }
+        callback(null, user.classToken);
+
+    });
+}
+
+
+
 /**
  * This method will compile the students data into one source
  * @param numStudents the total number of students

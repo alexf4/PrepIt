@@ -21,16 +21,24 @@ exports.teacherPage = function(req, res ){
     //TODO: Might have to switch this to a teacher chart later
     chartData = dataToChartHelper.createStudentMasteryChart(scores);
 
-    //TODO: Make this dynamic
-    res.render("teacher", {totalData : chartData.totalData , totalOptions : chartData.totalOptions ,
-      CUData : chartData.Constitutional_Underpinnings_Data, SectionOptions : chartData.sectionOptions,
-      Civil_Rights_and_Liberties_Data : chartData.Civil_Rights_and_Liberties_Data,
-      Political_Beliefs_and_Behaviors_Data : chartData.Political_Beliefs_and_Behaviors_Data,
-      Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
-      Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,
-      Public_Policy_Data : chartData.Public_Policy_Data
-    });
+    teacherFunctions.getTeacherClassToken(userId, function(classToken){
 
+      teacherFunctions.listStudents(classToken , function(students){
+
+        //TODO: now you have students list "students"
+        //TODO: Make this dynamic
+        res.render("teacher", {totalData : chartData.totalData , totalOptions : chartData.totalOptions ,
+          CUData : chartData.Constitutional_Underpinnings_Data, SectionOptions : chartData.sectionOptions,
+          Civil_Rights_and_Liberties_Data : chartData.Civil_Rights_and_Liberties_Data,
+          Political_Beliefs_and_Behaviors_Data : chartData.Political_Beliefs_and_Behaviors_Data,
+          Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
+          Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,
+          Public_Policy_Data : chartData.Public_Policy_Data, studentList : students
+        });
+
+      })
+
+    })
 
   });
 
