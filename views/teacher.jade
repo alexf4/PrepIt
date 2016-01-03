@@ -332,24 +332,11 @@ html
                                                     th <br />Student Username
                                                     th Precent of<br />all mastered
                                             tbody
-                                                tr
-                                                    td 1
-                                                    td Samantha
-                                                    td.text-navy
-                                                        i.fa.fa-level-up
-                                                        |  40%
-                                                tr
-                                                    td 2
-                                                    td Jacob
-                                                    td.text-warning
-                                                        i.fa.fa-level-down
-                                                        |  -20%
-                                                tr
-                                                    td 3
-                                                    td Damien
-                                                    td.text-navy
-                                                        i.fa.fa-level-up
-                                                        |  26%
+                                                each studentObject, index in studentsList
+                                                    tr
+                                                        td #{index+1}
+                                                        td #{studentObject.email}
+                                                        td #{studentObject.totalMastery}
                     //shows two tables not side by side for smaller screens
                     .hidden-lg
                         .row
@@ -446,24 +433,11 @@ html
                                                     th <br />Student Username
                                                     th Precent of<br />all mastered
                                             tbody
-                                                tr
-                                                    td 1
-                                                    td Samantha
-                                                    td.text-navy
-                                                        i.fa.fa-level-up
-                                                        |  40%
-                                                tr
-                                                    td 2
-                                                    td Jacob
-                                                    td.text-warning
-                                                        i.fa.fa-level-down
-                                                        |  -20%
-                                                tr
-                                                    td 3
-                                                    td Damien
-                                                    td.text-navy
-                                                        i.fa.fa-level-up
-                                                        |  26%
+                                                each studentObject, index in studentsList
+                                                    tr
+                                                        td #{index + 1}
+                                                        td #{studentObject.email}
+                                                        td #{studentObject.totalMastery}
                 .footer
                     .pull-right
                         | 10GB of
