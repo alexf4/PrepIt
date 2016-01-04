@@ -30,7 +30,7 @@ html
                         li.active
                             a(href='/teacher')
                                 i.fa.fa-th-large
-                                span.nav-label Main view
+                                span.nav-label Main View
                         li
                             a(href='/teacher')
                                 i.fa.fa-th-large
@@ -243,7 +243,7 @@ html
                             .col-lg-6
                                 .ibox.float-e-margins
                                     .ibox-title
-                                        h5 Top Missed Questions
+                                        h5 Top 10 Missed Questions
                                         .ibox-tools
                                             a.collapse-link
                                                 i.fa.fa-chevron-up
@@ -288,11 +288,12 @@ html
                                                         th Mastered
                                                         th Mised
                                                 tbody
-                                                    each questionData in questions
-                                                        tr
-                                                            td #{questionData.questionString}
-                                                            td #{questionData.questionMastered}
-                                                            td #{questionData.questionMissed}
+                                                    - for (var i=0;i<10;i++)
+                                                        - if(questions[i]!=null)
+                                                            tr
+                                                                td #{questions[i].questionString}
+                                                                td #{questions[i].questionMastered}
+                                                                td #{questions[i].questionMissed}
 
                                                     //tr
                                                     //    td
@@ -349,7 +350,7 @@ html
                             .col-sm-12
                                 .ibox.float-e-margins
                                     .ibox-title
-                                        h5 Top Missed Questions
+                                        h5 Top 10 Missed Questions
                                         .ibox-tools
                                             a.collapse-link
                                                 i.fa.fa-chevron-up
@@ -394,11 +395,12 @@ html
                                                         th Mastered
                                                         th Mised
                                                 tbody
-                                                    each questionData in questions
-                                                        tr
-                                                            td #{questionData.questionString}
-                                                            td #{questionData.questionMastered}
-                                                            td #{questionData.questionMissed}
+                                                    - for (var i=0;i<10;i++)
+                                                        - if(questions[i]!=null)
+                                                            tr
+                                                                td #{questions[i].questionString}
+                                                                td #{questions[i].questionMastered}
+                                                                td #{questions[i].questionMissed}
                                                     //tr
                                                     //    td
                                                     //        | Project
