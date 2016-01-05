@@ -28,13 +28,21 @@ html
                             .logo-element
                                 | IN+
                         li.active
-                            a(href='index.html')
+                            a(href='/teacher')
                                 i.fa.fa-th-large
-                                span.nav-label Main view
-                        //li
-                        //    a(href='minor.html')
-                        //        i.fa.fa-th-large
-                        //        span.nav-label Minor view
+                                span.nav-label Main View
+                        li
+                            a(href='/teacher')
+                                i.fa.fa-th-large
+                                span.nav-label Student Analysis
+                        li
+                            a(href='/teacher')
+                                i.fa.fa-th-large
+                                span.nav-label Question Analysis
+                        li
+                            a(href='/teacher')
+                                i.fa.fa-th-large
+                                span.nav-label Manage Students
             #page-wrapper.gray-bg
                 .row.border-bottom
                     nav.navbar.navbar-static-top.white-bg(role='navigation', style='margin-bottom: 0')
@@ -52,97 +60,397 @@ html
                 .wrapper.wrapper-content.animated.fadeInRight
                     .row
                         .col-lg-6
-                            .ibox.float-e-margins
-                                .ibox-title
-                                    h5 Total
-                                    div(ibox-tools='')
-                                .ibox-content
-                                    div
-                                        canvas#TotalChart(height='140')
+                            .panel.panel-primary
+                                .panel-heading.text-center
+                                    | Class Comprehension: All Categories
+                                .panel-body
+                                    .div
+                                        canvas#TotalChart(height='190')
+                            //.ibox.float-e-margins
+                            //    .ibox-title
+                            //        h5 Total
+                            //        div(ibox-tools='')
+                            //    .ibox-content
+                            //        div
+                            //            canvas#TotalChart(height='140')
                         .col-lg-6
-                            .row
-                                //.col-lg-4
-                                //    .panel.panel-primary
-                                //        .panel.panel-primary
-                                //            .panel-heading
-                                //                Constitutional Underpinnings
-                                //            .panel-body
+                            .hidden-xs
+                                .row
+                                    .col-sm-4
+                                       .panel.panel-primary
+                                           .panel-heading.text-nowrap.text-center
+                                               |Constitutional<br />Underpinnings
+                                           .panel-body
+                                               .div
+                                                   canvas#CUChart(height='220')
+                                       //.panel.panel-primary
+                                       //     .panel.panel-primary
+                                       //         .panel-heading
+                                       //             | Linkage Institutions
+                                       //         .panel-body
+                                       //             .div
+                                       //                 canvas#CUChart4(height='200')
+                                    .col-sm-4
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Civil Rights<br />and Liberties
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart2(height='220')
+                                        //.panel.panel-primary
+                                        //    .panel.panel-primary
+                                        //        .panel-heading
+                                        //            | Public Policy
+                                        //        .panel-body
+                                        //            .div
+                                        //                canvas#CUChart5(height='200')
+                                    .col-sm-4
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Political Beliefs<br />and Behaviors
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart3(height='220')
+                                        //.panel.panel-primary
+                                        //    .panel.panel-primary
+                                        //        .panel-heading
+                                        //            | Institutions of National Government
+                                        //        .panel-body
+                                        //            .div
+                                        //                canvas#CUChart6(height='200')
+
+
+                                    //.col-lg-4
+                                    //    .ibox.float-e-margins
+                                    //        .ibox-title
+                                    //            h5 Constitutional Underpinnings
+                                    //            div(ibox-tools='')
+                                    //        .ibox-content
+                                    //            div
+                                    //                canvas#CUChart(height='140')
+                                    //.col-lg-4
+                                    //    .ibox.float-e-margins
+                                    //        .ibox-title
+                                    //            h5 Civil Rights and Liberties
+                                    //            div(ibox-tools='')
+                                    //        .ibox-content
+                                    //            div
+                                    //                canvas#CUChart2(height='140')
+                                    //.col-lg-4
+                                    //    .ibox.float-e-margins
+                                    //        .ibox-title
+                                    //            h5 Political Beliefs and Behaviors
+                                    //            div(ibox-tools='')
+                                    //        .ibox-content
+                                    //            div
+                                    //                canvas#CUChart3(height='140')
+                                .row
+                                    .col-sm-4
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Linkage<br />Institutions
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart4(height='220')
+                                    .col-sm-4
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Public<br />Policy
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart5(height='220')
+                                    .col-sm-4
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Institutions of<br />National Government
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart6(height='220')
+                                //.row
+                                //    .col-lg-4
+                                //        .ibox.float-e-margins
+                                //            .ibox-title
+                                //                h5 Linkage Institutions
+                                //                div(ibox-tools='')
+                                //            .ibox-content
                                 //                div
-                                //                    canvas#CUChart(height='200')
-                                //.col-lg-4
-                                //    .panel.panel-primary
-                                //        .panel.panel-primary
-                                //            .panel-heading Civil Rights and Liberties
-                                //                .panel-body
-                                //                    div
-                                //                        canvas#CUChart2(height='140')
-                                //.col-lg-4
-                                //    .panel.panel-primary
-                                //        .panel.panel-primary
-                                //            .panel-heading Political Beliefs and Behaviors
-                                //                .panel-body
-                                //                    div
-                                //                        canvas#CUChart3(height='140')
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Constitutional Underpinnings
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart(height='140')
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Civil Rights and Liberties
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart2(height='140')
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Political Beliefs and Behaviors
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart3(height='140')
-                            .row
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Linkage Institutions
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart4(height='140')
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Public Policy
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart5(height='140')
-                                .col-lg-4
-                                    .ibox.float-e-margins
-                                        .ibox-title
-                                            h5 Institutions of National Government
-                                            div(ibox-tools='')
-                                        .ibox-content
-                                            div
-                                                canvas#CUChart6(height='140')
+                                //                    canvas#CUChart4(height='140')
+                                //    .col-lg-4
+                                //        .ibox.float-e-margins
+                                //            .ibox-title
+                                //                h5 Public Policy
+                                //                div(ibox-tools='')
+                                //            .ibox-content
+                                //                div
+                                //                    canvas#CUChart5(height='140')
+                                //    .col-lg-4
+                                //        .ibox.float-e-margins
+                                //            .ibox-title
+                                //                h5 Institutions of National Government
+                                //                div(ibox-tools='')
+                                //            .ibox-content
+                                //                div
+                                //                    canvas#CUChart6(height='140')
+                            .visible-xs
+                                .row
+                                    .col-xs-6
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Constitutional<br />Underpinnings
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart-xs(height='220')
+                                    .col-xs-6
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Civil Rights<br />and Liberties
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart2-xs(height='220')
+                                .row
+                                    .col-xs-6
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Political Beliefs<br />and Behaviors
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart3-xs(height='220')
+                                    .col-xs-6
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Linkage<br />Institutions
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart4-xs(height='220')
+                                .row
+                                    .col-xs-6
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Public<br />Policy
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart5-xs(height='220')
+                                    .col-xs-6
+                                        .panel.panel-primary
+                                            .panel-heading.text-nowrap.text-center
+                                                | Institutions of<br />National Government
+                                            .panel-body
+                                                .div
+                                                    canvas#CUChart6-xs(height='220')
+                    //shows tables side by side for larger screen
+                    .visible-lg
                         .row
-                            h5 Top 3 missed questions in class
-                            .col-md-4
-                                h4 What was the main conflict between Federalists and Antifederalists?
-                                h6 10 students missed this
-                            .col-md-4
-                                h4 Who is the mayor of crazy town
-                                h6 8 students missed this
-                            .col-md-4
-                                h4 What is the War Powers Resolution
-                                h6 6 students missed this
+                            .col-lg-6
+                                .ibox.float-e-margins
+                                    .ibox-title
+                                        h5 Top 10 Missed Questions
+                                        .ibox-tools
+                                            a.collapse-link
+                                                i.fa.fa-chevron-up
+                                            a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                                i.fa.fa-wrench
+                                            ul.dropdown-menu.dropdown-user
+                                                li
+                                                    a(href='#') Config option 1
+                                                li
+                                                    a(href='#') Config option 2
+                                            a.close-link
+                                                i.fa.fa-times
+                                    .ibox-content
+                                        .row
+                                            .col-sm-5.m-b-xs
+                                                select.input-sm.form-control.input-s-sm.inline
+                                                    option(value='0') Option 1
+                                                    option(value='1') Option 2
+                                                    option(value='2') Option 3
+                                                    option(value='3') Option 4
+                                            .col-sm-4.m-b-xs
+                                                .btn-group(data-toggle='buttons')
+                                                    label.btn.btn-sm.btn-white
+                                                        input#option1(type='radio', name='options')
+                                                        |  Day
+                                                    label.btn.btn-sm.btn-white.active
+                                                        input#option2(type='radio', name='options')
+                                                        |  Week
+                                                    label.btn.btn-sm.btn-white
+                                                        input#option3(type='radio', name='options')
+                                                        |  Month
+                                            .col-sm-3
+                                                .input-group
+                                                    input.input-sm.form-control(type='text', placeholder='Search')
+                                                    span.input-group-btn
+                                                        button.btn.btn-sm.btn-primary(type='button')  Go!
+                                        .table-responsive
+                                            table.table.table-hover
+                                                thead
+                                                    tr
+                                                        th Question
+                                                        th Mastered
+                                                        th Missed
+                                                tbody
+                                                    - for (var i=0;i<10;i++)
+                                                        - if(questions[i]!=null)
+                                                            tr
+                                                                td #{questions[i].questionString}
+                                                                td #{questions[i].questionMastered}
+                                                                td #{questions[i].questionMissed}
+
+                                                    //tr
+                                                    //    td
+                                                    //        | Project
+                                                    //        small This is example of project
+                                                    //    td
+                                                    //        span.pie 0.52/1.561
+                                                    //    td 20%
+                                                    //tr
+                                                    //    td Alpha project
+                                                    //    td
+                                                    //        span.pie 6,9
+                                                    //    td 40%
+                                                    //tr
+                                                    //    td Betha project
+                                                    //    td
+                                                    //        span.pie 3,1
+                                                    //    td 75%
+                                                    //tr
+                                                    //    td Gamma project
+                                                    //    td
+                                                    //        span.pie 4,9
+                                                    //    td 18%
+                            .col-lg-6
+                                .ibox.float-e-margins
+                                    .ibox-title
+                                        h5 Student Preformance List
+                                        .ibox-tools
+                                            a.collapse-link
+                                                i.fa.fa-chevron-up
+                                            a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                                i.fa.fa-wrench
+                                            ul.dropdown-menu.dropdown-user
+                                                li
+                                                    a(href='#') Config option 1
+                                                li
+                                                    a(href='#') Config option 2
+                                    .ibox-content
+                                        table.table.table-hover
+                                            thead
+                                                tr
+                                                    th <br />#
+                                                    th <br />Student Username
+                                                    th Precent of<br />all mastered
+                                            tbody
+                                                each studentObject, index in studentsList
+                                                    tr
+                                                        td #{index+1}
+                                                        td #{studentObject.email}
+                                                        td #{studentObject.totalMastery}
+                    //shows two tables not side by side for smaller screens
+                    .hidden-lg
+                        .row
+                            .col-sm-12
+                                .ibox.float-e-margins
+                                    .ibox-title
+                                        h5 Top 10 Missed Questions
+                                        .ibox-tools
+                                            a.collapse-link
+                                                i.fa.fa-chevron-up
+                                            a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                                i.fa.fa-wrench
+                                            ul.dropdown-menu.dropdown-user
+                                                li
+                                                    a(href='#') Config option 1
+                                                li
+                                                    a(href='#') Config option 2
+                                            a.close-link
+                                                i.fa.fa-times
+                                    .ibox-content
+                                        .row
+                                            .col-sm-5.m-b-xs
+                                                select.input-sm.form-control.input-s-sm.inline
+                                                    option(value='0') Option 1
+                                                    option(value='1') Option 2
+                                                    option(value='2') Option 3
+                                                    option(value='3') Option 4
+                                            .col-sm-4.m-b-xs
+                                                .btn-group(data-toggle='buttons')
+                                                    label.btn.btn-sm.btn-white
+                                                        input#option1(type='radio', name='options')
+                                                        |  Day
+                                                    label.btn.btn-sm.btn-white.active
+                                                        input#option2(type='radio', name='options')
+                                                        |  Week
+                                                    label.btn.btn-sm.btn-white
+                                                        input#option3(type='radio', name='options')
+                                                        |  Month
+                                            .col-sm-3
+                                                .input-group
+                                                    input.input-sm.form-control(type='text', placeholder='Search')
+                                                    span.input-group-btn
+                                                        button.btn.btn-sm.btn-primary(type='button')  Go!
+                                        .table-responsive
+                                            table.table.table-hover
+                                                thead
+                                                    tr
+                                                        th Question
+                                                        th Mastered
+                                                        th Missed
+                                                tbody
+                                                    - for (var i=0;i<10;i++)
+                                                        - if(questions[i]!=null)
+                                                            tr
+                                                                td #{questions[i].questionString}
+                                                                td #{questions[i].questionMastered}
+                                                                td #{questions[i].questionMissed}
+                                                    //tr
+                                                    //    td
+                                                    //        | Project
+                                                    //        small This is example of project
+                                                    //    td
+                                                    //        span.pie 0.52/1.561
+                                                    //    td 20%
+                                                    //tr
+                                                    //    td Alpha project
+                                                    //    td
+                                                    //        span.pie 6,9
+                                                    //    td 40%
+                                                    //tr
+                                                    //    td Betha project
+                                                    //    td
+                                                    //        span.pie 3,1
+                                                    //    td 75%
+                                                    //tr
+                                                    //    td Gamma project
+                                                    //    td
+                                                    //        span.pie 4,9
+                                                    //    td 18%
+                        .row
+                            .col-lg-12
+                                .ibox.float-e-margins
+                                    .ibox-title
+                                        h5 Student Preformance List
+                                        .ibox-tools
+                                            a.collapse-link
+                                                i.fa.fa-chevron-up
+                                            a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                                i.fa.fa-wrench
+                                            ul.dropdown-menu.dropdown-user
+                                                li
+                                                    a(href='#') Config option 1
+                                                li
+                                                    a(href='#') Config option 2
+                                    .ibox-content
+                                        table.table.table-hover
+                                            thead
+                                                tr
+                                                    th <br />#
+                                                    th <br />Student Username
+                                                    th Precent of<br />all mastered
+                                            tbody
+                                                each studentObject, index in studentsList
+                                                    tr
+                                                        td #{index + 1}
+                                                        td #{studentObject.email}
+                                                        td #{studentObject.totalMastery}
                 .footer
                     .pull-right
                         | 10GB of
@@ -182,3 +490,22 @@ html
             var ctx = document.getElementById("CUChart6").getContext("2d");
             var myNewChart2 = new Chart(ctx).Doughnut(!{JSON.stringify(Institutions_of_National_Government_Data)}, !{JSON.stringify(SectionOptions)});
 
+            //to have for smaller screens
+
+            var ctx = document.getElementById("CUChart-xs").getContext("2d");
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(SectionOptions)});
+
+            var ctx = document.getElementById("CUChart2-xs").getContext("2d");
+            var myNewChart2 = new Chart(ctx).Doughnut(!{JSON.stringify(Civil_Rights_and_Liberties_Data)}, !{JSON.stringify(SectionOptions)});
+
+            var ctx = document.getElementById("CUChart3-xs").getContext("2d");
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(Political_Beliefs_and_Behaviors_Data)}, !{JSON.stringify(SectionOptions)});
+
+            var ctx = document.getElementById("CUChart4-xs").getContext("2d");
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(Linkage_Institutions_Data)}, !{JSON.stringify(SectionOptions)});
+
+            var ctx = document.getElementById("CUChart5-xs").getContext("2d");
+            var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(Public_Policy_Data)}, !{JSON.stringify(SectionOptions)});
+
+            var ctx = document.getElementById("CUChart6-xs").getContext("2d");
+            var myNewChart2 = new Chart(ctx).Doughnut(!{JSON.stringify(Institutions_of_National_Government_Data)}, !{JSON.stringify(SectionOptions)});
