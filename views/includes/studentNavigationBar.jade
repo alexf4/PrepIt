@@ -1,0 +1,49 @@
+//
+   Created by Cody on 1/5/16.
+
+nav.navbar-default.navbar-static-side(role='navigation')
+    .sidebar-collapse
+        ul#side-menu.nav
+            li.nav-header
+                .dropdown.profile-element
+                    a.dropdown-toggle(data-toggle='dropdown', href='#')
+                        span.clear
+                            span.block.m-t-xs
+                                strong.font-bold Student Name/email
+                            span.text-muted.text-xs.block
+                                | election level
+                                b.caret
+                    ul.dropdown-menu.animated.fadeInRight.m-t-xs
+                        li
+                            a(href='/signout') Logout
+                .logo-element
+                    | IN+
+            li.active
+                a(href='student')
+                    i.fa.fa-th-large
+                    span.nav-label Main view
+            li
+                a(href='freeplay')
+                    i.fa.fa-th-large
+                    span.nav-label Freeplay
+                    span.fa.arrow
+                ul.nav.nav-second-level
+                    li
+                        a(href='freeplay') All Categories
+                    li
+                        a(href='freeplay/category/Political Beliefs and Behaviors') Political Beliefs and Behaviors
+                    li
+                        a(href='freeplay/category/Linkage Institutions') Linkage Institutions
+                    li
+                        a(href='freeplay/category/Institutions of National Government') Institutions of National Government
+                    li
+                        a(href='freeplay/category/Public Policy') Public Policy
+                    li
+                        a(href='freeplay/category/Civil Rights and Liberties') Civil Rights and Liberties
+                    li
+                        a(href='freeplay/category/Constitutional Underpinnings') Constitutional Underpinnings
+            li
+            li
+                a(href='StudentLink')
+                    i.fa.fa-th-large
+                    span.nav-label Add Class
