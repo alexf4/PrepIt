@@ -1,242 +1,16 @@
 doctype html
 html
-    head
-        meta(charset='utf-8')
-        meta(name='viewport', content='width=device-width, initial-scale=1.0')
-        title INSPINIA | Main view
-        link(href='css/bootstrap.min.css', rel='stylesheet')
-        link(href='font-awesome/css/font-awesome.css', rel='stylesheet')
-        link(href='css/animate.css', rel='stylesheet')
-        link(href='css/style.css', rel='stylesheet')
+    //Head
+    include ./includes/head.jade
     body
         #wrapper
-            nav.navbar-default.navbar-static-side(role='navigation')
-                .sidebar-collapse
-                    ul#side-menu.nav
-                        li.nav-header
-                            .dropdown.profile-element
-                                a.dropdown-toggle(data-toggle='dropdown', href='#')
-                                    span.clear
-                                        span.block.m-t-xs
-                                            strong.font-bold Teacher name or email
-                                        span.text-muted.text-xs.block
-                                            | temp
-                                            b.caret
-                                ul.dropdown-menu.animated.fadeInRight.m-t-xs
-                                    li
-                                        a(href='/signout') Logout
-                            .logo-element
-                                | IN+
-                        li.active
-                            a(href='/teacher')
-                                i.fa.fa-th-large
-                                span.nav-label Main View
-                        li
-                            a(href='/teacher')
-                                i.fa.fa-th-large
-                                span.nav-label Student Analysis
-                        li
-                            a(href='/teacher')
-                                i.fa.fa-th-large
-                                span.nav-label Question Analysis
-                        li
-                            a(href='/teacher')
-                                i.fa.fa-th-large
-                                span.nav-label Manage Students
+            //navegation bar
+            include ./includes/teacherNavigationBar.jade
             #page-wrapper.gray-bg
-                .row.border-bottom
-                    nav.navbar.navbar-static-top.white-bg(role='navigation', style='margin-bottom: 0')
-                        .navbar-header
-                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
-                                i.fa.fa-bars
-                            form.navbar-form-custom(role='search', method='post', action='#')
-                                .form-group
-                                    input#top-search.form-control(type='text', placeholder='Search for something...', name='top-search')
-                        ul.nav.navbar-top-links.navbar-right
-                            li
-                                a(href='/signout')
-                                    i.fa.fa-sign-out
-                                    |  Log out
+                include ./includes/topBar.jade
                 .wrapper.wrapper-content.animated.fadeInRight
-                    .row
-                        .col-lg-6
-                            .panel.panel-primary
-                                .panel-heading.text-center
-                                    | Class Comprehension: All Categories
-                                .panel-body
-                                    .div
-                                        canvas#TotalChart(height='190')
-                            //.ibox.float-e-margins
-                            //    .ibox-title
-                            //        h5 Total
-                            //        div(ibox-tools='')
-                            //    .ibox-content
-                            //        div
-                            //            canvas#TotalChart(height='140')
-                        .col-lg-6
-                            .hidden-xs
-                                .row
-                                    .col-sm-4
-                                       .panel.panel-primary
-                                           .panel-heading.text-nowrap.text-center
-                                               |Constitutional<br />Underpinnings
-                                           .panel-body
-                                               .div
-                                                   canvas#CUChart(height='220')
-                                       //.panel.panel-primary
-                                       //     .panel.panel-primary
-                                       //         .panel-heading
-                                       //             | Linkage Institutions
-                                       //         .panel-body
-                                       //             .div
-                                       //                 canvas#CUChart4(height='200')
-                                    .col-sm-4
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Civil Rights<br />and Liberties
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart2(height='220')
-                                        //.panel.panel-primary
-                                        //    .panel.panel-primary
-                                        //        .panel-heading
-                                        //            | Public Policy
-                                        //        .panel-body
-                                        //            .div
-                                        //                canvas#CUChart5(height='200')
-                                    .col-sm-4
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Political Beliefs<br />and Behaviors
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart3(height='220')
-                                        //.panel.panel-primary
-                                        //    .panel.panel-primary
-                                        //        .panel-heading
-                                        //            | Institutions of National Government
-                                        //        .panel-body
-                                        //            .div
-                                        //                canvas#CUChart6(height='200')
-
-
-                                    //.col-lg-4
-                                    //    .ibox.float-e-margins
-                                    //        .ibox-title
-                                    //            h5 Constitutional Underpinnings
-                                    //            div(ibox-tools='')
-                                    //        .ibox-content
-                                    //            div
-                                    //                canvas#CUChart(height='140')
-                                    //.col-lg-4
-                                    //    .ibox.float-e-margins
-                                    //        .ibox-title
-                                    //            h5 Civil Rights and Liberties
-                                    //            div(ibox-tools='')
-                                    //        .ibox-content
-                                    //            div
-                                    //                canvas#CUChart2(height='140')
-                                    //.col-lg-4
-                                    //    .ibox.float-e-margins
-                                    //        .ibox-title
-                                    //            h5 Political Beliefs and Behaviors
-                                    //            div(ibox-tools='')
-                                    //        .ibox-content
-                                    //            div
-                                    //                canvas#CUChart3(height='140')
-                                .row
-                                    .col-sm-4
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Linkage<br />Institutions
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart4(height='220')
-                                    .col-sm-4
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Public<br />Policy
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart5(height='220')
-                                    .col-sm-4
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Institutions of<br />National Government
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart6(height='220')
-                                //.row
-                                //    .col-lg-4
-                                //        .ibox.float-e-margins
-                                //            .ibox-title
-                                //                h5 Linkage Institutions
-                                //                div(ibox-tools='')
-                                //            .ibox-content
-                                //                div
-                                //                    canvas#CUChart4(height='140')
-                                //    .col-lg-4
-                                //        .ibox.float-e-margins
-                                //            .ibox-title
-                                //                h5 Public Policy
-                                //                div(ibox-tools='')
-                                //            .ibox-content
-                                //                div
-                                //                    canvas#CUChart5(height='140')
-                                //    .col-lg-4
-                                //        .ibox.float-e-margins
-                                //            .ibox-title
-                                //                h5 Institutions of National Government
-                                //                div(ibox-tools='')
-                                //            .ibox-content
-                                //                div
-                                //                    canvas#CUChart6(height='140')
-                            .visible-xs
-                                .row
-                                    .col-xs-6
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Constitutional<br />Underpinnings
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart-xs(height='220')
-                                    .col-xs-6
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Civil Rights<br />and Liberties
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart2-xs(height='220')
-                                .row
-                                    .col-xs-6
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Political Beliefs<br />and Behaviors
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart3-xs(height='220')
-                                    .col-xs-6
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Linkage<br />Institutions
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart4-xs(height='220')
-                                .row
-                                    .col-xs-6
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Public<br />Policy
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart5-xs(height='220')
-                                    .col-xs-6
-                                        .panel.panel-primary
-                                            .panel-heading.text-nowrap.text-center
-                                                | Institutions of<br />National Government
-                                            .panel-body
-                                                .div
-                                                    canvas#CUChart6-xs(height='220')
+                    //Main Charts
+                    include ./includes/charts.jade
                     //shows tables side by side for larger screen
                     .visible-lg
                         .row
@@ -294,33 +68,10 @@ html
                                                                 td #{questions[i].questionString}
                                                                 td #{questions[i].questionMastered}
                                                                 td #{questions[i].questionMissed}
-
-                                                    //tr
-                                                    //    td
-                                                    //        | Project
-                                                    //        small This is example of project
-                                                    //    td
-                                                    //        span.pie 0.52/1.561
-                                                    //    td 20%
-                                                    //tr
-                                                    //    td Alpha project
-                                                    //    td
-                                                    //        span.pie 6,9
-                                                    //    td 40%
-                                                    //tr
-                                                    //    td Betha project
-                                                    //    td
-                                                    //        span.pie 3,1
-                                                    //    td 75%
-                                                    //tr
-                                                    //    td Gamma project
-                                                    //    td
-                                                    //        span.pie 4,9
-                                                    //    td 18%
                             .col-lg-6
                                 .ibox.float-e-margins
                                     .ibox-title
-                                        h5 Student Preformance List
+                                        h5 Student Performance List
                                         .ibox-tools
                                             a.collapse-link
                                                 i.fa.fa-chevron-up
@@ -401,33 +152,11 @@ html
                                                                 td #{questions[i].questionString}
                                                                 td #{questions[i].questionMastered}
                                                                 td #{questions[i].questionMissed}
-                                                    //tr
-                                                    //    td
-                                                    //        | Project
-                                                    //        small This is example of project
-                                                    //    td
-                                                    //        span.pie 0.52/1.561
-                                                    //    td 20%
-                                                    //tr
-                                                    //    td Alpha project
-                                                    //    td
-                                                    //        span.pie 6,9
-                                                    //    td 40%
-                                                    //tr
-                                                    //    td Betha project
-                                                    //    td
-                                                    //        span.pie 3,1
-                                                    //    td 75%
-                                                    //tr
-                                                    //    td Gamma project
-                                                    //    td
-                                                    //        span.pie 4,9
-                                                    //    td 18%
                         .row
                             .col-lg-12
                                 .ibox.float-e-margins
                                     .ibox-title
-                                        h5 Student Preformance List
+                                        h5 Student Performance List
                                         .ibox-tools
                                             a.collapse-link
                                                 i.fa.fa-chevron-up
