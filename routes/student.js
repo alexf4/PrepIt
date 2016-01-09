@@ -49,7 +49,8 @@ exports.studentPage = function (req, res) {
                         Political_Beliefs_and_Behaviors_Data: chartData.Political_Beliefs_and_Behaviors_Data,
                         Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
                         Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
-                        Public_Policy_Data: chartData.Public_Policy_Data
+                        Public_Policy_Data: chartData.Public_Policy_Data,
+                        Title: "Student Dashboard"
                     });
 
             });

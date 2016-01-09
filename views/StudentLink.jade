@@ -3,134 +3,63 @@
 
 doctype html
 html
-    head
-        meta(charset='utf-8')
-        meta(name='viewport', content='width=device-width, initial-scale=1.0')
-        title INSPINIA  Wizards
-        link(href='css/bootstrap.min.css', rel='stylesheet')
-        link(href='font-awesome/css/font-awesome.css', rel='stylesheet')
-        link(href='css/plugins/iCheck/custom.css', rel='stylesheet')
-        link(href='css/plugins/steps/jquery.steps.css', rel='stylesheet')
-        link(href='css/animate.css', rel='stylesheet')
-        link(href='css/style.css', rel='stylesheet')
+    //head
+    include ./includes/head.jade
     body
         #wrapper
-            nav.navbar-default.navbar-static-side(role='navigation')
-                .sidebar-collapse
-                    ul#side-menu.nav
-                        li.nav-header
-                            .dropdown.profile-element
-                                a.dropdown-toggle(data-toggle='dropdown', href='#')
-                                    span.clear
-                                        span.block.m-t-xs
-                                            strong.font-bold David Williams
-                                        span.text-muted.text-xs.block
-                                            | Art Director
-                                            b.caret
-                                ul.dropdown-menu.animated.fadeInRight.m-t-xs
-                                    li
-                                        a(href='#') Logout
-                            .logo-element
-                                | IN+
-                        li
-                            a(href='student')
-                                i.fa.fa-th-large
-                                span.nav-label Main view
-                        li
-                            a(href='freeplay')
-                                i.fa.fa-th-large
-                                span.nav-label Freeplay
-                                span.fa.arrow
-                            ul.nav.nav-second-level
-                                li
-                                    a(href='freeplay') All Categories
-                                li
-                                    a(href='freeplay/category/Political Beliefs and Behaviors') Political Beliefs and Behaviors
-                                li
-                                    a(href='freeplay/category/Linkage Institutions') Linkage Institutions
-                                li
-                                    a(href='freeplay/category/Institutions of National Government') Institutions of National Government
-                                li
-                                    a(href='freeplay/category/Public Policy') Public Policy
-                                li
-                                    a(href='freeplay/category/Civil Rights and Liberties') Civil Rights and Liberties
-                                li
-                                    a(href='freeplay/category/Constitutional Underpinnings') Constitutional Underpinnings
-                        li
-                        li.active
-                           a(href='StudentLink')
-                              i.fa.fa-th-large
-                              span.nav-label Add Class
+            //Side bar
+            include ./includes/studentNavigationBar.jade
             #page-wrapper.gray-bg
-                .row.border-bottom
-                    nav.navbar.navbar-static-top.white-bg(role='navigation', style='margin-bottom: 0')
-                        .navbar-header
-                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
-                                i.fa.fa-bars
-                            form.navbar-form-custom(role='search', method='post', action='#')
-                                .form-group
-                                    input#top-search.form-control(type='text', placeholder='Search for something...', name='top-search')
-                        ul.nav.navbar-top-links.navbar-right
-                            li
-                                a(href='#')
-                                    i.fa.fa-sign-out
-                                    |  Log out
+                include ./includes/topBar.jade
                 .wrapper.wrapper-content.animated.fadeInRight
                     .row
                         .col-lg-12
                             .ibox
 
-                                    form#form.wizard-big(action='/updateStudentLink', method= "POST")
-                                        h1 Class Code
+                                form#form.wizard-big(action='/updateStudentLink', method= "POST")
+                                    h1 Class Code
 
-                                        fieldset
-                                            h2 Add Class By TeacherID
+                                    fieldset
+                                        h2 Add Class By TeacherID
 
-                                            .row
-                                                .col-lg-8
-                                                    .form-group
-                                                        label Teacher ID *
+                                        .row
+                                            .col-lg-8
+                                                .form-group
+                                                    label Teacher ID *
 
-                                                        //Change to drop down from backend data
-                                                        input#userName.form-control.required(name='TeacherID', type='text')
+                                                    //Change to drop down from backend data
+                                                    input#userName.form-control.required(name='TeacherID', type='text')
 
-                                        h1 First Name
+                                    h1 First Name
 
-                                        fieldset
-                                            h2 Add First Name
+                                    fieldset
+                                        h2 Add First Name
 
-                                            .row
-                                                .col-lg-8
-                                                    .form-group
-                                                        label First Name *
+                                        .row
+                                            .col-lg-8
+                                                .form-group
+                                                    label First Name *
 
-                                                        //Change to drop down from backend data
-                                                        input#userName.form-control(name='FirstName', type='text')
+                                                    //Change to drop down from backend data
+                                                    input#userName.form-control(name='FirstName', type='text')
 
-                                        h1 First Name
+                                    h1 First Name
 
-                                        fieldset
-                                            h2 Add Last Name
+                                    fieldset
+                                        h2 Add Last Name
 
-                                            .row
-                                                .col-lg-8
-                                                    .form-group
-                                                        label Last Name *
+                                        .row
+                                            .col-lg-8
+                                                .form-group
+                                                    label Last Name *
 
-                                                        //Change to drop down from backend data
-                                                        input#userName.form-control(name='LastName', type='text')
+                                                    //Change to drop down from backend data
+                                                    input#userName.form-control(name='LastName', type='text')
 
 
 
-                    .footer
-                        .pull-right
-                            | 10GB of
-                            strong 250GB
-                                Free.
-
-                        div
-                            strong Copyright
-                                Example Company &copy; 2014-2015
+                    //footer
+                    include ./includes/footer.jade
         // Mainly scripts
         script(src='js/jquery-2.1.1.js')
         script(src='js/bootstrap.min.js')

@@ -9,7 +9,7 @@ exports.StudentLink= function(req,res){
     //Get the users id
     userId = req.session.passport.user;
 
-    res.render('StudentLink');
+    res.render('StudentLink',{Title: "Student Teacher Link"});
 }
 /**
  * This method will catch posts to update the student link to teachers

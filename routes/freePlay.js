@@ -21,7 +21,7 @@ exports.startFreePlay = function(req, res) {
     freePlayLogic.getQuestion(userId, function(question){
 
 
-        res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
+        res.render("FreePlayQuestion", { question: question , questionID : question._id.toString(), Title: "All Categories"});
     })
 
     //Pass the question to render
@@ -38,14 +38,14 @@ exports.startCategoryPlay = function(req, res){
     {
         freePlayLogic.getQuestion(userId, function(question){
 
-            res.render("FreePlayQuestion", { question: question , questionID : question._id.toString()});
+            res.render("FreePlayQuestion", { question: question , questionID : question._id.toString(),Title: "All Categories"});
 
         })
     }
     else {
         freePlayLogic.getQuestionFromCategory(userId, req.session.category, function (question) {
 
-            res.render("FreePlayQuestion", {question: question, questionID: question._id.toString()});
+            res.render("FreePlayQuestion", {question: question, questionID: question._id.toString(),Title: req.session.category});
 
         })
     }
@@ -61,14 +61,7 @@ exports.startCategoryPlay = function(req, res){
 
     freePlayLogic.checkAnswer(userId, req.body.answer, req.body.questionId ,  function(result){
 
-        //IF result object has a correct then show answer
-        if(result.correct){
-            res.render("FreePlayReview" , {question : result.question , correct : true , correctSolution : result.question.solution});
-        }else{
-            res.render("FreePlayReview" , {question : result.question , correct: false, correctSolution : result.question.solution});
-
-        }
-
+            res.render("FreePlayReview" , {question : result.question , correct : result.correct , correctSolution : result.question.solution, Title: "Question Review"});
     })
 
 };

@@ -30,7 +30,7 @@ module.exports = function(passport){
 	/* GET login page. */
 	router.get('/', function(req, res) {
     	// Display the Login page with any flash message, if any
-		res.render('login');
+		res.render('login',{Title: "Login"});
 	});
 
 
@@ -57,12 +57,12 @@ module.exports = function(passport){
 	/* handle signin post
 	* Need to check the user email in the db*/
 	router.get("/login",function(req, res){
-		res.render('login',{error: req.flash("error"), success:req.flash("success")});
+		res.render('login',{error: req.flash("error"), success:req.flash("success"), Title: "Login"});
 	});
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
-		res.render('register',{message: req.flash('message')});
+		res.render('register',{message: req.flash('message'), Title: "Sign Up"});
 	});
 
 	/* Handle Registration POST */
@@ -121,12 +121,12 @@ module.exports = function(passport){
 
 	/* GET Home Page */
 	router.get('/home', isAuthenticated, function(req, res){
-		res.render('home', { user: req.user });
+		res.render('home', { user: req.user , Title: "Home"});
 	});
 
 	/* GET Test Page*/
     router.get('/testPage', function(req, res){
-        res.render('testPage', { user: req.user });
+        res.render('testPage', { user: req.user , Title: 'TestPage'});
     });
 
 	/* Handle Logout */
@@ -182,7 +182,7 @@ module.exports = function(passport){
 
 	/* GET Twitter View Page */
 	router.get('/twitter', isAuthenticated, function(req, res){
-		res.render('twitter', { user: req.user });
+		res.render('twitter', { user: req.user , Title: "Twitter"});
 	});
 
 	return router;
