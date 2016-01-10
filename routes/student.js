@@ -50,7 +50,8 @@ exports.studentPage = function (req, res) {
                         Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
                         Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
                         Public_Policy_Data: chartData.Public_Policy_Data,
-                        Title: "Student Dashboard"
+                        Title: "Student Dashboard",
+                        activeSection: "Main View"
                     });
 
             });

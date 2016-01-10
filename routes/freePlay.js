@@ -15,13 +15,18 @@ exports.startFreePlay = function(req, res) {
     //Get the users logged in id
     userId = req.session.passport.user;
 
-    req.session.category=null;
+    req.session.category="All Categories";
 
     //TODO: try to clean this up and not need it (figure out how to call category play)
     freePlayLogic.getQuestion(userId, function(question){
 
 
-        res.render("FreePlayQuestion", { question: question , questionID : question._id.toString(), Title: "All Categories"});
+        res.render("FreePlayQuestion", {
+            question: question ,
+            questionID : question._id.toString(),
+            Title: "All Categories",
+            activeSection: "Freeplay",
+            activeSubsection: req.session.category});
     })
 
     //Pass the question to render
@@ -34,18 +39,30 @@ exports.startCategoryPlay = function(req, res){
     userId = req.session.passport.user;
 
     //TODO: try to not make only one render call and add suport for highlighting what the current category is
-    if (req.session.category===null)
+    if (req.session.category===null||req.session.category==="All Categories")
     {
+        req.session.category="All Categories";
+
         freePlayLogic.getQuestion(userId, function(question){
 
-            res.render("FreePlayQuestion", { question: question , questionID : question._id.toString(),Title: "All Categories"});
+            res.render("FreePlayQuestion", {
+                question: question ,
+                questionID : question._id.toString(),
+                Title: "All Categories",
+                activeSection: "Freeplay",
+                activeSubsection: req.session.category});
 
         })
     }
     else {
         freePlayLogic.getQuestionFromCategory(userId, req.session.category, function (question) {
 
-            res.render("FreePlayQuestion", {question: question, questionID: question._id.toString(),Title: req.session.category});
+            res.render("FreePlayQuestion", {
+                question: question,
+                questionID: question._id.toString(),
+                Title: req.session.category,
+                activeSection: "Freeplay",
+                activeSubsection: req.session.category});
 
         })
     }
@@ -61,7 +78,13 @@ exports.startCategoryPlay = function(req, res){
 
     freePlayLogic.checkAnswer(userId, req.body.answer, req.body.questionId ,  function(result){
 
-            res.render("FreePlayReview" , {question : result.question , correct : result.correct , correctSolution : result.question.solution, Title: "Question Review"});
+            res.render("FreePlayReview" , {
+                question : result.question ,
+                correct : result.correct ,
+                correctSolution : result.question.solution,
+                Title: "Question Review",
+                activeSection: "Freeplay",
+                activeSubsection: req.session.category});
     })
 
 };
