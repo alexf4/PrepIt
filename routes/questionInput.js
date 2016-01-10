@@ -31,6 +31,23 @@ exports.addQuestion = function(req, res){
 
     newQuestion.correct = false;
 
+    newQuestion.comprehension =  {
+        "mastered": false,
+        "intermediate": false,
+        "novice": true
+    };
+
+    newQuestion.responses = {
+        a: 0,
+        b: 0,
+        c : 0,
+        d : 0
+    };
+
+    newQuestion.numberOfAttempts = 0;
+    newQuestion.incorrectAttempts = 0;
+    newQuestion.correctAttempts =0;
+
 
     newQuestion.save(function(err , product) {
         if (err) throw err;
