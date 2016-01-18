@@ -361,6 +361,12 @@ exports.getQuestionsForStudent = function(studentID, callback){
  * @param email the studetns email
  * @param callback the callback
  */
-exports.getStudentFromEmail = function(email, callback){
+exports.getStudentFromEmail = function(inputEmail, callback){
+    userModel.find({ email :inputEmail }, function (err, student){
+        if (err){
+            callback(err, null);
+        }
 
+        callback(null, student[0]._id.toString());
+    });
 };

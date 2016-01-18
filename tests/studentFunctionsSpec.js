@@ -68,8 +68,13 @@ describe ("Student Functions", function(){
     describe("#getStudentFromEmail()", function(){
 
         var studentEmail = "student3@google.com";
+        var studentID = "568491a4ab13621200fe36f7";
+
         it("should return the studentsID from students email", function (done){
-            studentFunctions.getStudentFromEmail(studentEmail, function(student){
+            studentFunctions.getStudentFromEmail(studentEmail, function(err, foundStudentID){
+
+                assert.equal(foundStudentID, studentID);
+                console.log(foundStudentID);
                 done();
             })
         })
@@ -79,7 +84,7 @@ describe ("Student Functions", function(){
         var studentID = "5684918fab13621200fe36bf";
 
         it("should return all the questions of a student", function  (done){
-            studentFunctions.getQuestionsForStudent(studentID, function(questionData){
+            studentFunctions.getQuestionsForStudent(studentID, function(err ,questionData){
                 done();
             })
         })
