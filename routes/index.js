@@ -30,7 +30,7 @@ module.exports = function(passport){
 	/* GET login page. */
 	router.get('/', function(req, res) {
     	// Display the Login page with any flash message, if any
-		res.render('login',{Title: "Login"});
+		res.render('homePage',{Title: "Home"});
 	});
 
 
