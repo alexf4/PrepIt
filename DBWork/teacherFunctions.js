@@ -496,55 +496,46 @@ exports.getMissedQuestionsList = function (teacherID, routeCallback){
 
 };
 
-exports.getMissedQuestionsListPerCategory = function(inputClassToken, category, routeCallback){
+exports.getMissedQuestionsListPerCategory = function(inputTeacherID, category, routeCallback){
     var retList = new list;
 
     //grab all the questions from the teacher object
-    userModel.find({ classToken: inputClassToken , $and: [ { "isteacher": false } ]  }, function (err, users){
+    userModel.findById(inputTeacherID, function(err, user) {
         if (err){
             routeCallback(err, null);
         }
 
-        async.forEachOf(users , function (user, key, callback) {
+        //Sort the questions
+        user.questions.sort(compare);
 
-            //Sort the questions
-            user.questions.sort(compare);
+        //for each question create a new object then add it to the return list
+        user.questions.forEach(function (entry){
 
-            //for each question create a new object then add it to the return list
-            user.questions.forEach(function (entry) {
+            if (entry.category == category) {
+                var questionData = {
+                    questionString: entry.questionText,
+                    questionMissed: entry.incorrectAttempts
+                };
 
-                if (entry.category == category) {
+                if (entry.comprehension.mastered) {
+                    questionData.questionMastered = "Mastered";
 
-
-                    var questionData = {
-                        questionString: entry.questionText,
-                        questionMissed: entry.incorrectAttempts
-                    };
-
-                    if (entry.comprehension.mastered) {
-                        questionData.questionMastered = "Mastered";
-
-                    }
-                    else if (entry.comprehension.intermediate) {
-                        questionData.questionMastered = "Intermediate";
-                    }
-                    else {
-                        questionData.questionMastered = "Novice";
-
-                    }
-
-                    retList.add(questionData);
+                }
+                else if (entry.comprehension.intermediate) {
+                    questionData.questionMastered = "Intermediate";
+                }
+                else {
+                    questionData.questionMastered = "Novice";
 
                 }
 
-            });
+                retList.add(questionData);
 
-            callback();
+            }
+        });
 
-        }, function(err){
 
-            routeCallback(null, retList.toJSON());
-        })
+        routeCallback(null, retList.toJSON());
 
     });
 };

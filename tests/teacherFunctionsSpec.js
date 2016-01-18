@@ -237,11 +237,12 @@ describe("Teacher Functions", function(){
 
     describe("#getMissedQuestionsListPerCategory()", function(){
 
-        var classToken = "74fb18a";
+
+        var teacherID = "5684903dab13621200fe364f";
 
         var category = "Constitutional Underpinnings";
         it("should return all of the question data assocaited to the teacher of a category", function(done){
-            teacherFunctions.getMissedQuestionsListPerCategory(classToken, category, function(err, questionData){
+            teacherFunctions.getMissedQuestionsListPerCategory(teacherID, category, function(err, questionData){
                 console.log(questionData);
                 done();
             })
