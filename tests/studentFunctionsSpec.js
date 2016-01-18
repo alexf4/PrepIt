@@ -41,7 +41,7 @@ describe ("Student Functions", function(){
         })
     });
 
-    describe("#getUserScores", function (){
+    describe("#getUserScores()", function (){
 
         var studentID = "5684918fab13621200fe36bf";
         it("should return the scores for a user", function (done){
@@ -53,7 +53,7 @@ describe ("Student Functions", function(){
         })
     })
 
-    describe("#getMasteryScores", function (){
+    describe("#getMasteryScores()", function (){
 
         var studentID = "5684918fab13621200fe36bf";
         it("should return the scores for a user", function (done){
@@ -61,6 +61,31 @@ describe ("Student Functions", function(){
                 //console.log(scores);
                 done();
 
+            })
+        })
+    });
+
+    describe("#getStudentFromEmail()", function(){
+
+        var studentEmail = "student3@google.com";
+        var studentID = "568491a4ab13621200fe36f7";
+
+        it("should return the studentsID from students email", function (done){
+            studentFunctions.getStudentFromEmail(studentEmail, function(err, foundStudentID){
+
+                assert.equal(foundStudentID, studentID);
+                done();
+            })
+        })
+    });
+
+    describe("#getQuestionsForStudent" , function(){
+        var studentID = "5684918fab13621200fe36bf";
+
+        it("should return all the questions of a student", function  (done){
+            studentFunctions.getQuestionsForStudent(studentID, function(err ,questionData){
+                //console.log(questionData);
+                done();
             })
         })
     })

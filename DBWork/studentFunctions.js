@@ -8,6 +8,7 @@ var userModel = require("../models/user");
 var mongoose = require('mongoose');
 var async = require('async');
 var Dict = require("collections/dict");
+var list = require("collections/list");
 var DBFunctions = require("../DBWork/DBFunctions.js");
 var studentFunctions = require("./studentFunctions");
 
@@ -345,4 +346,84 @@ exports.getMasteryScores = function (studentID , routeCallback ){
 
             });
         });
+};
+
+/**
+ * This method will return all of the question data for the student
+ * @param studentID the studentd ID
+ * @param callback the callback
+ */
+exports.getQuestionsForStudent = function(studentID, callback){
+
+    var retList = new list;
+
+    //grab all the questions from the teacher object
+    userModel.findById(studentID, function(err, user) {
+        if (err){
+            callback(err, null);
+        }
+
+        //Sort the questions
+        user.questions.sort(compare);
+
+        //for each question create a new object then add it to the return list
+        user.questions.forEach(function (entry){
+
+
+            var questionData = {
+                questionString : entry.questionText,
+                questionMissed : entry.incorrectAttempts
+            }
+
+            if(entry.comprehension.mastered){
+                questionData.questionMastered = "Mastered";
+
+            }
+            else if (entry.comprehension.intermediate){
+                questionData.questionMastered = "Intermediate";
+            }
+            else {
+                questionData.questionMastered = "Novice";
+
+            }
+
+            retList.add(questionData);
+
+
+        })
+
+
+        callback(null, retList.toJSON());
+
+    });
+
+};
+
+/**
+ * This method will return the students ID from an email
+ * @param email the studetns email
+ * @param callback the callback
+ */
+exports.getStudentFromEmail = function(inputEmail, callback){
+    userModel.find({ email :inputEmail }, function (err, student){
+        if (err){
+            callback(err, null);
+        }
+
+        callback(null, student[0]._id.toString());
+    });
+};
+
+/**
+ * Simple sort function. This proves that we need to move questions out of the user objects
+ * @param a
+ * @param b
+ * @returns {number}
+ */
+function compare(a, b) {
+    if (a.incorrectAttempts < b.incorrectAttempts)
+        return 1;
+    if (a.incorrectAttempts > b.incorrectAttempts)
+        return -1;
+    return 0;
 }

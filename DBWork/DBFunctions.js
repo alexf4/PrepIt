@@ -225,3 +225,34 @@ exports.getNumberOfQuestionsPerCategory = function (inputCategory , callback){
         callback(err, questions.length);
     })
 }
+
+/**
+ * This method will take a scores object and return the highest comprehension
+ * @param scores
+ */
+exports.calculateComprehension = function (scores){
+
+    var comprehension = {
+         comp : "",
+         value :  0
+    };
+
+    if(scores.intermediate > scores.mastered && scores.intermediate > scores.novice){
+        comprehension.comp = "Intermediate";
+        comprehension.value = scores.intermediate;
+
+    }
+    else if(scores.mastered > scores.intermediate && scores.mastered > scores.novice){
+
+        comprehension.comp = "Mastered";
+        comprehension.value = scores.mastered;
+
+
+    }else{
+        comprehension.comp = "Novice";
+        comprehension.value = scores.novice;
+    }
+
+
+    return comprehension;
+};
