@@ -621,5 +621,17 @@ exports.addStudentMasteryToTotal = function ( numStudents, totalScores, studentS
         }
     })
 
+};
+
+exports.listStudentsAndCategoryMastery = function (classToken, category, callback){
+
+}
+
+exports.getAllQuestionDataForTeacher = function (classToken, callback){
+
+}
+
+exports.getAllQuestionDataForTeacherOfCategory = function (classToken, category, callback){
+
 }
 

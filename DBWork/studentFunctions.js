@@ -345,4 +345,12 @@ exports.getMasteryScores = function (studentID , routeCallback ){
 
             });
         });
+};
+
+exports.getQuestionsForStudent = function(studentID, callback){
+
+}
+
+exports.getStudentFromEmail = function(email, callback){
+
 }

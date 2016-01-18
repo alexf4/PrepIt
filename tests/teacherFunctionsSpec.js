@@ -210,4 +210,43 @@ describe("Teacher Functions", function(){
         })
     })
 
+
+    describe("#listStudentsAndCategoryMastery()", function(){
+
+        var classToken = "74fb18a";
+        var category = "Constitutional Underpinnings";
+
+        it("should return a list of all the students and their mastery of a specific category", function (done){
+            teacherFunctions.listStudentsAndCategoryMastery(classToken, category, function(err, studentlist){
+
+                done();
+            })
+        })
+    });
+
+    describe("#getAllQuestionDataForTeacher()", function(){
+
+        var classToken = "74fb18a";
+
+        it("should return all of the question data assocaited to the teacher", function(done){
+            teacherFunctions.getAllQuestionDataForTeacher(classToken, function(err, questionData){
+                done();
+            })
+        })
+    });
+
+    describe("#getAllQuestionDataForTeacherOfCategory()", function(){
+
+        var classToken = "74fb18a";
+
+        var category = "Constitutional Underpinnings";
+        it("should return all of the question data assocaited to the teacher of a category", function(done){
+            teacherFunctions.getAllQuestionDataForTeacherOfCategory(classToken, category, function(err, questionData){
+                done();
+            })
+        })
+    });
+
+
+
 });
