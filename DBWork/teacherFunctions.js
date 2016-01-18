@@ -116,7 +116,7 @@ exports.getClassAverageMasteryForQuestion = function (inputID , questionid, rout
         })
 
     });
-}
+};
 
 /**
  * This method will return the class average master of a given category
@@ -199,7 +199,7 @@ exports.getClassAverageMasteryForCategory = function (inputID , category , route
         })
 
     });
-}
+};
 
 
 /**
@@ -291,7 +291,7 @@ exports.getStudentsScores = function (inputID, routeCallback){
 
     });
 
-}
+};
 
 /**
  * This method will compile the students data into one source
@@ -340,7 +340,7 @@ exports.addStudentScoresToTotal = function ( numStudents, totalScores, studentSc
 
     })
 
-}
+};
 
 /**
  * This method will count all the students in a class
@@ -356,7 +356,7 @@ exports.numberOfStudentsInClass = function (teacherToken, callback){
 
         callback(null, users.length);
     });
-}
+};
 
 
 /**
@@ -448,7 +448,7 @@ exports.getStudentsMasterys = function (inputID, routeCallback){
 
     });
 
-}
+};
 
 exports.getMissedQuestionsList = function (teacherID, routeCallback){
 
@@ -470,7 +470,7 @@ exports.getMissedQuestionsList = function (teacherID, routeCallback){
             var questionData = {
                 questionString : entry.questionText,
                 questionMissed : entry.incorrectAttempts
-            }
+            };
 
             if(entry.comprehension.mastered){
                 questionData.questionMastered = "Mastered";
@@ -487,18 +487,68 @@ exports.getMissedQuestionsList = function (teacherID, routeCallback){
             retList.add(questionData);
 
 
-        })
+        });
 
 
         routeCallback(null, retList.toJSON());
 
     });
 
+};
+
+exports.getMissedQuestionsListPerCategory = function(inputClassToken, category, routeCallback){
+    var retList = new list;
+
+    //grab all the questions from the teacher object
+    userModel.find({ classToken: inputClassToken , $and: [ { "isteacher": false } ]  }, function (err, users){
+        if (err){
+            routeCallback(err, null);
+        }
+
+        async.forEachOf(users , function (user, key, callback) {
+
+            //Sort the questions
+            user.questions.sort(compare);
+
+            //for each question create a new object then add it to the return list
+            user.questions.forEach(function (entry) {
+
+                if (entry.category == category) {
 
 
+                    var questionData = {
+                        questionString: entry.questionText,
+                        questionMissed: entry.incorrectAttempts
+                    };
 
+                    if (entry.comprehension.mastered) {
+                        questionData.questionMastered = "Mastered";
 
-}
+                    }
+                    else if (entry.comprehension.intermediate) {
+                        questionData.questionMastered = "Intermediate";
+                    }
+                    else {
+                        questionData.questionMastered = "Novice";
+
+                    }
+
+                    retList.add(questionData);
+
+                }
+
+            });
+
+            callback();
+
+        }, function(err){
+
+            routeCallback(null, retList.toJSON());
+        })
+
+    });
+};
+
 
 /**
  * Simple sort function. This proves that we need to move questions out of the user objects
@@ -554,7 +604,7 @@ exports.listStudents = function (inputClassToken, routeCallback){
 
     //add each students email and total mastery to the ret dict
 
-}
+};
 
 
 exports.getTeacherClassToken = function (inputID , callback ){
@@ -565,7 +615,7 @@ exports.getTeacherClassToken = function (inputID , callback ){
         callback(null, user.classToken);
 
     });
-}
+};
 
 
 
@@ -629,28 +679,66 @@ exports.addStudentMasteryToTotal = function ( numStudents, totalScores, studentS
  * @param category the category to get the mastery from
  * @param callback the callback
  */
-exports.listStudentsAndCategoryMastery = function (classToken, category, callback){
+exports.listStudentsAndCategoryMastery = function (classToken, category, routeCallback){
+    var retList = new list;
 
+
+
+    //find all the students of the class
+    userModel.find({ classToken: classToken , $and: [ { "isteacher": false } ]  }, function (err, users){
+        if (err){
+            routeCallback(err, null);
+        }
+
+        async.forEachOf(users , function (value, key, callback){
+
+            var studentObject = {};
+
+            studentObject.email = value.email;
+
+            studentFunctions.getMasterOfCategory(value._id.toString(),category, function(err, scores){
+
+                //studentObject.totalMastery = scores.get("TotalMastery");
+
+                //studentObject.totalMastery = DBFunctions.calculateComprehension(scores);
+
+                studentObject.totalMastery = scores.mastered;
+                retList.add(studentObject);
+
+                callback();
+
+            })
+
+        }, function(err){
+
+
+            //return the scores with callback(scores);
+            routeCallback(null, retList.toJSON());
+        })
+
+    });
 };
 
 
-/**
- * This method will return all the question data in highest missed order of a teacher
- * @param classToken the teachers class
- * @param callback the callback
- */
-exports.getAllQuestionDataForTeacher = function (classToken, callback){
-
-};
 
 
-/**
- * This method will return all of the question data for a teacher of a specific category
- * @param classToken the teachers class
- * @param category the category to get the mastery from
- * @param callback the callback
- */
-exports.getAllQuestionDataForTeacherOfCategory = function (classToken, category, callback){
-
-}
+///**
+// * This method will return all the question data in highest missed order of a teacher
+// * @param classToken the teachers class
+// * @param callback the callback
+// */
+//exports.getAllQuestionDataForTeacher = function (classToken, callback){
+//
+//};
+//
+//
+///**
+// * This method will return all of the question data for a teacher of a specific category
+// * @param classToken the teachers class
+// * @param category the category to get the mastery from
+// * @param callback the callback
+// */
+//exports.getAllQuestionDataForTeacherOfCategory = function (classToken, category, callback){
+//
+//}
 

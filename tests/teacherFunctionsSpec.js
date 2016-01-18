@@ -218,30 +218,31 @@ describe("Teacher Functions", function(){
 
         it("should return a list of all the students and their mastery of a specific category", function (done){
             teacherFunctions.listStudentsAndCategoryMastery(classToken, category, function(err, studentlist){
-
+                //console.log(studentlist);
                 done();
             })
         })
     });
 
-    describe("#getAllQuestionDataForTeacher()", function(){
+    //describe("#getAllQuestionDataForTeacher()", function(){
+    //
+    //    var classToken = "74fb18a";
+    //
+    //    it("should return all of the question data assocaited to the teacher", function(done){
+    //        teacherFunctions.getAllQuestionDataForTeacher(classToken, function(err, questionData){
+    //            done();
+    //        })
+    //    })
+    //});
 
-        var classToken = "74fb18a";
-
-        it("should return all of the question data assocaited to the teacher", function(done){
-            teacherFunctions.getAllQuestionDataForTeacher(classToken, function(err, questionData){
-                done();
-            })
-        })
-    });
-
-    describe("#getAllQuestionDataForTeacherOfCategory()", function(){
+    describe("#getMissedQuestionsListPerCategory()", function(){
 
         var classToken = "74fb18a";
 
         var category = "Constitutional Underpinnings";
         it("should return all of the question data assocaited to the teacher of a category", function(done){
-            teacherFunctions.getAllQuestionDataForTeacherOfCategory(classToken, category, function(err, questionData){
+            teacherFunctions.getMissedQuestionsListPerCategory(classToken, category, function(err, questionData){
+                console.log(questionData);
                 done();
             })
         })
