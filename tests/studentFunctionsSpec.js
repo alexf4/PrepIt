@@ -74,7 +74,6 @@ describe ("Student Functions", function(){
             studentFunctions.getStudentFromEmail(studentEmail, function(err, foundStudentID){
 
                 assert.equal(foundStudentID, studentID);
-                console.log(foundStudentID);
                 done();
             })
         })
@@ -85,6 +84,7 @@ describe ("Student Functions", function(){
 
         it("should return all the questions of a student", function  (done){
             studentFunctions.getQuestionsForStudent(studentID, function(err ,questionData){
+                //console.log(questionData);
                 done();
             })
         })
