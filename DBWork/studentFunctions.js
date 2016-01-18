@@ -347,10 +347,20 @@ exports.getMasteryScores = function (studentID , routeCallback ){
         });
 };
 
+/**
+ * This method will return all of the question data for the student
+ * @param studentID the studentd ID
+ * @param callback the callback
+ */
 exports.getQuestionsForStudent = function(studentID, callback){
 
-}
+};
 
+/**
+ * This method will return the students ID from an email
+ * @param email the studetns email
+ * @param callback the callback
+ */
 exports.getStudentFromEmail = function(email, callback){
 
-}
+};

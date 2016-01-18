@@ -623,14 +623,33 @@ exports.addStudentMasteryToTotal = function ( numStudents, totalScores, studentS
 
 };
 
+/**
+ * This method will list all the students of a class plus provide the mastery of a specific category per student
+ * @param classToken the class the students are in
+ * @param category the category to get the mastery from
+ * @param callback the callback
+ */
 exports.listStudentsAndCategoryMastery = function (classToken, category, callback){
 
-}
+};
 
+
+/**
+ * This method will return all the question data in highest missed order of a teacher
+ * @param classToken the teachers class
+ * @param callback the callback
+ */
 exports.getAllQuestionDataForTeacher = function (classToken, callback){
 
-}
+};
 
+
+/**
+ * This method will return all of the question data for a teacher of a specific category
+ * @param classToken the teachers class
+ * @param category the category to get the mastery from
+ * @param callback the callback
+ */
 exports.getAllQuestionDataForTeacherOfCategory = function (classToken, category, callback){
 
 }
