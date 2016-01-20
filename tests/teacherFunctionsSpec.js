@@ -43,9 +43,9 @@ describe("Teacher Functions", function(){
             var category = "Constitutional Underpinnings";
 
             var expectedResults = {
-                mastered : 6,
+                mastered : 5,
                 intermediate : 0,
-                novice : 93
+                novice : 95
             }
 
             teacherFunctions.getClassAverageMasteryForCategory(teacherID, category , function(err, scores){
@@ -243,7 +243,7 @@ describe("Teacher Functions", function(){
         var category = "Constitutional Underpinnings";
         it("should return all of the question data assocaited to the teacher of a category", function(done){
             teacherFunctions.getMissedQuestionsListPerCategory(teacherID, category, function(err, questionData){
-                console.log(questionData);
+                //console.log(questionData);
                 done();
             })
         })
