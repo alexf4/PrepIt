@@ -8,12 +8,85 @@ var dataToChartHelper = require("../views/dataToChartHelper");
 
 var async = require('async');
 
+var category;
+var studentEmail;
+var questionText;
+
+exports.setCategory=function(category){
+  this.category=category;
+};
+
+exports.setStudent = function(studentEmail){
+  this.studentEmail = studentEmail;
+};
+
+exports.setQuestionText = function(questionText){
+  this.questionText = questionText;
+};
+
+exports.emptyOutSessionData = function(req){
+  req.session.category = null;
+  req.session.studentEmail = null;
+  req.session.questionText = null;
+};
+
+
+
+exports.teacherDrillDown = function (req , res){
+
+  //figure out what session data there is
+
+  //if student, load student page
+  if (req.session.studentEmail){
+    //Render the student version of a view for the teacher
+    this.renderStudentView(req, res);
+  }
+
+  //if category, load only category data
+  else if (req.session.category){
+    //Render the views with a specific category
+    this.renderCategoryView(req, res);
+
+  }
+  //if question, load only question data
+  else if(req.session.questionText){
+    //render the views with a specific question
+    this.renderQuestionView(req, res);
+  }
+
+  //empty out session data
+  //TODO: may have to update the class vars.
+  this.emptyOutSessionData(req);
+
+};
+
+exports.renderStudentView = function (req, res){
+  //Find the users ID from their email
+
+  //Render the student page
+
+  //TODO: make sure we keep the side bar the teacher version
+};
+
+exports.renderCategoryView = function (req, res){
+
+  //Render the teacher dashboard, but only focus on the category
+};
+
+exports.renderQuestionView = function(req, res){
+
+  //Render the teacher dashboard, bur only fucos
+};
+
+
 /**
  *
  * @param req
  * @param res
  */
 exports.teacherPage = function(req, res ){
+
+  this.emptyOutSessionData(req);
 
   //Get the users logged in id
   userId = req.session.passport.user;
