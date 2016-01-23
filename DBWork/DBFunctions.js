@@ -256,3 +256,32 @@ exports.calculateComprehension = function (scores){
 
     return comprehension;
 };
+
+/**
+ * This method will return the question data of an user
+ * @param inputID the user, could be a teacher or student
+ * @param questionText the string format of the question
+ * @param callback the simple callback.
+ */
+exports.getQuestionData = function (inputID, questionText, callback){
+    var found = false;
+
+    //find the user
+    userModel.findById(inputID, function (err, user) {
+        if (err) {
+            callback(err, null);
+        }
+
+        user.questions.forEach(function (entry){
+            if (entry.questionText == questionText){
+                found = true;
+                callback(null, entry);
+            }
+        });
+
+        if (!found){
+            callback("could not find question", null);
+        }
+    });
+
+};
