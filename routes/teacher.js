@@ -6,6 +6,12 @@ var teacherFunctions = require("../DBWork/teacherFunctions");
 
 var dataToChartHelper = require("../views/dataToChartHelper");
 
+var studentFunctions = require("../DBWork/studentFunctions");
+
+var DBFunctions = require("../DBWork/DBFunctions.js");
+
+var teacher = require("./teacher.js");
+
 var async = require('async');
 
 var category;
@@ -39,43 +45,128 @@ exports.teacherDrillDown = function (req , res){
   //if student, load student page
   if (req.session.studentEmail){
     //Render the student version of a view for the teacher
-    this.renderStudentView(req, res);
+    teacher.renderStudentView(req, res);
   }
 
   //if category, load only category data
   else if (req.session.category){
     //Render the views with a specific category
-    this.renderCategoryView(req, res);
+    teacher.renderCategoryView(req, res);
 
   }
   //if question, load only question data
   else if(req.session.questionText){
     //render the views with a specific question
-    this.renderQuestionView(req, res);
+    teacher.renderQuestionView(req, res);
   }
 
   //empty out session data
   //TODO: may have to update the class vars.
-  this.emptyOutSessionData(req);
+  teacher.emptyOutSessionData(req);
 
 };
 
 exports.renderStudentView = function (req, res){
   //Find the users ID from their email
 
-  //Render the student page
+  studentFunctions.getStudentFromEmail(req.session.studentEmail, function(err, studentID){
+    studentFunctions.getMasteryScores(studentID, function(scores){
+      var chartData = dataToChartHelper.createStudentMasteryChart(scores);
 
-  //TODO: make sure we keep the side bar the teacher version
+      //TODO: Make this dynamic. We have a list of categories, but we need to clean up the names we use here
+      //TODO: Cody can now render pass into the student page the side bar information on the categories.
+      res.render("student",
+          {
+            //TODO: need to figure out what the total data will look like
+            totalData: chartData.totalData,
+            totalOptions: chartData.totalOptions,
+            CUData: chartData.Constitutional_Underpinnings_Data,
+            SectionOptions: chartData.sectionOptions,
+            Civil_Rights_and_Liberties_Data: chartData.Civil_Rights_and_Liberties_Data,
+            Political_Beliefs_and_Behaviors_Data: chartData.Political_Beliefs_and_Behaviors_Data,
+            Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
+            Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
+            Public_Policy_Data: chartData.Public_Policy_Data,
+            Title: "Student Dashboard View",
+            activeSection: "Main View"
+          });
+
+    })
+  });
+
+
+
+  //TODO: CODY (Drilldown) make sure we keep the side bar the teacher version
 };
 
 exports.renderCategoryView = function (req, res){
 
   //Render the teacher dashboard, but only focus on the category
+
+  async.waterfall([
+    function(callback) {
+      //Get the teachers students scores/masteries
+      teacherFunctions.getStudentsMasterys(userId, function(scores){
+        callback(null, scores)
+      })
+    },
+    function(scores, callback) {
+      //Convert the scores into a format the front end can consume
+      chartData = dataToChartHelper.createStudentMasteryChart(scores);
+      callback(null)
+    },
+    function(callback){
+
+      //find the teachers class token
+      teacherFunctions.getTeacherClassToken(userId, function(err, classToken) {
+        callback(null, classToken)
+      })
+    },
+    function(classToken, callback) {
+
+      //create the list of the students in the class and provide the mastery of the category
+      teacherFunctions.listStudentsAndCategoryMastery(classToken, req.session.category , function(students){
+        studentsList =  students;
+        callback(null)
+      })
+    },
+    function(callback) {
+
+      //create the list of missed questions
+      teacherFunctions.getMissedQuestionsListPerCategory(userId, req.session.category , function(err, questions){
+        questionList = questions;
+        callback(null);
+      })
+    }
+  ],  function () {
+    //Send all the data to the front end.
+
+    //TODO:CODY (Drilldown) you will need to switch up the main chart with the category that has been selected
+    res.render("teacher", {totalData : chartData.totalData , totalOptions : chartData.totalOptions ,
+      CUData : chartData.Constitutional_Underpinnings_Data, SectionOptions : chartData.sectionOptions,
+      Civil_Rights_and_Liberties_Data : chartData.Civil_Rights_and_Liberties_Data,
+      Political_Beliefs_and_Behaviors_Data : chartData.Political_Beliefs_and_Behaviors_Data,
+      Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
+      Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,
+      Public_Policy_Data : chartData.Public_Policy_Data, students : studentsList, questions : questionList , Title: "Teacher Dashboard"
+    });
+  });
 };
 
 exports.renderQuestionView = function(req, res){
 
-  //Render the teacher dashboard, bur only fucos
+  //Render the question page
+
+  DBFunctions.getQuestionData(req.sesstion.passport.user, req.session.questionText, function(err, questionData){
+
+    //TODO:Cody (DrillDown) once you make the view for question data, take and process the questionData
+
+    //res.render("QuestionView" , {questionData:questionData});
+
+  })
+
+
+
 };
 
 
@@ -86,7 +177,7 @@ exports.renderQuestionView = function(req, res){
  */
 exports.teacherPage = function(req, res ){
 
-  this.emptyOutSessionData(req);
+  teacher.emptyOutSessionData(req);
 
   //Get the users logged in id
   userId = req.session.passport.user;
