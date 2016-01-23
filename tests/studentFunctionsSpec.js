@@ -79,7 +79,7 @@ describe ("Student Functions", function(){
         })
     });
 
-    describe("#getQuestionsForStudent" , function(){
+    describe("#getQuestionsForStudent()" , function(){
         var studentID = "5684918fab13621200fe36bf";
 
         it("should return all the questions of a student", function  (done){
