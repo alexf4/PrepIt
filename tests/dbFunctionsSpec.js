@@ -9,6 +9,7 @@ db.connect();
 
 
 describe ("DB Functions" , function (){
+
     describe ("#getNumberOfQuestionsPerCategory()", function (){
         it("should return the number of questions in the db of a specific category" , function(done){
 
@@ -20,6 +21,19 @@ describe ("DB Functions" , function (){
             })
 
         })
-    })
+    });
 
-})
+    describe ("#getQuestionData()", function(){
+        var userID = "5684903dab13621200fe364f";
+        var questionText = "Iron triangles ensure that interest groups...";
+
+        it("should return the users question data given an user id and a question title", function(done){
+
+            DBFunctions.getQuestionData(userID, questionText, function(err, questionData){
+                //console.log(questionData);
+                done();
+            })
+        })
+    });
+
+});
