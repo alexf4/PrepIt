@@ -17,6 +17,7 @@ var async = require('async');
 var category;
 var studentEmail;
 var questionText;
+var classToken;
 
 exports.setCategory=function(category){
   this.category=category;
@@ -88,7 +89,8 @@ exports.renderStudentView = function (req, res){
             Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
             Public_Policy_Data: chartData.Public_Policy_Data,
             Title: "Student Dashboard View",
-            activeSection: "Main View"
+            activeSection: "Main View",
+            ClassCode: this.classToken
           });
 
     })
@@ -148,7 +150,8 @@ exports.renderCategoryView = function (req, res){
       Political_Beliefs_and_Behaviors_Data : chartData.Political_Beliefs_and_Behaviors_Data,
       Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
       Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,
-      Public_Policy_Data : chartData.Public_Policy_Data, students : studentsList, questions : questionList , Title: "Teacher Dashboard"
+      Public_Policy_Data : chartData.Public_Policy_Data, students : studentsList, questions : questionList,
+      Title: "Teacher Dashboard", ClassCode: this.classToken
     });
   });
 };
@@ -207,6 +210,7 @@ exports.teacherPage = function(req, res ){
 
       //find the teachers class token
       teacherFunctions.getTeacherClassToken(userId, function(err, classToken) {
+        this.classToken = classToken;
         callback(null, classToken)
       })
     },
@@ -234,7 +238,8 @@ exports.teacherPage = function(req, res ){
       Political_Beliefs_and_Behaviors_Data : chartData.Political_Beliefs_and_Behaviors_Data,
       Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
       Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,
-      Public_Policy_Data : chartData.Public_Policy_Data, students : studentsList, questions : questionList , Title: "Teacher Dashboard"
+      Public_Policy_Data : chartData.Public_Policy_Data, students : studentsList, questions : questionList,
+      Title: "Teacher Dashboard", ClassCode: this.classToken
     });
   });
   
