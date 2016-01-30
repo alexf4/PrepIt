@@ -60,10 +60,16 @@ exports.teacherDrillDown = function (req , res){
     //render the views with a specific question
     teacher.renderQuestionView(req, res);
   }
+  else{
+    //render standard view
+    teacher.teacherPage(req,res);
+  }
 
   //empty out session data
   //TODO: may have to update the class vars.
-  teacher.emptyOutSessionData(req);
+
+  //I want to keep session data so if user calls refresh it still works
+  //teacher.emptyOutSessionData(req);
 
 };
 
@@ -179,7 +185,7 @@ exports.renderQuestionView = function(req, res){
  * @param res
  */
 exports.teacherPage = function(req, res ){
-
+  //redundent
   teacher.emptyOutSessionData(req);
 
   //Get the users logged in id
