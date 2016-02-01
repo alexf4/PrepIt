@@ -14,14 +14,14 @@ describe ("Student Functions", function(){
         var expectedResults = {
             mastered : 6,
             intermediate : 0,
-            novice : 93
+            novice : 84
         };
 
         it("should return the mastery levels of category for a student", function(done){
             studentFunctions.getMasterOfCategory(studentID, category, function(err, scores){
                 assert.equal(scores.mastered, expectedResults.mastered, "mastered should be 8");
                 assert.equal(scores.intermediate, expectedResults.intermediate, "intermediate should be 0");
-                assert.equal(scores.novice, expectedResults.novice, "novice should be 91");
+                assert.equal(scores.novice, expectedResults.novice, "novice should be 84");
                 done();
             })
         })

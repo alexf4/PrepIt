@@ -43,15 +43,15 @@ describe("Teacher Functions", function(){
             var category = "Constitutional Underpinnings";
 
             var expectedResults = {
-                mastered : 5,
+                mastered : 4,
                 intermediate : 0,
-                novice : 95
+                novice : 86
             }
 
             teacherFunctions.getClassAverageMasteryForCategory(teacherID, category , function(err, scores){
                 assert.equal(scores.mastered, expectedResults.mastered, "mastered should be 0");
                 assert.equal(scores.intermediate, expectedResults.intermediate, "intermediate should be 0");
-                assert.equal(scores.novice, expectedResults.novice, "novice should be 100");
+                assert.equal(scores.novice, expectedResults.novice, "novice should be 86");
                 done();
             })
         })
