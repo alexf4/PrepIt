@@ -81,10 +81,13 @@
                                 th Precent of<br />all mastered
                         tbody
                             each studentObject, index in studentsList
-                                tr
-                                    td #{index+1}
-                                    td #{studentObject.email}
-                                    td #{studentObject.totalMastery}
+                                a(href='/teacherDrilldown/student/#{studentObject.email}')
+                                    tr
+                                        td #{index+1}
+                                        td
+                                            a(href='/teacherDrilldown/student/#{studentObject.email}')
+                                                p #{studentObject.email}
+                                        td #{studentObject.totalMastery}
 //shows two tables not side by side for smaller screens
 .hidden-lg
     .row
@@ -166,7 +169,15 @@
                                 th Precent of<br />all mastered
                         tbody
                             each studentObject, index in studentsList
-                                tr
-                                    td #{index + 1}
-                                    td #{studentObject.email}
-                                    td #{studentObject.totalMastery}
+
+                                a(href='/teacherDrilldown/student/#{studentObject.email}')
+                                    tr
+                                        td #{index + 1}
+                                        td
+                                            a(href='/teacherDrilldown/student/#{studentObject.email}')
+                                                p #{studentObject.email}
+                                        td #{studentObject.totalMastery}
+//script(type='text/javascript').
+//    $("tr").click(function() {
+//    window.location.href = $(this).find("a").attr("href");
+//    });

@@ -82,7 +82,7 @@ exports.renderStudentView = function (req, res){
 
       //TODO: Make this dynamic. We have a list of categories, but we need to clean up the names we use here
       //TODO: Cody can now render pass into the student page the side bar information on the categories.
-      res.render("student",
+      res.render("teacherStudentView",
           {
             //TODO: need to figure out what the total data will look like
             totalData: chartData.totalData,
@@ -96,7 +96,8 @@ exports.renderStudentView = function (req, res){
             Public_Policy_Data: chartData.Public_Policy_Data,
             Title: "Student Dashboard View",
             activeSection: "Main View",
-            ClassCode: this.classToken
+            ClassCode: this.classToken,
+            studentEmail: req.session.studentEmail
           });
 
     })

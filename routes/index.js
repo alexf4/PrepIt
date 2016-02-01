@@ -42,7 +42,7 @@ module.exports = function(passport){
 	router.get("/register", register.registrationpage);
 
 	/*handle teacher */
-	router.get("/teacher", isAuthenticated, teacher.teacherDrillDown);
+	router.get("/teacher", isAuthenticated, teacher.teacherPage);
 
 	/* Handle student
 	 */
@@ -156,18 +156,25 @@ module.exports = function(passport){
 	router.get('/teacherDrilldown/student/:studentEmail', isAuthenticated, function(req, res) {
 		teacher.emptyOutSessionData(req);
 		req.session.studentEmail=req.params.studentEmail;
-		res.redirect('/teacher');
+		res.redirect('/teacherDrilldown');
 	});
 	router.get('/teacherDrilldown/question/:questionText', isAuthenticated, function(req, res) {
 		teacher.emptyOutSessionData(req);
 		req.session.questionText=req.params.questionText;
-		res.redirect('/teacher');
+		res.redirect('/teacherDrilldown');
 	});
 	router.get('/teacherDrilldown/category/:category', isAuthenticated, function(req, res) {
 		teacher.emptyOutSessionData(req);
 		req.session.category=req.params.category;
-		res.redirect('/teacher');
+		res.redirect('/teacherDrilldown');
 	});
+	router.get('/teacherDrilldown/clear', isAuthenticated, function(req, res) {
+		teacher.emptyOutSessionData(req);
+		res.redirect('/teacherDrilldown');
+	});
+	/*handle teacher */
+	router.get("/teacherDrilldown", isAuthenticated, teacher.teacherDrillDown);
+
 
 	// route for facebook authentication and login
 	// different scopes while logging in
