@@ -36,4 +36,44 @@ describe ("DB Functions" , function (){
         })
     });
 
+    describe("#isNewUser()", function(){
+
+        var teacherWithStudents = "5684903dab13621200fe364f";
+        var teacherWithoutStudents = "56b7936de16c78b903572ea8";
+        var studentThatHasAnsweredQuestions = "56843ba3a2d4c2e80cb75c62";
+        var studentThatHasNotAnsweredQuestions = "56b7937ce16c78b903572eec";
+
+
+
+        it("should return false if the user has  answered any questions", function(done){
+            DBFunctions.isNewUser(studentThatHasAnsweredQuestions, function(err, userStatus){
+                assert.equal(userStatus, false, "There should have questions answered");
+                done();
+            })
+        });
+
+        it("should return false if the user is a teacher and has students", function(done){
+            DBFunctions.isNewUser(teacherWithStudents, function(err, userStatus){
+                assert.equal(userStatus, false, "There should have students");
+                done();
+            })
+        });
+
+        it("should return true if the user has not answered any questions", function(done){
+            DBFunctions.isNewUser(studentThatHasNotAnsweredQuestions, function(err, userStatus){
+                assert.equal(userStatus, true, "There should have no questions answered");
+                done();
+            })
+        });
+
+        it("should return true if the user is a teacher does not have any students.", function (done) {
+            DBFunctions.isNewUser(teacherWithoutStudents, function(err, userStatus){
+                assert.equal(userStatus, true, "There should have no students");
+                done();
+            })
+        });
+
+
+    })
+
 });

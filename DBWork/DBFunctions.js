@@ -6,6 +6,7 @@ var category = require("../models/category");
 var userModel = require("../models/user");
 var mongoose = require('mongoose');
 var arrays = require("collections/shim-array");
+var teacherFunctions = require("./teacherFunctions");
 
 /**
  * This method will add a new question to all users question sets
@@ -282,6 +283,50 @@ exports.getQuestionData = function (inputID, questionText, callback){
         if (!found){
             callback("could not find question", null);
         }
+    });
+
+};
+
+/**
+ * This method will determine if the user has not added a students, or has not answered any questions
+ * @param inputID the users ID
+ * @param callback the generic callback function
+ */
+exports.isNewUser = function (inputID, callback){
+    userModel.findById(inputID, function (err, user) {
+        if (err) {
+            callback(err, null);
+        }
+
+        if(user.isteacher){
+            teacherFunctions.listStudents(user.classToken, function(err, numberberOfStudents){
+                if(numberberOfStudents.length > 0){
+                    callback(null, false);
+                }
+                else{
+                    callback(null, true);
+                }
+            })
+
+        }
+
+        else{//user is a student
+
+            var questionAttempted = false;
+
+            //Find all the questions from a specific category
+            user.questions.forEach(function(entry){
+
+                if(entry.numberOfAttempts > 0){
+                    questionAttempted = true;
+                }
+            });
+
+            callback(null, !questionAttempted);
+
+        }
+
+
     });
 
 };

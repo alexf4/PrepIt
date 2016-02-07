@@ -9,15 +9,48 @@ var studentFunctions = require("../DBWork/studentFunctions");
 var DBFunctions = require("../DBWork/DBFunctions");
 var async = require('async');
 
-
+var student = require("./student");
 
 /**
- *
+ * This method will check the status of the user and route them correctly
  * @param req
  * @param res
  */
 exports.studentPage = function (req, res) {
 
+    //Get the users logged in id
+    var userId = req.session.passport.user;
+
+    DBFunctions.isNewUser(userId, function (err, userStatus) {
+        if (userStatus) {
+            //render new student page
+        }
+
+        //render student dashboard
+        student.renderStudentPage(req, res);
+
+
+    })
+};
+
+
+/**
+ * this method is used to show a new student the new student view
+ * @param req
+ * @param res
+ */
+exports.renderNewStudent = function (req ,res) {
+    //TODO: Cody to create a new jade view that holds the jpg. The side nave header and footer should be the same
+    //res.render();
+};
+
+
+/**
+ * This method is used to show a student their dashboard.
+ * @param req
+ * @param res
+ */
+exports.renderStudentPage = function(req, res){
     //Get the users logged in id
     var userId = req.session.passport.user;
 
