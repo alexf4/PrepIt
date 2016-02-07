@@ -588,7 +588,7 @@ exports.listStudents = function (inputClassToken, routeCallback){
 
 
             //return the scores with callback(scores);
-            routeCallback(retList.toJSON());
+            routeCallback(err, retList.toJSON());
         })
 
     });
