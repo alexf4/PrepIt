@@ -258,7 +258,7 @@ exports.teacherPage = function(req, res ){
       function(classToken, callback) {
 
         //create the list of the students in the class
-        teacherFunctions.listStudents(classToken, function(students){
+        teacherFunctions.listStudents(classToken, function(err, students){
           studentsList =  students;
           callback(null)
         })
