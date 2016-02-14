@@ -1,105 +1,7 @@
 //
    Created by Cody on 1/5/16.
 
-//Charts for normal screen
-mixin TotalChart
-    a(href='freeplay/category/')
-        .panel.panel-primary
-            .panel-heading.text-center
-                | Test Readiness: All Categories
-            .panel-body
-                .div
-
-                    canvas#TotalChart(height='190')
-mixin ConstitutionalUnderpinningsChart
-    a(href='freeplay/category/Constitutional%20Underpinnings')
-        .panel.panel-primary
-            .panel-heading.text-nowrap.text-center
-                | Constitutional<br />Underpinnings
-            .panel-body
-                .div
-                    canvas#CUChart(height='220')
-mixin CivilRightsandLibertiesChart
-        .panel.panel-primary
-            .panel-heading.text-nowrap.text-center
-                | Civil Rights<br />and Liberties
-            .panel-body
-                .div
-                    canvas#CUChart2(height='220')
-mixin PoliticalBeliefsandBehaviorsChart
-        .panel.panel-primary
-            .panel-heading.text-nowrap.text-center
-                | Political Beliefs<br />and Behaviors
-            .panel-body
-                .div
-                    canvas#CUChart3(height='220')
-mixin LinkageInstitutionsChart
-        .panel.panel-primary
-            .panel-heading.text-nowrap.text-center
-                | Linkage<br />Institutions
-            .panel-body
-                .div
-                    canvas#CUChart4(height='220')
-mixin PublicPolicyChart
-        .panel.panel-primary
-            .panel-heading.text-nowrap.text-center
-                | Public<br />Policy
-            .panel-body
-                .div
-                    canvas#CUChart5(height='220')
-mixin InstitutionsofNationalGovermentChart
-        .panel.panel-primary
-            .panel-heading.text-nowrap.text-center
-                | Institutions of<br />National Government
-            .panel-body
-                .div
-                    canvas#CUChart6(height='220')
-
-
-//Charts for xs
-mixin ConstitutionalUnderpinningsChartxs
-    a(href='freeplay/category/Constitutional%20Underpinnings')
-        .panel.panel-primary
-            .panel-heading.text-nowrap.text-center
-                | Constitutional<br />Underpinnings
-            .panel-body
-                .div
-                    canvas#CUChart(height='220')
-mixin CivilRightsandLibertiesChartxs
-    .panel.panel-primary
-        .panel-heading.text-nowrap.text-center
-            | Civil Rights<br />and Liberties
-        .panel-body
-            .div
-                canvas#CUChart2(height='220')
-mixin PoliticalBeliefsandBehaviorsChartxs
-    .panel.panel-primary
-        .panel-heading.text-nowrap.text-center
-            | Political Beliefs<br />and Behaviors
-        .panel-body
-            .div
-                canvas#CUChart3(height='220')
-mixin LinkageInstitutionsChartxs
-    .panel.panel-primary
-        .panel-heading.text-nowrap.text-center
-            | Linkage<br />Institutions
-        .panel-body
-            .div
-                canvas#CUChart4(height='220')
-mixin PublicPolicyChartxs
-    .panel.panel-primary
-        .panel-heading.text-nowrap.text-center
-            | Public<br />Policy
-        .panel-body
-            .div
-                canvas#CUChart5(height='220')
-mixin InstitutionsofNationalGovermentChartxs
-    .panel.panel-primary
-        .panel-heading.text-nowrap.text-center
-            | Institutions of<br />National Government
-        .panel-body
-            .div
-                canvas#CUChart6(height='220')
+include chartCategoryLogic/mixinsForChartLogic.jade
 
 //start body of html
 .row.text-center
@@ -125,46 +27,16 @@ mixin InstitutionsofNationalGovermentChartxs
     .visible-xs
         .row
             .col-xs-6
-                .panel.panel-primary
-                    .panel-heading.text-nowrap.text-center
-                        | Constitutional<br />Underpinnings
-                    .panel-body
-                        .div
-                            canvas#CUChart-xs(height='220')
+                mixin ConstitutionalUnderpinningsChartxs
             .col-xs-6
-                .panel.panel-primary
-                    .panel-heading.text-nowrap.text-center
-                        | Civil Rights<br />and Liberties
-                    .panel-body
-                        .div
-                            canvas#CUChart2-xs(height='220')
+                mixin CivilRightsandLibertiesChartxs
         .row
             .col-xs-6
-                .panel.panel-primary
-                    .panel-heading.text-nowrap.text-center
-                        | Political Beliefs<br />and Behaviors
-                    .panel-body
-                        .div
-                            canvas#CUChart3-xs(height='220')
+                mixin PoliticalBeliefsandBehaviorsChartxs
             .col-xs-6
-                .panel.panel-primary
-                    .panel-heading.text-nowrap.text-center
-                        | Linkage<br />Institutions
-                    .panel-body
-                        .div
-                            canvas#CUChart4-xs(height='220')
+                mixin LinkageInstitutionsChartxs
         .row
             .col-xs-6
-                .panel.panel-primary
-                    .panel-heading.text-nowrap.text-center
-                        | Public<br />Policy
-                    .panel-body
-                        .div
-                            canvas#CUChart5-xs(height='220')
+                mixin PublicPolicyChartxs
             .col-xs-6
-                .panel.panel-primary
-                    .panel-heading.text-nowrap.text-center
-                        | Institutions of<br />National Government
-                    .panel-body
-                        .div
-                            canvas#CUChart6-xs(height='220')
+                mixin InstitutionsofNationalGovermentChartxs

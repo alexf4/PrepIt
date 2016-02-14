@@ -235,10 +235,10 @@ exports.getStudentsScores = function (inputID, routeCallback){
                         questions : 0,
                         correct : 0,
                         testPercent : entry.TestPercent
-                    }
+                    };
 
                     retDict.set(entry.Title , questionData);
-                })
+                });
 
                 //ser the total number of questions
                 retDict.set("totalQuestions" , 0);
@@ -393,10 +393,10 @@ exports.getStudentsMasterys = function (inputID, routeCallback){
                         intermediate : 0,
                         novice : 0,
                         testPercent : entry.TestPercent
-                    }
+                    };
 
                     retDict.set(entry.Title , questionData);
-                })
+                });
 
 
                 //ser the total number of questions
