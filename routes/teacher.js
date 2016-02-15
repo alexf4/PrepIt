@@ -135,7 +135,7 @@ exports.renderCategoryView = function (req, res){
     function(classToken, callback) {
 
       //create the list of the students in the class and provide the mastery of the category
-      teacherFunctions.listStudentsAndCategoryMastery(classToken, req.session.category , function(students){
+      teacherFunctions.listStudentsAndCategoryMastery(classToken, req.session.category , function(err, students){
         studentsList =  students;
         callback(null)
       })
