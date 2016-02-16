@@ -175,6 +175,9 @@ module.exports = function(passport){
 	/*handle teacher */
 	router.get("/teacherDrilldown", isAuthenticated, teacher.teacherDrillDown);
 
+	//Handle the question Analysis link from the teacher nav.
+	router.get("/questionAnalysis", isAuthenticated, teacher.renderQuestionAnalysis);
+
 
 	// route for facebook authentication and login
 	// different scopes while logging in

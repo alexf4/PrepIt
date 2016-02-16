@@ -176,8 +176,26 @@ exports.renderQuestionView = function(req, res){
 
   })
 
+};
 
+/**
+ * This method handles the question Analysis routing.
+ * @param req
+ * @param res
+ */
+exports.renderQuestionAnalysis = function(req, res){
 
+  //Get the users logged in id
+  userId = req.session.passport.user;
+
+  //Grab all the missed questions associated from the teacher. This is meta data from all of their students.
+  teacherFunctions.getMissedQuestionsList(userId, function(err, questions){
+    if(err){
+      teacher.renderNewTeacher(req, res);
+    }
+
+    res.render("questionAnalysis", {questions : questions , ClassCode: this.classToken})
+  })
 };
 
 
