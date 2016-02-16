@@ -19,6 +19,9 @@ script(type='text/javascript').
 
     //to have for smaller screens
 
+    var ctx = document.getElementById("TotalChart-xs").getContext("2d");
+    var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(totalData)}, !{JSON.stringify(totalOptions)});
+
     var ctx = document.getElementById("CUChart-xs").getContext("2d");
     var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(SectionOptions)});
 
