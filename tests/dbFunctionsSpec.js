@@ -76,4 +76,15 @@ describe ("DB Functions" , function (){
 
     })
 
+    //describe("#removeQeuestion()", function(){
+    //
+    //    var baseQuestionID = "56bc24d63e7fee411f6037a0";
+    //
+    //    it("should remove a question based on the question base id", function(done){
+    //        DBFunctions.removeQuestion(baseQuestionID, function(){
+    //            done();
+    //        })
+    //    })
+    //})
+
 });

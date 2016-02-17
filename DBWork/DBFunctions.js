@@ -330,3 +330,49 @@ exports.isNewUser = function (inputID, callback){
     });
 
 };
+
+exports.removeQuestion = function (baseQuestionId, callback){
+    userModel.find({}, function (err, users) {
+        if (err) throw err;
+
+        // object of all the users
+        //console.log(users);
+
+        //For each user add a new question that is a copy of the question, but has a new id
+        users.forEach(function (user) {
+
+            for(var i = user.questions.length; i--;) {
+                if(user.questions[i].baseQuestionID === baseQuestionId) {
+                    arr.splice(i, 1);
+                }
+            }
+
+            //user.questions.forEach(function(entry){
+            //
+            //    if(entry.baseQuestionID == baseQuestionId){
+            //        //questionAttempted = true;
+            //
+            //        user.questions.
+            //    }
+            //
+            //});
+
+            //
+            ////Create new question
+            //var userQuestion = new questionModel(foundQuestion);
+            //userQuestion._id = mongoose.Types.ObjectId().toString();
+
+            //user.questions
+
+            //Add that question to that users question set
+            //user.questions.push(userQuestion);
+
+            user.save(function (error, data) {
+            });
+
+        });
+
+    });
+
+    callback()
+};

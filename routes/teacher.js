@@ -221,7 +221,8 @@ exports.teacherPage = function(req, res ){
   DBFunctions.isNewUser(userId, function(err, userStatus){
     if(userStatus){
       //render new user page
-      teacher.renderNewTeacher(req, res);
+      //teacher.renderNewTeacher(req, res);
+      teacher.renderTeacherDashboard(req, res);
     }
     else {
       //render teacher page
