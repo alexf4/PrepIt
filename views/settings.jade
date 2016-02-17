@@ -15,16 +15,16 @@ html
                             .ibox-title
                                 h5 Settings
                             .ibox-content
-                                form.form-horizontal
+                                form.form-horizontal(action='/updatePassword', method= "POST")
                                     p Password Reset
                                     .form-group
                                         label.col-lg-2.control-label Current Password
                                         .col-lg-10
-                                            input.form-control(type='email', placeholder='Current Password')
+                                            input.form-control(name="OldPassword", type='text', placeholder='Current Password')
                                     .form-group
                                         label.col-lg-2.control-label New Password
                                         .col-lg-10
-                                            input.form-control(type='email', placeholder='Password')
+                                            input.form-control(name = "NewPassword",type='text', placeholder='New Password')
                                     .form-group
                                         .col-lg-offset-2.col-lg-10
                                             button.btn.btn-sm.btn-white(type='submit') Update Password

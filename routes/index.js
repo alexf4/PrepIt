@@ -182,6 +182,9 @@ module.exports = function(passport){
 	//handle the settings page
 	router.get("/settings", isAuthenticated, settings.settings);
 
+	//Handle the password update from settings
+	router.post("/updatePassword", isAuthenticated, settings.updatePassword);
+
 
 	// route for facebook authentication and login
 	// different scopes while logging in
