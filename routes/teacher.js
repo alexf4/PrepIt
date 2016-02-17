@@ -135,7 +135,7 @@ exports.renderCategoryView = function (req, res){
     function(classToken, callback) {
 
       //create the list of the students in the class and provide the mastery of the category
-      teacherFunctions.listStudentsAndCategoryMastery(classToken, req.session.category , function(students){
+      teacherFunctions.listStudentsAndCategoryMastery(classToken, req.session.category , function(err, students){
         studentsList =  students;
         callback(null)
       })
@@ -152,14 +152,21 @@ exports.renderCategoryView = function (req, res){
     //Send all the data to the front end.
 
     //TODO:CODY (Drilldown) you will need to switch up the main chart with the category that has been selected
-    res.render("teacher", {totalData : chartData.totalData , totalOptions : chartData.totalOptions ,
-      CUData : chartData.Constitutional_Underpinnings_Data, SectionOptions : chartData.sectionOptions,
+    res.render("teacher", {
+      totalData : chartData.totalData ,
+      totalOptions : chartData.totalOptions ,
+      CUData : chartData.Constitutional_Underpinnings_Data,
+      SectionOptions : chartData.sectionOptions,
       Civil_Rights_and_Liberties_Data : chartData.Civil_Rights_and_Liberties_Data,
       Political_Beliefs_and_Behaviors_Data : chartData.Political_Beliefs_and_Behaviors_Data,
       Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
       Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,
-      Public_Policy_Data : chartData.Public_Policy_Data, students : studentsList, questions : questionList,
-      Title: "Teacher Dashboard", ClassCode: this.classToken
+      Public_Policy_Data : chartData.Public_Policy_Data,
+      students : studentsList,
+      questions : questionList,
+      Title: "Teacher Dashboard",
+      ClassCode: this.classToken,
+      Category: req.session.category
     });
   });
 };
@@ -176,8 +183,26 @@ exports.renderQuestionView = function(req, res){
 
   })
 
+};
 
+/**
+ * This method handles the question Analysis routing.
+ * @param req
+ * @param res
+ */
+exports.renderQuestionAnalysis = function(req, res){
 
+  //Get the users logged in id
+  userId = req.session.passport.user;
+
+  //Grab all the missed questions associated from the teacher. This is meta data from all of their students.
+  teacherFunctions.getMissedQuestionsList(userId, function(err, questions){
+    if(err){
+      teacher.renderNewTeacher(req, res);
+    }
+
+    res.render("questionAnalysis", {questions : questions , ClassCode: this.classToken})
+  })
 };
 
 
@@ -258,7 +283,7 @@ exports.teacherPage = function(req, res ){
       function(classToken, callback) {
 
         //create the list of the students in the class
-        teacherFunctions.listStudents(classToken, function(students){
+        teacherFunctions.listStudents(classToken, function(err, students){
           studentsList =  students;
           callback(null)
         })
@@ -273,14 +298,22 @@ exports.teacherPage = function(req, res ){
       }
     ],  function () {
       //Send all the data to the front end.
-      res.render("teacher", {totalData : chartData.totalData , totalOptions : chartData.totalOptions ,
-        CUData : chartData.Constitutional_Underpinnings_Data, SectionOptions : chartData.sectionOptions,
-        Civil_Rights_and_Liberties_Data : chartData.Civil_Rights_and_Liberties_Data,
-        Political_Beliefs_and_Behaviors_Data : chartData.Political_Beliefs_and_Behaviors_Data,
-        Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
-        Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,
-        Public_Policy_Data : chartData.Public_Policy_Data, students : studentsList, questions : questionList,
-        Title: "Teacher Dashboard", ClassCode: this.classToken
+      res.render("teacher",
+          {
+            totalData : chartData.totalData,
+            totalOptions : chartData.totalOptions,
+            CUData : chartData.Constitutional_Underpinnings_Data,
+            SectionOptions : chartData.sectionOptions,
+            Civil_Rights_and_Liberties_Data : chartData.Civil_Rights_and_Liberties_Data,
+            Political_Beliefs_and_Behaviors_Data : chartData.Political_Beliefs_and_Behaviors_Data,
+            Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
+            Institutions_of_National_Government_Data : chartData.Institutions_of_National_Government_Data,
+            Public_Policy_Data : chartData.Public_Policy_Data,
+            students : studentsList,
+            questions : questionList,
+            Title: "Teacher Dashboard",
+            ClassCode: this.classToken,
+            Category: req.session.category
       });
     });
   }

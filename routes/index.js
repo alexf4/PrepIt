@@ -11,6 +11,7 @@ var student = require('./student');
 var signup = require('./signup');
 var question = require('./questionInput');
 var freeplay = require('./freePlay');
+var settings = require('./settings');
 var link = require('./link');
 
 
@@ -174,6 +175,15 @@ module.exports = function(passport){
 	});
 	/*handle teacher */
 	router.get("/teacherDrilldown", isAuthenticated, teacher.teacherDrillDown);
+
+	//Handle the question Analysis link from the teacher nav.
+	router.get("/questionAnalysis", isAuthenticated, teacher.renderQuestionAnalysis);
+
+	//handle the settings page
+	router.get("/settings", isAuthenticated, settings.settings);
+
+	//Handle the password update from settings
+	router.post("/updatePassword", isAuthenticated, settings.updatePassword);
 
 
 	// route for facebook authentication and login
