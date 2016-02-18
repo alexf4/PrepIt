@@ -13,8 +13,13 @@ var async = require('async');
 
 exports.settings = function (req, res) {
 
-    res.render("settings", {ClassCode: this.classToken,
-        studentEmail: req.session.studentEmail});
+    res.render("settings", {
+        ClassCode: this.classToken,
+        studentEmail: req.session.studentEmail,
+        activeSection: "Settings"
+        //TODO: Alex please find a way to impliment the line under this
+        //,isTeacher: boolean
+        });
 
 };
 

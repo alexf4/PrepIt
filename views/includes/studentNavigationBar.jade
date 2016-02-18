@@ -63,6 +63,11 @@ mixin MainView
         i.fa.fa-th-large
         span.nav-label Main view
 
+mixin Settings
+    a(href='/settings')
+        i.fa.fa-th-large
+        span.nav-label Settings
+
 nav.navbar-default.navbar-static-side(role='navigation')
     .sidebar-collapse
         ul#side-menu.nav
@@ -100,3 +105,9 @@ nav.navbar-default.navbar-static-side(role='navigation')
             else
                 li
                     mixin StudentLink
+            if  activeSection == "Settings"
+                li.active
+                    mixin Settings
+            else
+                li
+                    mixin Settings
