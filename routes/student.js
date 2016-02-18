@@ -24,6 +24,7 @@ exports.studentPage = function (req, res) {
     DBFunctions.isNewUser(userId, function (err, userStatus) {
         if (userStatus) {
             //render new student page
+            student.renderNewStudent(req , res);
         }
 
         //render student dashboard
@@ -41,7 +42,7 @@ exports.studentPage = function (req, res) {
  */
 exports.renderNewStudent = function (req ,res) {
     //TODO: Cody to create a new jade view that holds the jpg. The side nave header and footer should be the same
-    //res.render();
+    res.render("newStudent");
 };
 
 
