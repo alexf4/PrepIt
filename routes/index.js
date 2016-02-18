@@ -159,9 +159,9 @@ module.exports = function(passport){
 		req.session.studentEmail=req.params.studentEmail;
 		res.redirect('/teacherDrilldown');
 	});
-	router.get('/teacherDrilldown/question/:questionText', isAuthenticated, function(req, res) {
+	router.get('/teacherDrilldown/question/:questionID', isAuthenticated, function(req, res) {
 		teacher.emptyOutSessionData(req);
-		req.session.questionText=req.params.questionText;
+		req.session.questionID=req.params.questionID;
 		res.redirect('/teacherDrilldown');
 	});
 	router.get('/teacherDrilldown/category/:category', isAuthenticated, function(req, res) {

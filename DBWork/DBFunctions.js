@@ -264,7 +264,7 @@ exports.calculateComprehension = function (scores){
  * @param questionText the string format of the question
  * @param callback the simple callback.
  */
-exports.getQuestionData = function (inputID, questionText, callback){
+exports.getQuestionData = function (inputID, questionID, callback){
     var found = false;
 
     //find the user
@@ -274,7 +274,7 @@ exports.getQuestionData = function (inputID, questionText, callback){
         }
 
         user.questions.forEach(function (entry){
-            if (entry.questionText == questionText){
+            if (entry.baseQuestionID == questionID){
                 found = true;
                 callback(null, entry);
             }

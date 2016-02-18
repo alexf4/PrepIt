@@ -41,7 +41,6 @@ exports.studentPage = function (req, res) {
  * @param res
  */
 exports.renderNewStudent = function (req ,res) {
-    //TODO: Cody to create a new jade view that holds the jpg. The side nave header and footer should be the same
     res.render("newStudent");
 };
 

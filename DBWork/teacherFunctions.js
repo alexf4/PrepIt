@@ -469,7 +469,8 @@ exports.getMissedQuestionsList = function (teacherID, routeCallback){
 
             var questionData = {
                 questionString : entry.questionText,
-                questionMissed : entry.incorrectAttempts
+                questionMissed : entry.incorrectAttempts,
+                questionID     : entry.baseQuestionID
             };
 
             if(entry.comprehension.mastered){

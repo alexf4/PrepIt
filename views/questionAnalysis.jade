@@ -30,7 +30,9 @@ html
                                             - for (var i=0;i<questions.length;i++)
                                                 - if(questions[i]!=null)
                                                     tr
-                                                        td #{questions[i].questionString}
+                                                        td
+                                                            a(href='/teacherDrilldown/question/#{questions[i].questionID}')
+                                                                p #{questions[i].questionString}
                                                         td #{questions[i].questionMastered}
                                                         td #{questions[i].questionMissed}
                 //footer

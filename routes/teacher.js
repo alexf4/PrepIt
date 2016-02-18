@@ -56,7 +56,7 @@ exports.teacherDrillDown = function (req , res){
 
   }
   //if question, load only question data
-  else if(req.session.questionText){
+  else if(req.session.questionID){
     //render the views with a specific question
     teacher.renderQuestionView(req, res);
   }
@@ -175,11 +175,9 @@ exports.renderQuestionView = function(req, res){
 
   //Render the question page
 
-  DBFunctions.getQuestionData(req.sesstion.passport.user, req.session.questionText, function(err, questionData){
+  DBFunctions.getQuestionData(req.session.passport.user, req.session.questionID, function(err, questionData){
 
-    //TODO:Cody (DrillDown) once you make the view for question data, take and process the questionData
-
-    //res.render("QuestionView" , {questionData:questionData});
+    res.render("questionResponsesView" , {question:questionData});
 
   })
 
