@@ -45,12 +45,12 @@ describe ("DB Functions" , function (){
 
 
 
-        it("should return false if the user has  answered any questions", function(done){
-            DBFunctions.isNewUser(studentThatHasAnsweredQuestions, function(err, userStatus){
-                assert.equal(userStatus, false, "There should have questions answered");
-                done();
-            })
-        });
+        //it("should return false if the user has  answered any questions", function(done){
+        //    DBFunctions.isNewUser(studentThatHasAnsweredQuestions, function(err, userStatus){
+        //        assert.equal(userStatus, false, "There should have questions answered");
+        //        done();
+        //    })
+        //});
 
         it("should return false if the user is a teacher and has students", function(done){
             DBFunctions.isNewUser(teacherWithStudents, function(err, userStatus){
