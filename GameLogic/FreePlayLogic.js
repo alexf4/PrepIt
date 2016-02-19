@@ -69,6 +69,10 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
         //foundQuestion = findNextQuestion(user.questions);
 
         //find the question in the user item
+
+        if (user.questions ==null){
+            console.log(user);
+        }
         user.questions.forEach(function (entry) {
 
 
@@ -80,7 +84,7 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
 
                 //Update the teachers question with metric data
                 if (!user.isteacher && user.classToken != 0) {
-                    updateTeacherData(user.classToken, entry.baseQuestionID, userAnswer);
+                    FreePlayLogic.updateTeacherData(user.classToken, entry.baseQuestionID, userAnswer);
                 }
 
 
@@ -152,20 +156,29 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
  * @param inputBaseQuestionID the base question id links the student and teacher questions together.
  * @param userAnswer what the student entered
  */
-function updateTeacherData(inputClassToken, inputBaseQuestionID, userAnswer) {
+exports.updateTeacherData = function(inputClassToken, inputBaseQuestionID, userAnswer) {
     //get the Teacher
     studentFunctions.getTeacher(inputClassToken, function (err, teacher) {
         // Get the teachers question
-        studentFunctions.getTeacherQuestion(inputClassToken, inputBaseQuestionID, function (err, questionID) {
-            if (err) {
-                console.log(err.toString());
-            }
 
-            //The the check anser method from the teacher object to update it
-            FreePlayLogic.checkAnswer(teacher[0]._id, userAnswer, questionID, function (result) {
-                console.log("Question data added to teacher object");
+        if(err){
+
+            console.log("teacher not found");
+
+        }
+        else{
+            studentFunctions.getTeacherQuestion(inputClassToken, inputBaseQuestionID, function (err, questionID) {
+                if (err) {
+                    console.log(err.toString());
+                }
+
+                //The the check anser method from the teacher object to update it
+                FreePlayLogic.checkAnswer(teacher[0]._id, userAnswer, questionID, function (result) {
+                    console.log("Question data added to teacher object");
+                })
             })
-        })
+        }
+
     });
 }
 
