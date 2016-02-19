@@ -53,6 +53,7 @@ exports.renderNewStudent = function (req ,res) {
 exports.renderStudentPage = function(req, res){
     //Get the users logged in id
     var userId = req.session.passport.user;
+    var userEmail = "";
 
     /**
      * This async call will cause a waterfall flow for getting the data from the DB
@@ -61,6 +62,12 @@ exports.renderStudentPage = function(req, res){
         function(callback){
             //Get the Category Titles
             DBFunctions.getCategoryTitles(callback)
+        },
+        function(categories ,callback) {
+            DBFunctions.getUserEmail(userId, function (err, email) {
+                userEmail = email;
+                callback(null, categories);
+            });
         }
     ],
         //Once we have the Category titles we can do the rendering
@@ -85,7 +92,8 @@ exports.renderStudentPage = function(req, res){
                         Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
                         Public_Policy_Data: chartData.Public_Policy_Data,
                         Title: "Student Dashboard",
-                        activeSection: "Main View"
+                        activeSection: "Main View",
+                        userEmail : userEmail
                     });
 
             });

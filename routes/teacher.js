@@ -128,7 +128,16 @@ exports.renderCategoryView = function (req, res){
 
   //Render the teacher dashboard, but only focus on the category
 
+  var userEmail = "";
+
   async.waterfall([
+    function(callback){
+      DBFunctions.getUserEmail(userId, function(err, email){
+        userEmail = email;
+        callback();
+      })
+    },
+
     function(callback) {
       //Get the teachers students scores/masteries
       teacherFunctions.getStudentsMasterys(userId, function(scores){
@@ -181,7 +190,8 @@ exports.renderCategoryView = function (req, res){
       questions : questionList,
       Title: "Teacher Dashboard",
       ClassCode: this.classToken,
-      Category: req.session.category
+      Category: req.session.category,
+      userEmail : userEmail
     });
   });
 };
@@ -271,10 +281,18 @@ exports.teacherPage = function(req, res ){
 
     questionList = null;
 
+    var userEmail = "";
+
 
     //https://github.com/caolan/async#waterfall
 
     async.waterfall([
+      function(callback){
+        DBFunctions.getUserEmail(userId, function(err, email){
+          userEmail = email;
+          callback();
+        })
+      },
       function(callback) {
         //Get the teachers students scores/masteries
         teacherFunctions.getStudentsMasterys(userId, function(scores){
@@ -327,7 +345,8 @@ exports.teacherPage = function(req, res ){
             questions : questionList,
             Title: "Teacher Dashboard",
             ClassCode: this.classToken,
-            Category: req.session.category
+            Category: req.session.category,
+            userEmail : userEmail
       });
     });
   }

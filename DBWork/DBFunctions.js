@@ -420,4 +420,14 @@ exports.updateTeachersQuestions = function (ClassToken , callback){
         });
 
     callback();
-}
+};
+
+exports.getUserEmail = function( inputID , callback){
+    userModel.findById(inputID, function (err, user) {
+        if (err) {
+            callback(err, null);
+        }
+
+        callback(null, user.email);
+    });
+};
