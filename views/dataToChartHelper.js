@@ -133,14 +133,14 @@ function calculateTotalMastery(scores) {
     var scoresArray = scores.entries();
 
     var masteredData = {
-        value: scores.get("TotalMastery") ,
+        value: Math.round(scores.get("TotalMastery")) ,
         label: "Mastered",
         color: "#a3e1d4",
         highlight: "#1ab394"
     };
 
     var intermediateData = {
-        value: scores.get("TotalIntermediate") ,
+        value: Math.round(scores.get("TotalIntermediate")) ,
         label: "Intermediate",
         color: "#777777",
         highlight: "#1ab394"
@@ -148,7 +148,7 @@ function calculateTotalMastery(scores) {
 
 
     var noviceData = {
-        value: scores.get("TotalNovice") ,
+        value: Math.round(scores.get("TotalNovice")) ,
         label: "Novice",
         color: "#FF0000",
         highlight: "#1ab394"

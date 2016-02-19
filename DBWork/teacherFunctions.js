@@ -576,7 +576,7 @@ exports.listStudents = function (inputClassToken, routeCallback){
 
             studentFunctions.getMasteryScores(value._id.toString(), function(scores){
 
-                studentObject.totalMastery = scores.get("TotalMastery");
+                studentObject.totalMastery = Math.round(scores.get("TotalMastery"));
 
 
                 retList.add(studentObject);

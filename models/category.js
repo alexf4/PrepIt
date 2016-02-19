@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 
 var categorySchema = new Schema({
     Title: String,
-    TestPercent : Number
+    TestPercent : Number,
+    questionCount : Number
     //subcategories : [{ type : mongoose.Schema.Types.ObjectId, ref: 'subcategory' }]
 
 });

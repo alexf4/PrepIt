@@ -330,9 +330,9 @@ exports.getMasteryScores = function (studentID , routeCallback ){
                         testPercent : category.TestPercent
                     };
 
-                    totalMastery += scores.mastered * categoryData.testPercent *.1;
-                    totalIntermediate += scores.intermediate * categoryData.testPercent *.1 ;
-                    totalNovice += scores.novice * categoryData.testPercent *.1;
+                    totalMastery += scores.mastered / category.questionCount * categoryData.testPercent;
+                    totalIntermediate += scores.intermediate / category.questionCount  * categoryData.testPercent;
+                    totalNovice += scores.novice / category.questionCount * categoryData.testPercent;
 
                     retDict.set(category.Title, categoryData);
                     callback();
