@@ -140,15 +140,16 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
         });
 
 
-        //user.questions = null;
+        //TODO Look at this later
+        user.questions = null;
 
         user.save(function (err, product, number) {
 
-            //user.questions = questions;
-            callback(result);
-            //user.save(function (err, product, number) {
-            //    callback(result);
-            //})
+            user.questions = questions;
+
+            user.save(function (err, product, number) {
+                callback(result);
+            })
         })
     });
 
