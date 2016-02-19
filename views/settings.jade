@@ -5,7 +5,10 @@ html
     body
         #wrapper
             //navegation bar
-            include ./includes/teacherNavigationBar.jade
+            if isTeacher==true
+                include ./includes/teacherNavigationBar.jade
+            else
+                include ./includes/studentNavigationBar.jade
             #page-wrapper.gray-bg
                 include ./includes/topBar.jade
                 .wrapper.wrapper-content.animated.fadeInRight

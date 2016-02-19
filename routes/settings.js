@@ -13,8 +13,12 @@ var async = require('async');
 
 exports.settings = function (req, res) {
 
-    res.render("settings", {ClassCode: this.classToken,
-        studentEmail: req.session.studentEmail});
+    res.render("settings", {
+        ClassCode: this.classToken,
+        studentEmail: req.session.studentEmail,
+        activeSection: "Settings",
+        isTeacher: req.session.isTeacher
+        });
 
 };
 
