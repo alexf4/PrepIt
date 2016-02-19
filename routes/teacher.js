@@ -39,6 +39,21 @@ exports.emptyOutSessionData = function(req){
 
 
 
+exports.renderStudentList = function(req, res){
+
+
+  userId = req.session.passport.user;
+  //find the teachers class token
+  teacherFunctions.getTeacherClassToken(userId, function(err, classToken) {
+
+    teacherFunctions.listStudents(classToken, function (err, studentsList) {
+      res.render("studentList", {students: studentsList});
+    });
+
+  });
+
+};
+
 exports.teacherDrillDown = function (req , res){
 
   //figure out what session data there is

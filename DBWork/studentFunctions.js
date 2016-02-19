@@ -146,6 +146,10 @@ exports.getTeacherQuestion = function (classToken, inputBaseQuestionID, callback
             callback(err, null);
         }
 
+        if(teacher[0].questions == null){
+            consol.log("got log");
+        }
+
         teacher[0].questions.forEach(function(entry){
             if (entry.baseQuestionID == inputBaseQuestionID) {
                 callback(null, entry._id.toString());

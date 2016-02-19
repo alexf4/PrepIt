@@ -76,15 +76,17 @@ describe ("DB Functions" , function (){
 
     })
 
-    //describe("#removeQeuestion()", function(){
+    //describe("#updateteacherQuestionSet()", function(){
     //
-    //    var baseQuestionID = "56bc24d63e7fee411f6037a0";
-    //
-    //    it("should remove a question based on the question base id", function(done){
-    //        DBFunctions.removeQuestion(baseQuestionID, function(){
-    //            done();
+    //    var classToken = "33625fa";
+    //    //get all the students from the teacher object
+    //    it("it should work", function(done){
+    //        DBFunctions.updateTeachersQuestions(classToken, function(){
+    //            done()
     //        })
     //    })
+    //
+    //
     //})
 
 });

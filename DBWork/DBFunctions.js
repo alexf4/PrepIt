@@ -7,6 +7,7 @@ var userModel = require("../models/user");
 var mongoose = require('mongoose');
 var arrays = require("collections/shim-array");
 var teacherFunctions = require("./teacherFunctions");
+var freePlayLogic = require("../GameLogic/FreePlayLogic");
 
 /**
  * This method will add a new question to all users question sets
@@ -376,3 +377,47 @@ exports.removeQuestion = function (baseQuestionId, callback){
 
     callback()
 };
+
+
+exports.updateTeachersQuestions = function (ClassToken , callback){
+    //find all the students
+    userModel.find({ classToken: ClassToken , $and: [ { "isteacher": false } ]  }, function (err, users){
+        if (err){
+            callback();
+        }
+
+        //for each user
+        users.forEach(function (user) {
+
+            //for each question
+            user.questions.forEach(function(entry){
+
+                var as = entry.responses.a;
+
+                for (var i = 0; i< as; i++){
+                    freePlayLogic.updateTeacherData(ClassToken, entry.baseQuestionID, "a");
+                }
+
+
+                var bs = entry.responses.b;
+                for (var i = 0; i< bs; i++){
+                    freePlayLogic.updateTeacherData(ClassToken, entry.baseQuestionID, "b");
+                }
+
+                var cs = entry.responses.c;
+                for (var i = 0; i< cs; i++){
+                    freePlayLogic.updateTeacherData(ClassToken, entry.baseQuestionID, "c");
+                }
+
+                var ds = entry.responses.d;
+                for (var i = 0; i< ds; i++){
+                    freePlayLogic.updateTeacherData(ClassToken, entry.baseQuestionID, "d");
+                }
+            });
+
+            });
+
+        });
+
+    callback();
+}
