@@ -186,6 +186,10 @@ module.exports = function(passport){
 	router.post("/updatePassword", isAuthenticated, settings.updatePassword);
 
 
+	//handle the student list
+	router.get("/studentList", isAuthenticated , teacher.renderStudentList)
+
+
 	// route for facebook authentication and login
 	// different scopes while logging in
 	router.get('/login/facebook', 
