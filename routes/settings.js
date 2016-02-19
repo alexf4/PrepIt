@@ -16,9 +16,8 @@ exports.settings = function (req, res) {
     res.render("settings", {
         ClassCode: this.classToken,
         studentEmail: req.session.studentEmail,
-        activeSection: "Settings"
-        //TODO: Alex please find a way to impliment the line under this
-        //,isTeacher: boolean
+        activeSection: "Settings",
+        isTeacher: req.session.isTeacher
         });
 
 };
