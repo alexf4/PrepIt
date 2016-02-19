@@ -10,16 +10,28 @@ var teacher = require("./teacher.js");
 
 var async = require('async');
 
+var userModel = require("../models/user");
 
 exports.settings = function (req, res) {
 
-    res.render("settings", {
-        ClassCode: this.classToken,
-        studentEmail: req.session.studentEmail,
-        activeSection: "Settings",
-        isTeacher: req.session.isTeacher
-        });
+    isTeacherData = false;
 
+    userModel.findById(req.session.passport.user, function (err, user) {
+        if (err) {
+            //callback(err, null);
+        }
+
+        if(user.isteacher){
+            isTeacherData = true;
+        }
+
+        res.render("settings", {
+            ClassCode: this.classToken,
+            studentEmail: req.session.studentEmail,
+            activeSection: "Settings",
+            isTeacher: isTeacherData
+        });
+    });
 };
 
 
