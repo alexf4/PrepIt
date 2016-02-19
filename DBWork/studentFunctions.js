@@ -147,7 +147,8 @@ exports.getTeacherQuestion = function (classToken, inputBaseQuestionID, callback
         }
 
         if(teacher[0].questions == null){
-            consol.log("got log");
+            console.log("error");
+            console.log("CLass token :"+ classToken + " inputQuestion: " + inputBaseQuestionID);
         }
 
         teacher[0].questions.forEach(function(entry){
