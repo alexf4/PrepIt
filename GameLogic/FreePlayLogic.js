@@ -72,6 +72,11 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
 
         if (user.questions ==null){
             console.log(user);
+
+            if(user.isteacher){
+                callback("teacher could not find question", null);
+            }
+
         }
         user.questions.forEach(function (entry) {
 
