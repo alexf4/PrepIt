@@ -210,7 +210,7 @@ function calcComprehension(numAttempts, numCorrect) {
     else if (compRatio < .75 && compRatio > .50) {
         retComprehension.intermediate = true;
     }
-    else {
+    else if (compRatio <= .50){
         retComprehension.novice = true;
     }
 
