@@ -1,0 +1,38 @@
+//
+   Created by Cody on 1/6/16.
+
+nav.navbar-default.navbar-static-side(role='navigation')
+    .sidebar-collapse
+        ul#side-menu.nav
+            li.nav-header
+                .dropdown.profile-element
+                    a.dropdown-toggle(data-toggle='dropdown', href='#')
+                        span.clear
+                            span.block.m-t-xs
+                                strong.font-bold #{userEmail}
+                    ul.dropdown-menu.animated.fadeInRight.m-t-xs
+                        li
+                            a(href='/signout') Logout
+                .logo-element
+                    | IN+
+            li.active
+                a(href='/teacher')
+                    i.fa.fa-th-large
+                    span.nav-label Main View
+            li
+                a(href='/studentList')
+                    i.fa.fa-th-large
+                    span.nav-label Student Analysis
+            li
+                a(href='/questionAnalysis')
+                    i.fa.fa-th-large
+                    span.nav-label Question Analysis
+            li
+                a(href='/settings')
+                    i.fa.fa-th-large
+                    span.nav-label Settings
+            .nav-divider
+            li
+                a
+                    i.fa.fa-info
+                    span.nav-label Class Code: #{ClassCode}

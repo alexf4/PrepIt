@@ -1,0 +1,50 @@
+doctype html
+html
+    //Head
+    include ./includes/head.jade
+    body
+        #wrapper
+            //navegation bar
+            include ./includes/teacherNavigationBar.jade
+            #page-wrapper.gray-bg
+                include ./includes/topBar.jade
+                .wrapper.wrapper-content.animated.fadeInRight
+
+                .row
+                    .col-lg-12
+                        .ibox.float-e-margins
+                            .ibox-title
+                                h5 All Questions
+                                .ibox-tools
+                                    a.collapse-link
+                                        i.fa.fa-chevron-up
+                            .ibox-content
+                                .table-responsive
+                                    table.table.table-hover
+                                        thead
+                                            tr
+                                                th Question
+                                                th Mastered
+                                                th Missed
+                                        tbody
+                                            - for (var i=0;i<questions.length;i++)
+                                                - if(questions[i]!=null)
+                                                    tr
+                                                        td
+                                                            a(href='/teacherDrilldown/question/#{questions[i].questionID}')
+                                                                p #{questions[i].questionString}
+                                                        td #{questions[i].questionMastered}
+                                                        td #{questions[i].questionMissed}
+                //footer
+                include ./includes/footer.jade
+
+        // Mainly scripts
+        script(src='js/jquery-2.1.1.js')
+        script(src='js/bootstrap.min.js')
+        script(src='js/plugins/metisMenu/jquery.metisMenu.js')
+        script(src='js/plugins/slimscroll/jquery.slimscroll.min.js')
+        // Custom and plugin javascript
+        //script(src='js/chartjs.js' , type='text/javascript')
+        script(src='js/inspinia.js')
+        script(src='js/plugins/pace/pace.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js')

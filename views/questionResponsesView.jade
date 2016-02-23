@@ -1,0 +1,126 @@
+//
+   Created by beckyedithbrooker on 7/19/15.
+doctype html
+html
+    //Head
+    include ./includes/head.jade
+    body
+        #wrapper
+            //side bar
+            include ./includes/teacherNavigationBar.jade
+            #page-wrapper.gray-bg
+                //top bar
+                include ./includes/topBar.jade
+                .wrapper.wrapper-content.animated.fadeInRight
+                    //feedback
+                   .row
+                     .ibox.float-e-margins
+                        .ibox-title
+                           h5 Question Analysis
+                           div(ibox-tools='')
+                        .ibox-content
+                           div
+                              .wrapper.wrapper-content.animated.fadeInRight
+                                 .row
+                                    .col-sm-6.b-r
+                                       h3.m-t-none.m-b Category: #{question.category}
+                                       p Subcategory: #{question.subcategory}
+                                          p Question Text: #{question.questionText}
+                                    .col-sm-6
+                                       .ibox.float-e-margins
+                                          .ibox-content
+                                             .list-group
+                                                if question.solution == "a"
+                                                   a.list-group-item.active(href='#')
+                                                        if question.numberOfAttempts != 0
+                                                          h3.list-group-item-heading A #{question.responses.a / question.numberOfAttempts * 100} %
+                                                          p.list-group-item-text
+                                                             | #{question.answers.a}
+                                                        else
+                                                            h3.list-group-item-heading A 0 %
+                                                            p.list-group-item-text
+                                                                | #{question.answers.a}
+                                                else
+                                                   a.list-group-item(href='#')
+                                                       if question.numberOfAttempts != 0
+                                                          h3.list-group-item-heading A #{question.responses.a / question.numberOfAttempts * 100} %
+                                                          p.list-group-item-text
+                                                             | #{question.answers.a}
+                                                       else
+                                                           h3.list-group-item-heading A 0 %
+                                                           p.list-group-item-text
+                                                            | #{question.answers.a}
+
+                                                if question.solution == "b"
+                                                   a.list-group-item.active(href='#')
+                                                       if question.numberOfAttempts != 0
+                                                          h3.list-group-item-heading B #{question.responses.b / question.numberOfAttempts * 100} %
+                                                          p.list-group-item-text
+                                                             | #{question.answers.b}
+                                                        else
+                                                            h3.list-group-item-heading B 0 %
+                                                                p.list-group-item-text
+                                                                    | #{question.answers.b}
+                                                else
+                                                   a.list-group-item(href='#')
+                                                       if question.numberOfAttempts != 0
+                                                          h3.list-group-item-heading B #{question.responses.b / question.numberOfAttempts * 100} %
+                                                          p.list-group-item-text
+                                                             | #{question.answers.b}
+                                                       else
+                                                           h3.list-group-item-heading B 0 %
+                                                               p.list-group-item-text
+                                                                   | #{question.answers.b}
+                                                if question.solution == "c"
+                                                   a.list-group-item.active(href='#')
+                                                       if question.numberOfAttempts != 0
+                                                          h3.list-group-item-heading C #{question.responses.c / question.numberOfAttempts * 100} %
+                                                          p.list-group-item-text
+                                                             | #{question.answers.c}
+                                                       else
+                                                           h3.list-group-item-heading C 0 %
+                                                               p.list-group-item-text
+                                                                   | #{question.answers.c}
+                                                else
+                                                   a.list-group-item(href='#')
+                                                       if question.numberOfAttempts != 0
+                                                          h3.list-group-item-heading C #{question.responses.c / question.numberOfAttempts * 100} %
+                                                          p.list-group-item-text
+                                                             | #{question.answers.c}
+                                                       else
+                                                           h3.list-group-item-heading C 0 %
+                                                               p.list-group-item-text
+                                                                   | #{question.answers.c}
+
+                                                if question.solution == "d"
+                                                   a.list-group-item.active(href='#')
+                                                       if question.numberOfAttempts != 0
+                                                          h3.list-group-item-heading D #{question.responses.d / question.numberOfAttempts * 100} %
+                                                          p.list-group-item-text
+                                                             | #{question.answers.d}
+                                                       else
+                                                           h3.list-group-item-heading D 0 %
+                                                               p.list-group-item-text
+                                                                   | #{question.answers.d}
+
+                                                else
+                                                   a.list-group-item(href='#')
+                                                    if question.numberOfAttempts != 0
+                                                      h3.list-group-item-heading D #{question.responses.d / question.numberOfAttempts * 100} %
+                                                      p.list-group-item-text
+                                                         | #{question.answers.d}
+                                                    else
+                                                        h3.list-group-item-heading D 0 %
+                                                            p.list-group-item-text
+                                                                | #{question.answers.d}
+                //footer
+                include ./includes/footer.jade
+        // Mainly scripts
+        script(src='js/jquery-2.1.1.js')
+        script(src='js/bootstrap.min.js')
+        script(src='js/plugins/metisMenu/jquery.metisMenu.js')
+        script(src='js/plugins/slimscroll/jquery.slimscroll.min.js')
+        // Custom and plugin javascript
+        script(src='js/inspinia.js')
+        script(src='js/plugins/pace/pace.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js')

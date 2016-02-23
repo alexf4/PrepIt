@@ -1,0 +1,73 @@
+doctype html
+html
+    //Head
+    include ./includes/head.jade
+    body
+        #wrapper
+            //navegation bar
+            include ./includes/teacherNavigationBar.jade
+            #page-wrapper.gray-bg
+                include ./includes/topBar.jade
+                .wrapper.wrapper-content.animated.fadeInRight
+                    //Main Charts
+                    include ./includes/chartWithCategoryLogic.jade
+
+                    //teacher Tables
+                    include ./includes/teacherTables.jade
+
+                //footer
+                include ./includes/footer.jade
+        // Mainly scripts
+        script(src='js/jquery-2.1.1.js')
+        script(src='js/bootstrap.min.js')
+        script(src='js/plugins/metisMenu/jquery.metisMenu.js')
+        script(src='js/plugins/slimscroll/jquery.slimscroll.min.js')
+        // Custom and plugin javascript
+        //script(src='js/chartjs.js' , type='text/javascript')
+        script(src='js/inspinia.js')
+        script(src='js/plugins/pace/pace.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js')
+        //inline scrip because I can not get to work with js in external file. makes file cleaner
+        include ./includes/chartJS.jade
+        script(type='text/javascript').
+            //include ../public/js/chartjs.js
+            //var ctx = document.getElementById("TotalChart").getContext("2d");
+            //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(totalData)}, !{JSON.stringify(totalOptions)});
+            //
+            //var ctx = document.getElementById("CUChart").getContext("2d");
+            //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart2").getContext("2d");
+            //var myNewChart2 = new Chart(ctx).Doughnut(!{JSON.stringify(Civil_Rights_and_Liberties_Data)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart3").getContext("2d");
+            //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(Political_Beliefs_and_Behaviors_Data)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart4").getContext("2d");
+            //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(Linkage_Institutions_Data)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart5").getContext("2d");
+            //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(Public_Policy_Data)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart6").getContext("2d");
+            //var myNewChart2 = new Chart(ctx).Doughnut(!{JSON.stringify(Institutions_of_National_Government_Data)}, !{JSON.stringify(SectionOptions)});
+            //
+            ////to have for smaller screens
+            //
+            //var ctx = document.getElementById("CUChart-xs").getContext("2d");
+            //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(CUData)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart2-xs").getContext("2d");
+            //var myNewChart2 = new Chart(ctx).Doughnut(!{JSON.stringify(Civil_Rights_and_Liberties_Data)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart3-xs").getContext("2d");
+            //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(Political_Beliefs_and_Behaviors_Data)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart4-xs").getContext("2d");
+            //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(Linkage_Institutions_Data)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart5-xs").getContext("2d");
+            //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(Public_Policy_Data)}, !{JSON.stringify(SectionOptions)});
+            //
+            //var ctx = document.getElementById("CUChart6-xs").getContext("2d");
+            //var myNewChart2 = new Chart(ctx).Doughnut(!{JSON.stringify(Institutions_of_National_Government_Data)}, !{JSON.stringify(SectionOptions)});
