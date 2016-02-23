@@ -1,0 +1,111 @@
+//
+   Created by Cody on 1/6/16.
+
+//shows tables side by side for larger screen
+.visible-lg
+    .row
+        .col-lg-6
+            .ibox.float-e-margins
+                .ibox-title
+                    h5 Top 10 Missed Questions
+                    if (Category!== null)
+                        h5 &nbsp;in #{Category}
+                    .ibox-tools
+                        a.collapse-link
+                            i.fa.fa-chevron-up
+                .ibox-content
+                    .table-responsive
+                        table.table.table-hover
+                            thead
+                                tr
+                                    th Question
+                                    th Mastered
+                                    th Missed
+                            tbody
+                                - for (var i=0;i<10;i++)
+                                    - if(questions[i]!=null)
+                                        tr
+                                            td
+                                                a(href='/teacherDrilldown/question/#{questions[i].questionID}')
+                                                   p #{questions[i].questionString}
+                                            td #{questions[i].questionMastered}
+                                            td #{questions[i].questionMissed}
+        .col-lg-6
+            .ibox.float-e-margins
+                .ibox-title
+                    h5 Student Performance List
+                    if (Category !== null)
+                        h5 &nbsp;in #{Category}
+                    .ibox-tools
+                        a.collapse-link
+                            i.fa.fa-chevron-up
+                .ibox-content
+                    table.table.table-hover
+                        thead
+                            tr
+                                th <br />#
+                                th <br />Student Username
+                                th Precent of<br />Questions mastered
+                        tbody
+                            each studentObject, index in studentsList
+                                a(href='/teacherDrilldown/student/#{studentObject.email}')
+                                    tr
+                                        td #{index+1}
+                                        td
+                                            a(href='/teacherDrilldown/student/#{studentObject.email}')
+                                                p #{studentObject.email}
+                                        td #{studentObject.totalMastery}
+//shows two tables not side by side for smaller screens
+.hidden-lg
+    .row
+        .col-sm-12
+            .ibox.float-e-margins
+                .ibox-title
+                    h5 Top 10 Missed Questions
+                    if (Category !== null)
+                        h5 &nbsp;in #{Category}
+                    .ibox-tools
+                        a.collapse-link
+                            i.fa.fa-chevron-up
+                .ibox-content
+                    .table-responsive
+                        table.table.table-hover
+                            thead
+                                tr
+                                    th Question
+                                    th Mastered
+                                    th Missed
+                            tbody
+                                - for (var i=0;i<10;i++)
+                                    - if(questions[i]!=null)
+                                        tr
+                                            td #{questions[i].questionString}
+                                            td #{questions[i].questionMastered}
+                                            td #{questions[i].questionMissed}
+    .row
+        .col-lg-12
+            .ibox.float-e-margins
+                .ibox-title
+                    h5 Student Performance List
+                    if (Category !== null)
+                        h5 &nbsp;in #{Category}
+                    .ibox-tools
+                        a.collapse-link
+                            i.fa.fa-chevron-up
+                .ibox-content
+                    table.table.table-hover
+                        thead
+                            tr
+                                th <br />#
+                                th <br />Student Username
+                                th Precent of<br />all mastered
+                        tbody
+                            each studentObject, index in studentsList
+
+                                a(href='/teacherDrilldown/student/#{studentObject.email}')
+                                    tr
+                                        td #{index + 1}
+                                        td
+                                            a(href='/teacherDrilldown/student/#{studentObject.email}')
+                                                p #{studentObject.email}
+                                        td #{studentObject.totalMastery}

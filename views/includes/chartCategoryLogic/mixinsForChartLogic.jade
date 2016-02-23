@@ -1,0 +1,272 @@
+//
+   Created by Cody on 2/14/16.
+
+//Charts for normal screen
+mixin TotalChart
+    if Category==null
+        .panel.panel-primary
+            .panel-heading.text-center
+                | Test Readiness: All Categories
+            .panel-body
+                .div
+                    canvas#TotalChart(height='190')
+
+    else if Category=="Constitutional Underpinnings"
+        .panel.panel-primary
+            .panel-heading.text-nowrap.text-center
+                | Constitutional Underpinnings
+            .panel-body
+                .div
+                    canvas#CUChart(height='190')
+
+    else if Category=="Civil Rights and Liberties"
+        .panel.panel-primary
+            .panel-heading.text-nowrap.text-center
+                | Civil Rights and Liberties
+            .panel-body
+                .div
+                    canvas#CUChart2(height='190')
+
+    else if Category == "Political Beliefs and Behaviors"
+        .panel.panel-primary
+            .panel-heading.text-nowrap.text-center
+                | Political Beliefs and Behaviors
+            .panel-body
+                .div
+                    canvas#CUChart3(height='190')
+
+    else if Category == "Linkage Institutions"
+        .panel.panel-primary
+            .panel-heading.text-nowrap.text-center
+                | Linkage Institutions
+            .panel-body
+                .div
+                    canvas#CUChart4(height='190')
+
+    else if Category =="Public Policy"
+        .panel.panel-primary
+            .panel-heading.text-nowrap.text-center
+                | Public Policy
+            .panel-body
+                .div
+                    canvas#CUChart5(height='190')
+
+    else if Category =="Institutions of National Goverment"
+        .panel.panel-primary
+            .panel-heading.text-nowrap.text-center
+                | Institutions of National Government
+            .panel-body
+                .div
+                    canvas#CUChart6(height='190')
+
+    else
+        p You are looking at #{Category}
+
+
+mixin ConstitutionalUnderpinningsChart
+    if Category=="Constitutional Underpinnings"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart(height='220')
+    else
+        a(href='teacherDrilldown/category/Constitutional%20Underpinnings')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Constitutional<br />Underpinnings
+                .panel-body
+                    .div
+                        canvas#CUChart(height='220')
+mixin CivilRightsandLibertiesChart
+    if Category == "Civil Rights and Liberties"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart(height='220')
+    else
+        a(href='teacherDrilldown/category/Civil%20Rights%20and%20Liberties')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Civil Rights<br />and Liberties
+                .panel-body
+                    .div
+                        canvas#CUChart2(height='220')
+mixin PoliticalBeliefsandBehaviorsChart
+    if Category == "Political Beliefs and Behaviors"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart(height='220')
+    else
+        a(href='teacherDrilldown/category/Political%20Beliefs%20and%20Behaviors')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Political Beliefs<br />and Behaviors
+                .panel-body
+                    .div
+                        canvas#CUChart3(height='220')
+mixin LinkageInstitutionsChart
+    if Category == "Linkage Institutions"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart(height='220')
+    else
+        a(href='teacherDrilldown/category/Linkage%20Institutions')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Linkage<br />Institutions
+                .panel-body
+                    .div
+                        canvas#CUChart4(height='220')
+mixin PublicPolicyChart
+    if Category == "Public Policy"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart(height='220')
+    else
+        a(href='teacherDrilldown/category/Public%20Policy')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Public<br />Policy
+                .panel-body
+                    .div
+                        canvas#CUChart5(height='220')
+mixin InstitutionsofNationalGovermentChart
+    if Category == "Institutions of National Goverment"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart(height='220')
+    else
+        a(href='teacherDrilldown/category/Institutions%20of%20National%20Goverment')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Institutions of<br />National Government
+                .panel-body
+                    .div
+                        canvas#CUChart6(height='220')
+
+
+//Charts for xs
+mixin ConstitutionalUnderpinningsChartxs
+    if Category=="Constitutional Underpinnings"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart-xs(height='220')
+    else
+        a(href='teacherDrilldown/category/Constitutional%20Underpinnings')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Constitutional<br />Underpinnings
+                .panel-body
+                    .div
+                        canvas#CUChart-xs(height='220')
+mixin CivilRightsandLibertiesChartxs
+    if Category == "Civil Rights and Liberties"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart-xs(height='220')
+    else
+        a(href='teacherDrilldown/category/Civil%20Rights%20and%20Liberties')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Civil Rights<br />and Liberties
+                .panel-body
+                    .div
+                        canvas#CUChart2-xs(height='220')
+mixin PoliticalBeliefsandBehaviorsChartxs
+    if Category == "Political Beliefs and Behaviors"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart-xs(height='220')
+    else
+        a(href='teacherDrilldown/category/Political%20Beliefs%20and%20Behaviors')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Political Beliefs<br />and Behaviors
+                .panel-body
+                    .div
+                        canvas#CUChart3-xs(height='220')
+mixin LinkageInstitutionsChartxs
+    if Category == "Linkage Institutions"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart-xs(height='220')
+    else
+        a(href='teacherDrilldown/category/Linkage%20Institutions')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Linkage<br />Institutions
+                .panel-body
+                    .div
+                        canvas#CUChart4-xs(height='220')
+mixin PublicPolicyChartxs
+    if Category == "Public Policy"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart-xs(height='220')
+    else
+        a(href='teacherDrilldown/category/Public%20Policy')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Public<br />Policy
+                .panel-body
+                    .div
+                        canvas#CUChart5-xs(height='220')
+mixin InstitutionsofNationalGovermentChartxs
+    if Category == "Institutions of National Goverment"
+        a(href='/teacherDrilldown/clear')
+            .panel.panel-primary
+                .panel-heading.text-center
+                    | Test Readiness:<br />All Categories
+                .panel-body
+                    .div
+                        canvas#TotalChart-xs(height='220')
+    else
+        a(href='teacherDrilldown/category/Institutions%20of%20National%20Goverment')
+            .panel.panel-primary
+                .panel-heading.text-nowrap.text-center
+                    | Institutions of<br />National Government
+                .panel-body
+                    .div
+                        canvas#CUChart6-xs(height='220')

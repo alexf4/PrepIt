@@ -1,0 +1,62 @@
+
+.row
+    .ibox.float-e-margins
+        .ibox-title
+            h5 Free Play Question
+            div(ibox-tools='')
+        .ibox-content
+            div
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .row
+                        .col-sm-6.b-r
+                            h3.m-t-none.m-b #{question.category}
+                            p #{question.subcategory}
+                                p #{question.questionText}
+                                div
+                                    a(href='/freeplaySameCategory')
+                                        button.btn.btn-sm.btn-primary.pull-right.m-t-n-xs()
+                                            strong Next Question
+                        .col-sm-6
+                            .ibox.float-e-margins
+                                .ibox-content
+                                    .list-group
+                                        if correctSolution == "a"
+                                            a.list-group-item.active(href='#')
+                                                h3.list-group-item-heading A
+                                                p.list-group-item-text
+                                                    | #{question.answers.a}
+                                        else
+                                            a.list-group-item(href='#')
+                                                h3.list-group-item-heading A
+                                                p.list-group-item-text
+                                                    | #{question.answers.a}
+                                        if correctSolution == "b"
+                                            a.list-group-item.active(href='#')
+                                                h3.list-group-item-heading B
+                                                p.list-group-item-text
+                                                    | #{question.answers.b}
+                                        else
+                                            a.list-group-item(href='#')
+                                                h3.list-group-item-heading B
+                                                p.list-group-item-text
+                                                    | #{question.answers.b}
+                                        if correctSolution == "c"
+                                            a.list-group-item.active(href='#')
+                                                h3.list-group-item-heading C
+                                                p.list-group-item-text
+                                                    | #{question.answers.c}
+                                        else
+                                            a.list-group-item(href='#')
+                                                h3.list-group-item-heading C
+                                                p.list-group-item-text
+                                                    | #{question.answers.c}
+                                        if correctSolution == "d"
+                                            a.list-group-item.active(href='#')
+                                                h3.list-group-item-heading D
+                                                p.list-group-item-text
+                                                    | #{question.answers.d}
+                                        else
+                                            a.list-group-item(href='#')
+                                                h3.list-group-item-heading D
+                                                p.list-group-item-text
+                                                    | #{question.answers.d}

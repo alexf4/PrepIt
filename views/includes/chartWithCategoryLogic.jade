@@ -1,0 +1,42 @@
+//
+   Created by Cody on 1/5/16.
+
+include ./chartCategoryLogic/mixinsForChartLogic.jade
+
+//start body of html
+.row.text-center
+    .col-lg-6
+        mixin TotalChart
+    .hidden-xs
+        .col-lg-6
+            .row
+
+                .col-xs-4
+                    mixin ConstitutionalUnderpinningsChart
+                .col-xs-4
+                    mixin CivilRightsandLibertiesChart
+                .col-xs-4
+                    mixin PoliticalBeliefsandBehaviorsChart
+            .row
+                .col-xs-4
+                    mixin LinkageInstitutionsChart
+                .col-xs-4
+                    mixin PublicPolicyChart
+                .col-xs-4
+                    mixin InstitutionsofNationalGovermentChart
+    .visible-xs
+        .row
+            .col-xs-6
+                mixin ConstitutionalUnderpinningsChartxs
+            .col-xs-6
+                mixin CivilRightsandLibertiesChartxs
+        .row
+            .col-xs-6
+                mixin PoliticalBeliefsandBehaviorsChartxs
+            .col-xs-6
+                mixin LinkageInstitutionsChartxs
+        .row
+            .col-xs-6
+                mixin PublicPolicyChartxs
+            .col-xs-6
+                mixin InstitutionsofNationalGovermentChartxs

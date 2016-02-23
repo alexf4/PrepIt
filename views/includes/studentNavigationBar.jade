@@ -1,0 +1,112 @@
+mixin freeplay
+    a(href='freeplay')
+        i.fa.fa-th-large
+        span.nav-label Freeplay
+        span.fa.arrow
+    ul.nav.nav-second-level
+        if activeSubsection=="All Categories"
+            li.active
+                a(href='freeplay') All Categories
+        else
+            li
+                a(href='freeplay') All Categories
+
+        if activeSubsection=="Political Beliefs and Behaviors"
+            li.active
+                a(href='freeplay/category/Political%20Beliefs%20and%20Behaviors') Political Beliefs and Behaviors
+        else
+            li
+                a(href='freeplay/category/Political%20Beliefs%20and%20Behaviors') Political Beliefs and Behaviors
+
+        if activeSubsection=="Linkage Institutions"
+            li.active
+                a(href='freeplay/category/Linkage%20Institutions') Linkage Institutions
+        else
+            li
+                a(href='freeplay/category/Linkage%20Institutions') Linkage Institutions
+
+        if activeSubsection=="Institutions of National Government"
+            li.active
+                a(href='freeplay/category/Institutions%20of%20National%20Government') Institutions of National Government
+        else
+            li
+                a(href='freeplay/category/Institutions%20of%20National%20Government') Institutions of National Government
+
+        if activeSubsection=="Public Policy"
+            li.active
+                a(href='freeplay/category/Public%20Policy') Public Policy
+        else
+            li
+                a(href='freeplay/category/Public%20Policy') Public Policy
+
+        if activeSubsection=="Civil Rights and Liberties"
+            li.active
+                a(href='freeplay/category/Civil%20Rights%20and%20Liberties') Civil Rights and Liberties
+        else
+            li
+                a(href='freeplay/category/Civil%20Rights%20and%20Liberties') Civil Rights and Liberties
+
+        if activeSubsection=="Constitutional Underpinnings"
+            li.active
+                a(href='freeplay/category/Constitutional%20Underpinnings') Constitutional Underpinnings
+        else
+            li
+                a(href='freeplay/category/Constitutional%20Underpinnings') Constitutional Underpinnings
+
+mixin StudentLink
+    a(href='StudentLink')
+            i.fa.fa-th-large
+            span.nav-label Join Class
+
+mixin MainView
+    a(href='student')
+        i.fa.fa-th-large
+        span.nav-label Main view
+
+mixin Settings
+    a(href='/settings')
+        i.fa.fa-th-large
+        span.nav-label Settings
+
+nav.navbar-default.navbar-static-side(role='navigation')
+    .sidebar-collapse
+        ul#side-menu.nav
+            li.nav-header
+                .dropdown.profile-element
+                    a.dropdown-toggle(data-toggle='dropdown', href='#')
+                        span.clear
+                            span.block.m-t-xs
+                                strong.font-bold #{userEmail}
+                    ul.dropdown-menu.animated.fadeInRight.m-t-xs
+                        li
+                            a(href='/signout') Logout
+                .logo-element
+                    | IN+
+            if  activeSection == "Main View"
+                li.active
+                    mixin MainView
+            else
+                li
+                    mixin MainView
+
+            if  activeSection=="Freeplay"
+                li.active
+                    mixin freeplay
+            else
+                li
+                    mixin freeplay
+
+            if  activeSection == "StudentLink"
+                li.active
+                    mixin StudentLink
+            else
+                li
+                    mixin StudentLink
+
+            if  activeSection == "Settings"
+                li.active
+                    mixin Settings
+            else
+                li
+                    mixin Settings
+
