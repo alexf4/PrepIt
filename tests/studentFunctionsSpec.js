@@ -12,9 +12,9 @@ describe ("Student Functions", function(){
         var category = "Constitutional Underpinnings";
 
         var expectedResults = {
-            mastered : 6,
+            mastered : 0,
             intermediate : 0,
-            novice : 84
+            novice : 3
         };
 
         it("should return the mastery levels of category for a student", function(done){

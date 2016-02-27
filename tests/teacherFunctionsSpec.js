@@ -43,9 +43,9 @@ describe("Teacher Functions", function(){
             var category = "Constitutional Underpinnings";
 
             var expectedResults = {
-                mastered : 4,
+                mastered : 0,
                 intermediate : 0,
-                novice : 86
+                novice : 3
             }
 
             teacherFunctions.getClassAverageMasteryForCategory(teacherID, category , function(err, scores){
