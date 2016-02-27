@@ -7,6 +7,8 @@ var Schema = mongoose.Schema;
 
 var questionSchema = new Schema({
 
+    userID : String,
+
     category: String,
 
     subcategory: String,

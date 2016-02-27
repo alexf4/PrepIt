@@ -9,6 +9,8 @@ var arrays = require("collections/shim-array");
 var teacherFunctions = require("./teacherFunctions");
 var freePlayLogic = require("../GameLogic/FreePlayLogic");
 
+var async = require('async');
+
 /**
  * This method will add a new question to all users question sets
  */
@@ -22,7 +24,7 @@ exports.addQuestionToAllUsers = function (inputID) {
         if (err) throw err;
 
         // show the one user
-        console.log(question);
+        //console.log(question);
 
 
         //save the question
@@ -38,19 +40,36 @@ exports.addQuestionToAllUsers = function (inputID) {
             console.log(users);
 
             //For each user add a new question that is a copy of the question, but has a new id
-            users.forEach(function (user) {
+            async.forEachOf(users, function (user, key, sCallback) {
+                    //Create new question
+                    var userQuestion = new questionModel(foundQuestion);
+                    userQuestion._id = mongoose.Types.ObjectId().toString();
 
-                //Create new question
-                var userQuestion = new questionModel(foundQuestion);
-                userQuestion._id = mongoose.Types.ObjectId().toString();
+                    //Add that question to that users question set
+                    user.questions.push(userQuestion);
 
-                //Add that question to that users question set
-                user.questions.push(userQuestion);
+                    user.save(function (error, data) {
+                    });
 
-                user.save(function (error, data) {
+                },
+                function (err) {
+
                 });
 
-            });
+
+            //users.forEach(function (user) {
+            //
+            //    //Create new question
+            //    var userQuestion = new questionModel(foundQuestion);
+            //    userQuestion._id = mongoose.Types.ObjectId().toString();
+            //
+            //    //Add that question to that users question set
+            //    user.questions.push(userQuestion);
+            //
+            //    user.save(function (error, data) {
+            //    });
+            //
+            //});
 
         });
 
@@ -59,6 +78,52 @@ exports.addQuestionToAllUsers = function (inputID) {
 
 
 };
+
+
+exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
+
+    questionModel.findById(baseQuestionID, function (err, question) {
+        if (err) throw err;
+
+        //save the question
+        foundQuestion = question;
+
+        //Get a list of all users
+        // get all the users
+        userModel.find({}, function (err, users) {
+            if (err) throw err;
+
+            // object of all the users
+            //console.log(users);
+
+            async.forEachOf(users, function (user, key, sCallback) {
+                //Create new question
+                var userQuestion = new questionModel(foundQuestion);
+                userQuestion._id = mongoose.Types.ObjectId().toString();
+
+                userQuestion.baseQuestionID = baseQuestionID;
+
+                userQuestion.UserID = user._id.toString();
+
+                userQuestion.save(function (err, data) {
+                    if (err) {
+                        sCallback(err, null);
+                    }
+                    sCallback(null, data);
+                })
+            },
+                function(err){
+                    if (err){
+                        callback(err, null)
+                    }
+                    callback(null, "worked");
+                });
+
+        });
+
+
+    });
+}
 
 
 exports.addQuestionsToUser = function (inputID, callback) {
@@ -148,24 +213,24 @@ exports.findNMissedQuestions = function (inputID, numberOfQuestions, callback) {
  * @param Category the category to return
  * @param callback the method that is called
  */
-exports.getMissedQuestionsPerCategory = function (inputID , numberOfQuestions,  Category, callback){
+exports.getMissedQuestionsPerCategory = function (inputID, numberOfQuestions, Category, callback) {
 
     var retArray = new arrays();
 
-    userModel.findById(userId , function (err, user){
-        if(err){
+    userModel.findById(userId, function (err, user) {
+        if (err) {
             callback(err, null);
         }
         //Sort the question array with our specific compare function
         user.questions.sort(compare);
 
-        user.questions.forEach(function (entry){
-            if (entry.category == inputCategory){
+        user.questions.forEach(function (entry) {
+            if (entry.category == inputCategory) {
                 retArray.add(entry);
             }
         });
 
-        callback(null, retArray.slice(0, numberOfQuestions -1));
+        callback(null, retArray.slice(0, numberOfQuestions - 1));
 
 
     });
@@ -218,9 +283,9 @@ exports.getAllQuestionsPerUser = function (inputID, callback) {
  * @param callback the method that is called
  * @returns {number}
  */
-exports.getNumberOfQuestionsPerCategory = function (inputCategory , callback){
-    questionModel.find({category : inputCategory}, function(err, questions){
-        if (err){
+exports.getNumberOfQuestionsPerCategory = function (inputCategory, callback) {
+    questionModel.find({category: inputCategory}, function (err, questions) {
+        if (err) {
             callback(err, null);
         }
 
@@ -232,25 +297,25 @@ exports.getNumberOfQuestionsPerCategory = function (inputCategory , callback){
  * This method will take a scores object and return the highest comprehension
  * @param scores
  */
-exports.calculateComprehension = function (scores){
+exports.calculateComprehension = function (scores) {
 
     var comprehension = {
-         comp : "",
-         value :  0
+        comp: "",
+        value: 0
     };
 
-    if(scores.intermediate > scores.mastered && scores.intermediate > scores.novice){
+    if (scores.intermediate > scores.mastered && scores.intermediate > scores.novice) {
         comprehension.comp = "Intermediate";
         comprehension.value = scores.intermediate;
 
     }
-    else if(scores.mastered > scores.intermediate && scores.mastered > scores.novice){
+    else if (scores.mastered > scores.intermediate && scores.mastered > scores.novice) {
 
         comprehension.comp = "Mastered";
         comprehension.value = scores.mastered;
 
 
-    }else{
+    } else {
         comprehension.comp = "Novice";
         comprehension.value = scores.novice;
     }
@@ -265,7 +330,7 @@ exports.calculateComprehension = function (scores){
  * @param questionText the string format of the question
  * @param callback the simple callback.
  */
-exports.getQuestionData = function (inputID, questionID, callback){
+exports.getQuestionData = function (inputID, questionID, callback) {
     var found = false;
 
     //find the user
@@ -274,14 +339,14 @@ exports.getQuestionData = function (inputID, questionID, callback){
             callback(err, null);
         }
 
-        user.questions.forEach(function (entry){
-            if (entry.baseQuestionID == questionID){
+        user.questions.forEach(function (entry) {
+            if (entry.baseQuestionID == questionID) {
                 found = true;
                 callback(null, entry);
             }
         });
 
-        if (!found){
+        if (!found) {
             callback("could not find question", null);
         }
     });
@@ -293,32 +358,32 @@ exports.getQuestionData = function (inputID, questionID, callback){
  * @param inputID the users ID
  * @param callback the generic callback function
  */
-exports.isNewUser = function (inputID, callback){
+exports.isNewUser = function (inputID, callback) {
     userModel.findById(inputID, function (err, user) {
         if (err) {
             callback(err, null);
         }
 
-        if(user.isteacher){
-            teacherFunctions.listStudents(user.classToken, function(err, numberberOfStudents){
-                if(numberberOfStudents.length > 0){
+        if (user.isteacher) {
+            teacherFunctions.listStudents(user.classToken, function (err, numberberOfStudents) {
+                if (numberberOfStudents.length > 0) {
                     callback(null, false);
                 }
-                else{
+                else {
                     callback(null, true);
                 }
             })
 
         }
 
-        else{//user is a student
+        else {//user is a student
 
             var questionAttempted = false;
 
             //Find all the questions from a specific category
-            user.questions.forEach(function(entry){
+            user.questions.forEach(function (entry) {
 
-                if(entry.numberOfAttempts > 0){
+                if (entry.numberOfAttempts > 0) {
                     questionAttempted = true;
                 }
             });
@@ -332,7 +397,7 @@ exports.isNewUser = function (inputID, callback){
 
 };
 
-exports.removeQuestion = function (baseQuestionId, callback){
+exports.removeQuestion = function (baseQuestionId, callback) {
     userModel.find({}, function (err, users) {
         if (err) throw err;
 
@@ -342,8 +407,8 @@ exports.removeQuestion = function (baseQuestionId, callback){
         //For each user add a new question that is a copy of the question, but has a new id
         users.forEach(function (user) {
 
-            for(var i = user.questions.length; i--;) {
-                if(user.questions[i].baseQuestionID === baseQuestionId) {
+            for (var i = user.questions.length; i--;) {
+                if (user.questions[i].baseQuestionID === baseQuestionId) {
                     arr.splice(i, 1);
                 }
             }
@@ -379,10 +444,10 @@ exports.removeQuestion = function (baseQuestionId, callback){
 };
 
 
-exports.updateTeachersQuestions = function (ClassToken , callback){
+exports.updateTeachersQuestions = function (ClassToken, callback) {
     //find all the students
-    userModel.find({ classToken: ClassToken , $and: [ { "isteacher": false } ]  }, function (err, users){
-        if (err){
+    userModel.find({classToken: ClassToken, $and: [{"isteacher": false}]}, function (err, users) {
+        if (err) {
             callback();
         }
 
@@ -390,39 +455,39 @@ exports.updateTeachersQuestions = function (ClassToken , callback){
         users.forEach(function (user) {
 
             //for each question
-            user.questions.forEach(function(entry){
+            user.questions.forEach(function (entry) {
 
                 var as = entry.responses.a;
 
-                for (var i = 0; i< as; i++){
+                for (var i = 0; i < as; i++) {
                     freePlayLogic.updateTeacherData(ClassToken, entry.baseQuestionID, "a");
                 }
 
 
                 var bs = entry.responses.b;
-                for (var i = 0; i< bs; i++){
+                for (var i = 0; i < bs; i++) {
                     freePlayLogic.updateTeacherData(ClassToken, entry.baseQuestionID, "b");
                 }
 
                 var cs = entry.responses.c;
-                for (var i = 0; i< cs; i++){
+                for (var i = 0; i < cs; i++) {
                     freePlayLogic.updateTeacherData(ClassToken, entry.baseQuestionID, "c");
                 }
 
                 var ds = entry.responses.d;
-                for (var i = 0; i< ds; i++){
+                for (var i = 0; i < ds; i++) {
                     freePlayLogic.updateTeacherData(ClassToken, entry.baseQuestionID, "d");
                 }
             });
 
-            });
-
         });
+
+    });
 
     callback();
 };
 
-exports.getUserEmail = function( inputID , callback){
+exports.getUserEmail = function (inputID, callback) {
     userModel.findById(inputID, function (err, user) {
         if (err) {
             callback(err, null);
@@ -431,3 +496,87 @@ exports.getUserEmail = function( inputID , callback){
         callback(null, user.email);
     });
 };
+
+/**
+ * This method update the category count
+ * @param category
+ * @param callback
+ */
+exports.updateCategoryCount= function (inputCategory, callback){
+    category.find({Title : inputCategory}, function(err, cat){
+
+
+        if (err){
+            callback(err, null)
+        }
+        cat[0].questionCount ++;
+        cat[0].save(function (err, product) {
+            if (err) throw err;
+            callback(null, "worked");
+
+        });
+    })
+}
+
+/**
+ * This is just a util script, it should not be called during app usage.
+ * @param callback
+ */
+exports.generateQuestionsForUsers = function (callback) {
+    userModel.find({}, function (err, users) {
+        if (err) {
+            callback(err, null);
+        }
+
+
+        async.forEachOf(users, function (user, key, sCallback) {
+                //console.log("got here");
+
+                user.questions.forEach(function (question) {
+                    //create new question object
+                    var newQuestion = questionModel();
+
+
+                    newQuestion.category = question.category;
+
+                    newQuestion.subcategory = question.subcategory;
+
+                    newQuestion.questionText = question.questionText;
+
+                    newQuestion.answers = question.answers;
+
+                    newQuestion.solution = question.solution;
+
+                    newQuestion.correct = question.correct;
+
+                    newQuestion.comprehension = question.comprehension;
+
+                    newQuestion.responses = question.responses;
+
+                    newQuestion.numberOfAttempts = question.numberOfAttempts;
+                    newQuestion.incorrectAttempts = question.incorrectAttempts;
+                    newQuestion.correctAttempts = question.correctAttempts;
+
+                    newQuestion.baseQuestionID = question.baseQuestionID;
+
+
+                    //update the userid of the question
+                    newQuestion.userID = user._id.toString();
+
+                    newQuestion.save(function (err, product) {
+                        if (err) throw err;
+
+                        sCallback();
+
+
+                    });
+
+                })
+
+
+            },
+            function (err) {
+                callback();
+            })
+    });
+}

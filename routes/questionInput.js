@@ -3,12 +3,14 @@
  */
 
 
+var async = require('async');
+
 var question = require("../models/question");
 
 var DBFunctions = require("../DBWork/DBFunctions");
 
 
-exports.addQuestion = function(req, res){
+exports.addQuestion = function (req, res) {
 
     var newQuestion = new question();
 
@@ -24,14 +26,16 @@ exports.addQuestion = function(req, res){
     //newQuestion.answers = {"a": "Cabinet Department" , b: "Government Corporation",
     //    c: "Independent Executive Agency" , d:"Independent Regulatory Commission" };
 
-    newQuestion.answers = {"a": req.param("A") , b: req.param("B"),
-        c: req.param("C") , d:req.param("D") };
+    newQuestion.answers = {
+        "a": req.param("A"), b: req.param("B"),
+        c: req.param("C"), d: req.param("D")
+    };
 
     newQuestion.solution = req.param("solution");
 
     newQuestion.correct = false;
 
-    newQuestion.comprehension =  {
+    newQuestion.comprehension = {
         "mastered": false,
         "intermediate": false,
         "novice": true
@@ -40,31 +44,51 @@ exports.addQuestion = function(req, res){
     newQuestion.responses = {
         a: 0,
         b: 0,
-        c : 0,
-        d : 0
+        c: 0,
+        d: 0
     };
 
     newQuestion.numberOfAttempts = 0;
     newQuestion.incorrectAttempts = 0;
-    newQuestion.correctAttempts =0;
+    newQuestion.correctAttempts = 0;
 
 
-    newQuestion.save(function(err , product) {
+    newQuestion.save(function (err, product) {
         if (err) throw err;
 
-        console.log('Question saved successfully!');
-        res.redirect("/question");
 
-        DBFunctions.addQuestionToAllUsers(product.id);
+        async.series([
+            function (callback) {
+                DBFunctions.createQuestionsForAllUsers(product.id, function (err, worked) {
+                    if (err) {
+                        console.log("error, not added to all users")
+                    }
+                    else {
+                        console.log('Question saved successfully!');
+                        callback();
 
-
-
+                    }
+                });
+            },
+            function (callback){
+                DBFunctions.updateCategoryCount(req.param("Category"), function(err, worked){
+                    if (err){
+                        console.log("category count update problem")
+                    }
+                    callback()
+                })
+            },
+            function (callback) {
+                res.redirect("/question");
+                callback()
+            }]
+        )
 
     });
 
 }
 
-exports.temp = function(req, res){
+exports.temp = function (req, res) {
 
     res.render("questionInput");
 }
