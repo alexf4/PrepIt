@@ -89,4 +89,12 @@ describe ("DB Functions" , function (){
     //
     //})
 
+    //describe("#generateQuestionsForUser()", function(){
+    //    it ("should populate the question database with the content of the users question set", function (done){
+    //        DBFunctions.generateQuestionsForUsers(function(err){
+    //            done();
+    //        })
+    //    })
+    //})
+
 });
