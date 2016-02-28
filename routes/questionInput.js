@@ -52,6 +52,8 @@ exports.addQuestion = function (req, res) {
     newQuestion.incorrectAttempts = 0;
     newQuestion.correctAttempts = 0;
 
+    newQuestion.UserID = 0;
+
 
     newQuestion.save(function (err, product) {
         if (err) throw err;

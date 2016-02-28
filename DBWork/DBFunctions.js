@@ -11,73 +11,6 @@ var freePlayLogic = require("../GameLogic/FreePlayLogic");
 
 var async = require('async');
 
-/**
- * This method will add a new question to all users question sets
- */
-exports.addQuestionToAllUsers = function (inputID) {
-
-
-    var foundQuestion = null;
-
-    //Get the question via question id
-    questionModel.findById(inputID, function (err, question) {
-        if (err) throw err;
-
-        // show the one user
-        //console.log(question);
-
-
-        //save the question
-        foundQuestion = question;
-
-
-        //Get a list of all users
-        // get all the users
-        userModel.find({}, function (err, users) {
-            if (err) throw err;
-
-            // object of all the users
-            console.log(users);
-
-            //For each user add a new question that is a copy of the question, but has a new id
-            async.forEachOf(users, function (user, key, sCallback) {
-                    //Create new question
-                    var userQuestion = new questionModel(foundQuestion);
-                    userQuestion._id = mongoose.Types.ObjectId().toString();
-
-                    //Add that question to that users question set
-                    user.questions.push(userQuestion);
-
-                    user.save(function (error, data) {
-                    });
-
-                },
-                function (err) {
-
-                });
-
-
-            //users.forEach(function (user) {
-            //
-            //    //Create new question
-            //    var userQuestion = new questionModel(foundQuestion);
-            //    userQuestion._id = mongoose.Types.ObjectId().toString();
-            //
-            //    //Add that question to that users question set
-            //    user.questions.push(userQuestion);
-            //
-            //    user.save(function (error, data) {
-            //    });
-            //
-            //});
-
-        });
-
-
-    });
-
-
-};
 
 
 exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
@@ -97,23 +30,23 @@ exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
             //console.log(users);
 
             async.forEachOf(users, function (user, key, sCallback) {
-                //Create new question
-                var userQuestion = new questionModel(foundQuestion);
-                userQuestion._id = mongoose.Types.ObjectId().toString();
+                    //Create new question
+                    var userQuestion = new questionModel(foundQuestion);
+                    userQuestion._id = mongoose.Types.ObjectId().toString();
 
-                userQuestion.baseQuestionID = baseQuestionID;
+                    userQuestion.baseQuestionID = baseQuestionID;
 
-                userQuestion.UserID = user._id.toString();
+                    userQuestion.UserID = user._id.toString();
 
-                userQuestion.save(function (err, data) {
+                    userQuestion.save(function (err, data) {
+                        if (err) {
+                            sCallback(err, null);
+                        }
+                        sCallback(null, data);
+                    })
+                },
+                function (err) {
                     if (err) {
-                        sCallback(err, null);
-                    }
-                    sCallback(null, data);
-                })
-            },
-                function(err){
-                    if (err){
                         callback(err, null)
                     }
                     callback(null, "worked");
@@ -359,6 +292,7 @@ exports.getQuestionData = function (inputID, questionID, callback) {
  * @param callback the generic callback function
  */
 exports.isNewUser = function (inputID, callback) {
+
     userModel.findById(inputID, function (err, user) {
         if (err) {
             callback(err, null);
@@ -503,31 +437,31 @@ exports.getUserEmail = function (inputID, callback) {
  * @param inputID
  * @param callback
  */
-exports.findQuestionsForUser = function (inputID , callback){
-
-    questionModel.find({userID: inputID}, function(err, foundQuestions){
-        if (err){
-            callback(err, null);
-        }
-
-        callback(null, foundQuestions);
-    })
-
-}
+//exports.findQuestionsForUser = function (inputID, callback) {
+//
+//    questionModel.find({userID: inputID}, function (err, foundQuestions) {
+//        if (err) {
+//            callback(err, null);
+//        }
+//
+//        callback(null, foundQuestions);
+//    })
+//
+//}
 
 /**
  * This method update the category count
  * @param category
  * @param callback
  */
-exports.updateCategoryCount= function (inputCategory, callback){
-    category.find({Title : inputCategory}, function(err, cat){
+exports.updateCategoryCount = function (inputCategory, callback) {
+    category.find({Title: inputCategory}, function (err, cat) {
 
 
-        if (err){
+        if (err) {
             callback(err, null)
         }
-        cat[0].questionCount ++;
+        cat[0].questionCount++;
         cat[0].save(function (err, product) {
             if (err) throw err;
             callback(null, "worked");

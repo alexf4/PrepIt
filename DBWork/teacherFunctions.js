@@ -12,6 +12,7 @@ var Dict = require("collections/dict");
 var studentFunctions = require("./studentFunctions");
 var teacherFunctions = require("./teacherFunctions");
 var DBFunctions = require("../DBWork/DBFunctions.js");
+var questionFunctions = require("../DBWork/questionFunctions");
 
 var list = require("collections/list");
 /**
@@ -273,10 +274,6 @@ exports.getStudentsScores = function (inputID, routeCallback) {
 
                 teacherFunctions.addStudentScoresToTotal(numStudents, retDict, scores);
 
-                //scores.forEach( function (entry){
-                //    console.log("here2");
-                //})
-
                 callback();
 
 
@@ -454,7 +451,7 @@ exports.getMissedQuestionsList = function (teacherID, routeCallback) {
 
     var retList = new list;
 
-    DBFunctions.findQuestionsForUser(teacherID, function (err, questions) {
+    questionFunctions.findQuestionsForUser(teacherID, function (err, questions) {
         if (err) {
             routeCallback(err, null);
         }
@@ -491,7 +488,7 @@ exports.getMissedQuestionsList = function (teacherID, routeCallback) {
 exports.getMissedQuestionsListPerCategory = function (inputTeacherID, category, routeCallback) {
     var retList = new list;
 
-    DBFunctions.findQuestionsForUser(inputTeacherID, function (err, questions) {
+    questionFunctions.findQuestionsForUser(inputTeacherID, function (err, questions) {
         if (err) {
             routeCallback(err, null);
         }
@@ -524,7 +521,7 @@ exports.getMissedQuestionsListPerCategory = function (inputTeacherID, category, 
 
             }
         });
-        
+
         routeCallback(null, retList.toJSON());
     });
 
