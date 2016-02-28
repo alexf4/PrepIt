@@ -9,6 +9,8 @@ var arrays = require("collections/shim-array");
 var teacherFunctions = require("./teacherFunctions");
 var freePlayLogic = require("../GameLogic/FreePlayLogic");
 
+var questionFunctions = require("../DBWork/questionFunctions");
+
 var async = require('async');
 
 
@@ -64,7 +66,6 @@ exports.addQuestionsToUser = function (inputID, callback) {
     userModel.findById(inputID, function (err, user) {
 
         if (err) throw err;
-
 
         questionModel.find({baseQuestionID: ""}, function (err, questionsList) {
             async.forEachOf(questionsList, function (question, key, sCallback) {
@@ -125,9 +126,16 @@ exports.findNMissedQuestions = function (inputID, numberOfQuestions, callback) {
             callback(err, null);
         }
 
-        //Sort the question array with our specific compare function
-        user.questions.sort(compare);
-        callback(null, user.questions.slice(0, numberOfQuestions - 1));
+        questionFunctions.findQuestionsForUser(inputID, function (err, questions) {
+            if (err) {
+                callback(err, null);
+            }
+
+            //Sort the question array with our specific compare function
+            questions.sort(compare);
+            callback(null, questions.slice(0, numberOfQuestions - 1));
+
+        })
     })
 
 };
@@ -140,7 +148,7 @@ exports.findNMissedQuestions = function (inputID, numberOfQuestions, callback) {
  * @param Category the category to return
  * @param callback the method that is called
  */
-exports.getMissedQuestionsPerCategory = function (inputID, numberOfQuestions, Category, callback) {
+exports.getMissedQuestionsPerCategory = function (inputID, numberOfQuestions, inputCategory, callback) {
 
     var retArray = new arrays();
 
@@ -148,17 +156,26 @@ exports.getMissedQuestionsPerCategory = function (inputID, numberOfQuestions, Ca
         if (err) {
             callback(err, null);
         }
-        //Sort the question array with our specific compare function
-        user.questions.sort(compare);
 
-        user.questions.forEach(function (entry) {
-            if (entry.category == inputCategory) {
-                retArray.add(entry);
+
+        questionFunctions.findQuestionsForUser(inputID, function (err, questions) {
+            if (err) {
+                callback(err, null);
             }
-        });
 
-        callback(null, retArray.slice(0, numberOfQuestions - 1));
 
+            //Sort the question array with our specific compare function
+            questions.sort(compare);
+
+            questions.forEach(function (entry) {
+                if (entry.category == inputCategory) {
+                    retArray.add(entry);
+                }
+            });
+
+            callback(null, retArray.slice(0, numberOfQuestions - 1));
+
+        })
 
     });
 }
@@ -182,11 +199,12 @@ function compare(a, b) {
  * @param callback the method to be called when its done
  */
 exports.getAllQuestions = function (callback) {
-    questionModel.find({}, function (err, questions) {
+
+    questionModel.find({baseQuestionID: ""}, function (err, questionsList) {
         if (err) {
             callback(err, null);
         }
-        return questions;
+        return questionsList;
     });
 
 };
@@ -212,7 +230,7 @@ exports.getAllQuestionsPerUser = function (inputID, callback) {
  * @returns {number}
  */
 exports.getNumberOfQuestionsPerCategory = function (inputCategory, callback) {
-    questionModel.find({category: inputCategory}, function (err, questions) {
+    questionModel.find({baseQuestionID: "", category: inputCategory}, function (err, questions) {
         if (err) {
             callback(err, null);
         }
@@ -261,13 +279,13 @@ exports.calculateComprehension = function (scores) {
 exports.getQuestionData = function (inputID, questionID, callback) {
     var found = false;
 
-    //find the user
-    userModel.findById(inputID, function (err, user) {
+
+    questionFunctions.findQuestionsForUser(inputID, function (err, questions) {
         if (err) {
             callback(err, null);
         }
 
-        user.questions.forEach(function (entry) {
+        questions.forEach(function (entry) {
             if (entry.baseQuestionID == questionID) {
                 found = true;
                 callback(null, entry);
@@ -277,7 +295,27 @@ exports.getQuestionData = function (inputID, questionID, callback) {
         if (!found) {
             callback("could not find question", null);
         }
-    });
+    })
+
+
+    ////find the user
+    //userModel.findById(inputID, function (err, user) {
+    //    if (err) {
+    //        callback(err, null);
+    //    }
+    //
+    //
+    //    user.questions.forEach(function (entry) {
+    //        if (entry.baseQuestionID == questionID) {
+    //            found = true;
+    //            callback(null, entry);
+    //        }
+    //    });
+    //
+    //    if (!found) {
+    //        callback("could not find question", null);
+    //    }
+    //});
 
 };
 
@@ -309,15 +347,32 @@ exports.isNewUser = function (inputID, callback) {
 
             var questionAttempted = false;
 
-            //Find all the questions from a specific category
-            user.questions.forEach(function (entry) {
 
-                if (entry.numberOfAttempts > 0) {
-                    questionAttempted = true;
+            questionFunctions.findQuestionsForUser(inputID, function (err, questions) {
+                if (err) {
+                    callback(err, null);
                 }
-            });
 
-            callback(null, !questionAttempted);
+                questions.forEach(function (entry) {
+
+                    if (entry.numberOfAttempts > 0) {
+                        questionAttempted = true;
+                    }
+                });
+
+                callback(null, !questionAttempted);
+
+            })
+
+            ////Find all the questions from a specific category
+            //user.questions.forEach(function (entry) {
+            //
+            //    if (entry.numberOfAttempts > 0) {
+            //        questionAttempted = true;
+            //    }
+            //});
+            //
+            //callback(null, !questionAttempted);
 
         }
 
@@ -326,6 +381,11 @@ exports.isNewUser = function (inputID, callback) {
 
 };
 
+/**
+ * Util function
+ * @param baseQuestionId
+ * @param callback
+ */
 exports.removeQuestion = function (baseQuestionId, callback) {
     userModel.find({}, function (err, users) {
         if (err) throw err;
