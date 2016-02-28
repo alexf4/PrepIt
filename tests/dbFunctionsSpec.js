@@ -10,6 +10,8 @@ db.connect();
 
 describe ("DB Functions" , function (){
 
+    this.timeout(4000);
+
     describe ("#getNumberOfQuestionsPerCategory()", function (){
         it("should return the number of questions in the db of a specific category" , function(done){
 

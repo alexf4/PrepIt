@@ -12,6 +12,8 @@ db.connect();
 
 describe("Teacher Functions", function(){
 
+    this.timeout(4000);
+
     describe("#getClassAverageMasteryForQuestion()", function (){
         it("will return the average mastery for a specific question", function(done){
 
