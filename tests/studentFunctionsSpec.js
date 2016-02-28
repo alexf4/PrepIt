@@ -16,7 +16,7 @@ describe ("Student Functions", function(){
         var expectedResults = {
             mastered : 0,
             intermediate : 0,
-            novice : 3
+            novice : 2
         };
 
         it("should return the mastery levels of category for a student", function(done){
