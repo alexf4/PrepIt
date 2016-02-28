@@ -12,7 +12,6 @@ var freePlayLogic = require("../GameLogic/FreePlayLogic");
 var async = require('async');
 
 
-
 exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
 
     questionModel.findById(baseQuestionID, function (err, question) {
@@ -36,7 +35,7 @@ exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
 
                     userQuestion.baseQuestionID = baseQuestionID;
 
-                    userQuestion.UserID = user._id.toString();
+                    userQuestion.userID = user._id.toString();
 
                     userQuestion.save(function (err, data) {
                         if (err) {
@@ -61,39 +60,34 @@ exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
 
 exports.addQuestionsToUser = function (inputID, callback) {
 
-    foundUser = null;
-
     //Find the new user
     userModel.findById(inputID, function (err, user) {
 
         if (err) throw err;
 
-        foundUser = user;
+
+        questionModel.find({baseQuestionID: ""}, function (err, questionsList) {
+            async.forEachOf(questionsList, function (question, key, sCallback) {
+
+                    newQuestion = new questionModel(question);
+                    newQuestion._id = mongoose.Types.ObjectId().toString();
+                    newQuestion.baseQuestionID = question._id;
+                    newQuestion.userID = inputID;
+
+                    newQuestion.save(function (err, data) {
+                        //newQuestion = null;
 
 
-        //Find all of the questions in the question set
-        questionModel.find({}, function (err, questionsList) {
+                        sCallback(null);
+                    })
+                },
+                function (err) {
+                    callback();
+                });
+        })
+    })
+}
 
-            //For each question create a clone and add it to the users set
-            questionsList.forEach(function (question) {
-                newQuestion = new questionModel(question);
-                newQuestion._id = mongoose.Types.ObjectId().toString();
-                newQuestion.baseQuestionID = question._id;
-
-                foundUser.questions.push(newQuestion);
-
-            });
-
-            foundUser.save(function (error, data) {
-
-                newQuestion = null;
-
-
-                callback(null);
-            });
-        });
-    });
-};
 
 /**
  * This method will get all the question Categories
@@ -182,6 +176,7 @@ function compare(a, b) {
         return 1;
     return 0;
 }
+
 /**
  * This method will return all of the questions in the db category
  * @param callback the method to be called when its done
@@ -377,7 +372,11 @@ exports.removeQuestion = function (baseQuestionId, callback) {
     callback()
 };
 
-
+/**
+ * This is just a util function
+ * @param ClassToken
+ * @param callback
+ */
 exports.updateTeachersQuestions = function (ClassToken, callback) {
     //find all the students
     userModel.find({classToken: ClassToken, $and: [{"isteacher": false}]}, function (err, users) {

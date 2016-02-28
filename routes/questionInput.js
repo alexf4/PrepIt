@@ -52,7 +52,9 @@ exports.addQuestion = function (req, res) {
     newQuestion.incorrectAttempts = 0;
     newQuestion.correctAttempts = 0;
 
-    newQuestion.UserID = 0;
+    newQuestion.userID = "";
+
+    newQuestion.baseQuestionID = "";
 
 
     newQuestion.save(function (err, product) {
