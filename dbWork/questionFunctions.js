@@ -4,7 +4,7 @@ var questionModel = require("../models/question");
 
 /**
  * This function will return all the questions of a user
- * @param inputID
+ * @param inputID the input id of the person
  * @param callback
  */
 exports.findQuestionsForUser = function (inputID, callback) {
