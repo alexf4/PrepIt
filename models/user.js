@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 
-var questionFunctions = require("../DBWork/questionFunctions");
+var questionFunctions = require("../DBWork/questionFunctions.js");
+
 
 var bcrypt = require('bcrypt-nodejs');
 
