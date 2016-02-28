@@ -6,6 +6,8 @@ var db = require('../dbWork/db');
 
 db.connect();
 describe ("Student Functions", function(){
+
+    this.timeout(4000);
     describe("#getMasterOfCategory()", function (){
 
         var studentID = "5684918fab13621200fe36bf";
