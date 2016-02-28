@@ -7,7 +7,7 @@ var studentFunctions = require("../DBWork/studentFunctions");
 var FreePlayLogic = require("./FreePlayLogic");
 
 var DBFunctions = require("../DBWork/DBFunctions.js");
-var questionFunctions = require("../DBWork/questionFunctions");
+var questionFunctions = require("../DBWork/questionFunctions.js");
 
 exports.getQuestion = function (inputID, callback) {
 
