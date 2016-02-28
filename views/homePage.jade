@@ -51,13 +51,13 @@ head
                                 a.page-scroll(href='#page-top') Home
 
                             li
-                                a.page-scroll(href='#features') Student Features
+                                a.page-scroll(href='#studentFeatures') Student Features
 
                             li
-                                a.page-scroll(href='#team') Teacher Features
+                                a.page-scroll(href='#teacherFeatures') Teacher Features
 
                             li
-                                a.page-scroll(href='#testimonials') Team
+                                a.page-scroll(href='#team') Team
 
                             //li
                             //    a.page-scroll(href='#pricing') Pricing
@@ -119,11 +119,11 @@ head
                 span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
 
                 span.sr-only Next
-        section#features.container.services
+        //section#features.container.services
             .row
                 .col-lg-12.text-center
                     .navy-line
-                    p PrepIT is offering free access to the beta version of its first review app for use with the AP US Government and Politics exam.  The app contains 250 review questions and powerful data tracking tools to help students and teachers target weaknesses.  Check out the features for both the student and teacher accounts and give it a try!
+                    p PrepIT is offering free access to the beta version of its first review app for use with the AP US Government and Politics exam.  The app contains 250 review questions and powerful data tracking tools to help students and teachers target weaknesses.  Check out the features for both the student and teacher accounts and give it a try!
             .row
                 .col-sm-6
                     h2 Engaging Review
@@ -164,78 +164,144 @@ head
 
                     p
                         a.navy-link(href='#', role='button') Details &raquo;
-        //section.container.features
+        section#studentFeatures.container.features
             .row
                 .col-lg-12.text-center
                     .navy-line
 
                     h1
-                        | Over 40+ unique view
+                        | Review Questions
                         br
 
-                        span.navy  with many custom components
+                        span.navy  250 high quality review questions
 
-                    p Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.
+                    p written by experienced teachers and broken into 6 major categories of study.
 
             .row
                 .col-md-3.text-center.wow.fadeInLeft
+                    br
                     div
-                        i.fa.fa-mobile.features-icon
+                        i.fa.fa-laptop.features-icon
 
-                        h2 Full responsive
+                        h2 Maximize Study Time
 
                         p
-                            | Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.
+                            | With PrepIT tracking your performance you will know what topics to review.
 
                     .m-t-lg
-                        i.fa.fa-bar-chart.features-icon
+                        i.fa.fa-link.features-icon
 
+                        h2 Link Your Account
+
+                        p
+                            | You can link your account to your classroom teacher.  They will get updates as you practice so they will know what to review with you in class.
+                        br
+
+                .col-md-6.text-center.wow.zoomIn
+                    img.img-responsive(src='img/mobileView.png', alt='mobile compatibility')
+
+                .col-md-3.text-center.wow.fadeInRight
+                    br
+                    div
+                        i.fa.fa-desktop.features-icon
+
+                        h2 Visualize Your Performance
+
+                        p
+                            | PrepIT dashboard visually communicates your progress so you will know when you are ready for the test.
+
+                    .m-t-lg
+                        i.fa.fa-mobile-phone.features-icon
+
+                        h2 Practice Anywhere
+
+                        p
+                            | PrepIT works across multiple devices, including most mobile devices.
+                        br
+
+            section#features.container.services
+                .row
+                    .col-lg-12.text-center
+                        .navy-line
+                        p PrepIT is offering free access to the beta version of its first review app for use with the AP US Government and Politics exam.  The app contains 250 review questions and powerful data tracking tools to help students and teachers target weaknesses.  Check out the features for both the student and teacher accounts and give it a try!
+                .row
+                    .col-sm-6
+                        h2 Engaging Review
+
+                        p
+                            | The new PrepIT gaming app is a revolutionary way to help students pass the AP exam. Students will challenge opponents in head to
+                            | head trivia contests as they work their way up the political ladder to reach the White House. Along the way PrepIT will analyze
+                            | their performance to offer data driven guidance on where students should devote their study time.
+
+                        //p
+                            a.navy-link(href='#', role='button') Details &raquo;
+
+                    .col-sm-6
+                        h2 PrepIT Crunches the Numbers
+
+                        p
+                            | A teacher's time is a valuable resource. With PrepIT students can lind their game to their teachers classroom dashboard. As students
+                            | play, PrepIT will aggregate class data to show teachers the strengths and weadnesses among their students and offer suggestions on
+                            | what to review again.
+
+                        //p
+                            a.navy-link(href='#', role='button') Details &raquo;
+
+                    //.col-sm-3
                         h2 6 Charts Library
 
                         p
                             | Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.
 
-                .col-md-6.text-center.wow.zoomIn
-                    img.img-responsive(src='img/perspective.png', alt='dashboard')
+                        p
+                            a.navy-link(href='#', role='button') Details &raquo;
 
-                .col-md-3.text-center.wow.fadeInRight
-                    div
-                        i.fa.fa-envelope.features-icon
-
-                        h2 Mail pages
+                    //.col-sm-3
+                        h2 Advanced Forms
 
                         p
                             | Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.
 
-                    .m-t-lg
-                        i.fa.fa-google.features-icon
-
-                        h2 AngularJS version
-
                         p
-                            | Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.
+                            a.navy-link(href='#', role='button') Details &raquo;
+            section#teacherFeatures.container.features
+                .row
+                    .col-lg-12.text-center
+                        .navy-line
+
+                        h1
+                            | Gain Valuable Insight
+                            br
+
+                            span.navy  with our teacher dashboard view
+
+                        p Collect multiple data points on student performance with the teacher account
+
+                .row.features-block
+                    .col-md-5.text-center.wow.fadeInLeft
+                        .col-lg-10
+                            .row
+                                i.fa.fa-camera.features-icon
+
+                                    h2 Class Snapshot
+
+                                    p
+                                        | No need to dig through the numbers.  Instantly see class trends, commonly missed questions, and individual student performance.
+                                    br
+                            .row
+                                i.fa.fa-desktop.features-icon
+
+                                    h2 Monitor Student Progress
+
+                                    p
+                                        | Dive deeper into the data with the student and question analysis features.  See what questions Jonny is missing or what concepts about linkage institutions are stumping the class.
+                                    br
+
+                    .col-lg-7.text-center.wow.fadeInRight
+                        img.img-responsive.center-block(src='img/teacherDashboard.png', alt='dashboard')
 
             .row
-                .col-lg-12.text-center
-                    .navy-line
-
-                    h1 Discover great feautres
-
-                    p Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.
-
-            .row.features-block
-                .col-lg-6.features-text.wow.fadeInLeft
-                    small INSPINIA
-
-                    h2 Perfectly designed
-
-                    p
-                        | INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest jQuery plugins.
-
-                    a.btn.btn-primary(href='') Learn more
-
-                .col-lg-6.text-right.wow.fadeInRight
-                    img.img-responsive.pull-right(src='img/dashboard.png', alt='dashboard')
+                p The Teacher Dashboard is designed to provide powerful insight into classroom performance. Teachers don’t have time to sift through hundreds of multiple choice questions looking for trends, so the PrepIT app does it for you.  The program automatically calculates class averages on the 6 major categories of the AP exam, tracks commonly missed questions, and ranks student performance.
         section#team.gray-section.team
             .container
                 .row.m-b-lg
@@ -249,7 +315,7 @@ head
                 .row
                     .col-sm-4.wow.fadeInLeft
                         .team-member
-                            img.img-responsive.img-circle.img-small(src='img/avatar3.jpg', alt='')
+                            img.img-responsive.img-circle.img-small(src='img/Mike.jpg', alt='')
 
                             h4
                                 span.navy Mike
@@ -258,7 +324,7 @@ head
                             p
                                 | Mike is an AP Government teacher in Iowa and he understands the time crunch that teachers face as they prepare students for the AP exams. His idea for PrepIT was inspired by his students love of class trivia games and the need to prioritize review time on student weaknesses. Before teaching in Iowa Mike taught internationally in Vietnam and also served as a Teach for America corps member in Kansas City, Mo. Mike is a graduate of the University of Northern Iowa and Rockhurst University.
 
-                            ul.list-inline.social-icon
+                            //ul.list-inline.social-icon
                                 li
                                     a(href='#')
                                         i.fa.fa-twitter
@@ -273,7 +339,7 @@ head
 
                     .col-sm-4
                         .team-member.wow.zoomIn
-                            img.img-responsive.img-circle(src='img/avatar1.jpg', alt='')
+                            img.img-responsive.img-circle(src='img/Alex.jpg', alt='')
 
                             h4
                                 span.navy Alex
@@ -282,7 +348,7 @@ head
                             p
                                 | Alex is a startup forged Software Engineer. Working at startups in Iowa, San Francisco, Austin and Chicago he loves the fast pace of building and shipping products. Alex currently lives in Seattle and spends his time doing yoga and ingesting technologies. His affection for AWS, Docker and Node.js has simplified build process and increased the speed at which PrepIT.io is developed. In fact he would rather be coding then working on a Bio.....
 
-                            ul.list-inline.social-icon
+                            //ul.list-inline.social-icon
                                 li
                                     a(href='#')
                                         i.fa.fa-twitter
@@ -297,7 +363,7 @@ head
 
                     .col-sm-4.wow.fadeInRight
                         .team-member
-                            img.img-responsive.img-circle.img-small(src='img/avatar2.jpg', alt='')
+                            img.img-responsive.img-circle.img-small(src='img/TJ.jpg', alt='')
 
                             h4
                                 span.navy TJ
@@ -306,7 +372,7 @@ head
                             p
                                 | TJ has been working in professional education since 1999 after earning an undergraduate degree from the University of Iowa. He moved to North Carolina in 2001 and worked in the training group for high tech companies such as IBM and Lenovo. Eventually he became a program manager at Global Knowledge which is the worlds largest learning solutions provider. During this time his client list included Fortune 500 companies such as Microsoft, Cisco, Citibank, and the New York Stock Exchange. While in North Carolina he also earned an MBA from NC State with a concentration in entrepreneurship and technology.
 
-                            ul.list-inline.social-icon
+                            //ul.list-inline.social-icon
                                 li
                                     a(href='#')
                                         i.fa.fa-twitter
@@ -546,7 +612,7 @@ head
                     .col-lg-3.col-lg-offset-3
                         address
                             strong
-                                span.navy Company name, Inc.
+                                span.navy PrepIT, LLC.
                             br
                             |                     795 Folsom Ave, Suite 600
                             br
