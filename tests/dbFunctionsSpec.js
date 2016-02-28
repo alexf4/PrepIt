@@ -1,5 +1,6 @@
 var expect = require("chai").expect;
 var DBFunctions = require("../DBWork/DBFunctions.js");
+var questionFunctions = require("../DBWork/questionFunctions");
 var assert = require('chai').assert;
 
 var db = require('../dbWork/db');
@@ -18,7 +19,7 @@ describe ("DB Functions" , function (){
             var category = "Constitutional Underpinnings";
 
             DBFunctions.getNumberOfQuestionsPerCategory(category, function(err, questionCount){
-                assert.equal( questionCount, 852, "The number of questions in a category");
+                assert.equal( questionCount, 947, "The number of questions in a category");
                 done();
             })
 
@@ -77,6 +78,8 @@ describe ("DB Functions" , function (){
 
 
     })
+
+
 
     //describe("#updateteacherQuestionSet()", function(){
     //

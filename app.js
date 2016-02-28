@@ -72,6 +72,13 @@ if (app.get('env') === 'development') {
     });
 }
 
+app.use(function(req, res, next) {
+    if (req.url.slice === 'http://prepit-io-c6927db3.6ba7a109.svc.dockerapp.io:8080/') {
+        req.url = "PrepIt.IO";
+    }
+    next();
+});
+
 
 
 

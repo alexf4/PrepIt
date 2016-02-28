@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+
+var questionFunctions = require("../DBWork/questionFunctions");
+
 var bcrypt = require('bcrypt-nodejs');
 
 //TODO: Might want to create a question que system
@@ -12,7 +15,7 @@ var userSchema = new Schema({
     password: String,
     email: String,
     isteacher: Boolean,
-    token: { type: String, unique: true},
+    token: {type: String, unique: true},
     classToken: String,
     questions: []
 
@@ -34,14 +37,19 @@ userSchema.methods.validPassword = function (password) {
 userSchema.methods.countNumberOfQuestionsPerCategory = function (inputCategory) {
     var numberOfQuestions = 0;
 
-    this.questions.forEach(function (entry) {
-        if (entry.category == inputCategory) {
-            numberOfQuestions++;
+    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+        if (err) {
+            console.log(err);
         }
+
+        questions.forEach(function (entry) {
+            if (entry.category == inputCategory) {
+                numberOfQuestions++;
+
+            }
+        });
+        return numberOfQuestions;
     });
-
-    return numberOfQuestions;
-
 };
 
 //Count the number of questions correct per category
@@ -49,14 +57,19 @@ userSchema.methods.numberOfQuestionsCorrectPerCategory = function (inputCategory
     var numberOfQuestionsCorrect = 0;
 
 
-    this.questions.forEach(function (entry) {
-        if ((entry.category == inputCategory) && (entry.correct == true)) {
-            numberOfQuestionsCorrect++;
+    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+        if (err) {
+            console.log(err);
         }
+
+        questions.forEach(function (entry) {
+            if ((entry.category == inputCategory) && (entry.correct == true)) {
+                numberOfQuestionsCorrect++;
+            }
+            return numberOfQuestionsCorrect;
+        });
+
     });
-
-
-    return numberOfQuestionsCorrect;
 };
 
 
@@ -64,48 +77,62 @@ userSchema.methods.numberOfQuestionsCorrectPerCategory = function (inputCategory
 userSchema.methods.numberOfCorrectAnswersForUser = function () {
     var numberOfQuestionsRight = 0;
 
-    this.questions.forEach(function (entry) {
-        if (entry.correct == true) {
-            numberOfQuestionsRight++;
+    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+        if (err) {
+            console.log(err);
         }
+
+        questions.forEach(function (entry) {
+            if (entry.correct == true) {
+                numberOfQuestionsRight++;
+            }
+            return numberOfQuestionsRight;
+        });
+
+
+    });
+};
+
+//Return the next question the user should use
+userSchema.methods.findNextQuestion = function (callback) {
+
+
+    this.findIncorrectQuestion(function (err, question) {
+        callback(err, question)
     });
 
-    return numberOfQuestionsRight;
+    //if (returnQuestion == null) {
+    //    returnQuestion = this.findColdestQuestion();
+    //}
+    //
+    ////TODO this can be updated later
+    ////returnQuestion.updateTimeStamp();
+    //
+    //
+    //return returnQuestion;
 };
 
 //Return the next question the user should use
-userSchema.methods.findNextQuestion = function () {
+userSchema.methods.findNextQuestionFromCategory = function (inputCategory, callback) {
 
 
-    var returnQuestion = this.findIncorrectQuestion();
+    var returnQuestion;
+    this.findIncorrectQuestionFromCategory(inputCategory, function (err, question) {
 
-    if (returnQuestion == null) {
-        returnQuestion = this.findColdestQuestion;
-    }
+        returnQuestion = question;
+
+        callback(null, returnQuestion);
+    });
+
+    //if (returnQuestion == null) {
+    //    returnQuestion = this.findQuestionFromCategory(inputCategory);
+    //    //returnQuestion = this.findColdestQuestion;
+    //}
 
     //TODO this can be updated later
     //returnQuestion.updateTimeStamp();
 
 
-    return returnQuestion;
-};
-
-//Return the next question the user should use
-userSchema.methods.findNextQuestionFromCategory = function (inputCategory) {
-
-
-    var returnQuestion = this.findIncorrectQuestionFromCategory(inputCategory);
-
-    if (returnQuestion == null) {
-        returnQuestion = this.findQuestionFromCategory(inputCategory);
-        //returnQuestion = this.findColdestQuestion;
-    }
-
-    //TODO this can be updated later
-    //returnQuestion.updateTimeStamp();
-
-
-    return returnQuestion;
 };
 
 //Need a method to open old questions for review
@@ -117,48 +144,60 @@ userSchema.methods.findColdestQuestion = function () {
 };
 
 //Find a question that is incorrect
-userSchema.methods.findIncorrectQuestion = function () {
+userSchema.methods.findIncorrectQuestion = function (callback) {
     var possibleQuestions = [];
 
-    this.questions.forEach(function (entry) {
-        if (!entry.correct) {
-            possibleQuestions.add(entry);
+    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+        if (err) {
+            callback(err, null);
         }
+
+        questions.forEach(function (entry) {
+            if (!entry.correct) {
+                possibleQuestions.add(entry);
+            }
+        });
+
+
+        //If there are any unleft questions that are wrong choose from there
+        //Randomly choose a question
+
+        if (possibleQuestions.length > 0) {
+            callback(null, possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)]);
+        }
+
+        //return null;
     });
-
-
-    //If there are any unleft questions that are wrong choose from there
-    //Randomly choose a question
-
-    if (possibleQuestions.length > 0) {
-        return possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)];
-    }
-
-    return null;
 };
 
 /**
  *
  * @returns {*}
  */
-userSchema.methods.findIncorrectQuestionFromCategory = function (inputCategory) {
+userSchema.methods.findIncorrectQuestionFromCategory = function (inputCategory, callback) {
     var possibleQuestions = [];
 
-    this.questions.forEach(function (entry) {
-        if (!entry.correct && entry.category == inputCategory) {
-            possibleQuestions.add(entry);
+    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+        if (err) {
+            callback(err, null);
         }
+
+        questions.forEach(function (entry) {
+            if (!entry.correct && entry.category == inputCategory) {
+                possibleQuestions.add(entry);
+            }
+        });
+
+
+        //If there are any unleft questions that are wrong choose from there
+        //Randomly choose a question
+
+        if (possibleQuestions.length > 0) {
+            callback(null, possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)]);
+        }
+
+        //return null;
     });
-
-
-    //If there are any unleft questions that are wrong choose from there
-    //Randomly choose a question
-
-    if (possibleQuestions.length > 0) {
-        return possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)];
-    }
-
-    return null;
 };
 
 /**
@@ -166,26 +205,32 @@ userSchema.methods.findIncorrectQuestionFromCategory = function (inputCategory) 
  * @param inputCategory
  * @returns {*}
  */
-userSchema.methods.findQuestionFromCategory = function (inputCategory) {
+userSchema.methods.findQuestionFromCategory = function (inputCategory, callback) {
     var possibleQuestions = [];
 
-    this.questions.forEach(function (entry) {
-        if (entry.category == inputCategory) {
-            possibleQuestions.add(entry);
+
+    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+        if (err) {
+            callback(err, null);
         }
+
+        questions.forEach(function (entry) {
+            if (entry.category == inputCategory) {
+                possibleQuestions.add(entry);
+            }
+            //If there are any unleft questions that are wrong choose from there
+            //Randomly choose a question
+
+            if (possibleQuestions.length > 0) {
+                callback(null, possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)]);
+            }
+
+            //return null;
+
+
+        });
     });
-
-
-    //If there are any unleft questions that are wrong choose from there
-    //Randomly choose a question
-
-    if (possibleQuestions.length > 0) {
-        return possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)];
-    }
-
-    return null;
-
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema)
 
