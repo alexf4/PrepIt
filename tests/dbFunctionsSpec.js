@@ -78,6 +78,18 @@ describe ("DB Functions" , function (){
 
     })
 
+    describe("#findQuestionsForUser()", function(){
+
+        var UserID = "5684903dab13621200fe364f";
+
+        it ("Should find all the questionf for a user", function (done){
+            DBFunctions.findQuestionsForUser(UserID, function(err, foundQuestions){
+                //console.log(foundQuestions);
+             done()
+            })
+        })
+    })
+
     //describe("#updateteacherQuestionSet()", function(){
     //
     //    var classToken = "33625fa";
