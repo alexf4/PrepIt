@@ -6,6 +6,9 @@ var userModel = require("../models/user");
 var studentFunctions = require("../DBWork/studentFunctions");
 var FreePlayLogic = require("./FreePlayLogic");
 
+var DBFunctions = require("../DBWork/DBFunctions.js");
+var questionFunctions = require("../DBWork/questionFunctions.js");
+
 exports.getQuestion = function (inputID, callback) {
 
     userModel.findById(inputID, function (err, user) {
@@ -13,10 +16,9 @@ exports.getQuestion = function (inputID, callback) {
             callback(err, null);
         }
 
-        //Find a question that has an incorrect
-        var foundQuestion = user.findNextQuestion();
-
-        callback(foundQuestion);
+        user.findNextQuestion(function (err, foundQuestion) {
+            callback(foundQuestion);
+        })
 
     });
 
@@ -56,102 +58,88 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
         question: null
     };
 
-    //grab the questions correct answer
+    var foundUser;
+
     userModel.findById(inputId, function (err, user) {
         if (err) {
             callback(err, null);
         }
 
-        //TODO: Clean up this save code
-        var questions = user.questions;
+        foundUser = user;
 
-        //Find a question that has an incorrect
-        //foundQuestion = findNextQuestion(user.questions);
-
-        //find the question in the user item
-
-        if (user.questions ==null){
-            console.log(user);
-
-            if(user.isteacher){
-                callback("teacher could not find question", null);
+        questionFunctions.findQuestionsForUser(inputId, function (err, questions) {
+            if (err) {
+                routeCallback(err, null);
             }
 
-        }
-        user.questions.forEach(function (entry) {
+            questions.forEach(function (entry) {
 
 
-            /**
-             * adding new questions.
-             */
+                /**
+                 * adding new questions.
+                 */
 
-            if (entry._id.toString() == questionID) {
+                if (entry.baseQuestionID == questionID) {
 
-                //Update the teachers question with metric data
-                if (!user.isteacher && user.classToken != 0) {
-                    FreePlayLogic.updateTeacherData(user.classToken, entry.baseQuestionID, userAnswer);
+                    //Update the teachers question with metric data
+                    if (!foundUser.isteacher && foundUser.classToken != 0) {
+                        FreePlayLogic.updateTeacherData(foundUser.classToken, entry.baseQuestionID, userAnswer);
+                    }
+
+
+                    result.question = entry;
+
+                    //update the count of the users answer
+                    switch (userAnswer) {
+                        case "a":
+                            entry.responses.a++;
+
+                            break;
+                        case "b":
+                            entry.responses.b++;
+
+                            break;
+                        case "c":
+                            entry.responses.c++;
+
+                            break;
+                        case "d":
+                            entry.responses.d++;
+
+                            break;
+                    }
+
+                    entry.numberOfAttempts++;
+
+
+                    if (entry.solution == userAnswer) {
+                        //Mark question as correct
+                        entry.correct = true;
+                        result.correct = true;
+
+                        entry.correctAttempts++;
+
+
+                    } else {
+                        entry.correct = false;
+                        result.correct = false;
+
+                        entry.incorrectAttempts++;
+
+                    }
+
+                    entry.comprehension = calcComprehension(entry.numberOfAttempts, entry.correctAttempts);
+
+
+                    entry.save(function (err, product, number) {
+                        callback(result);
+                    })
                 }
-
-
-                result.question = entry;
-
-                //update the count of the users answer
-                switch (userAnswer) {
-                    case "a":
-                        entry.responses.a++;
-
-                        break;
-                    case "b":
-                        entry.responses.b++;
-
-                        break;
-                    case "c":
-                        entry.responses.c++;
-
-                        break;
-                    case "d":
-                        entry.responses.d++;
-
-                        break;
-                }
-
-                entry.numberOfAttempts++;
-
-
-                if (entry.solution == userAnswer) {
-                    //Mark question as correct
-                    entry.correct = true;
-                    result.correct = true;
-
-                    entry.correctAttempts++;
-
-
-                } else {
-                    entry.correct = false;
-                    result.correct = false;
-
-                    entry.incorrectAttempts++;
-
-                }
-
-                entry.comprehension = calcComprehension(entry.numberOfAttempts, entry.correctAttempts);
-
-            }
-        });
-
-
-        //TODO Look at this later
-        user.questions = null;
-
-        user.save(function (err, product, number) {
-
-            user.questions = questions;
-
-            user.save(function (err, product, number) {
-                callback(result);
-            })
+            });
         })
+
     });
+
 
 
 };
@@ -162,26 +150,29 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
  * @param inputBaseQuestionID the base question id links the student and teacher questions together.
  * @param userAnswer what the student entered
  */
-exports.updateTeacherData = function(inputClassToken, inputBaseQuestionID, userAnswer) {
+exports.updateTeacherData = function (inputClassToken, inputBaseQuestionID, userAnswer) {
     //get the Teacher
     studentFunctions.getTeacher(inputClassToken, function (err, teacher) {
         // Get the teachers question
 
-        if(err){
+        if (err) {
 
             console.log("teacher not found");
 
         }
-        else{
+        else {
             studentFunctions.getTeacherQuestion(inputClassToken, inputBaseQuestionID, function (err, questionID) {
                 if (err) {
-                    console.log(err.toString());
+                    console.log("Cant find it " + err.toString());
+                }
+                else {
+                    //The the check answer method from the teacher object to update it
+                    FreePlayLogic.checkAnswer(teacher[0]._id, userAnswer, questionID, function (result) {
+                        console.log("Question data added to teacher object");
+                    })
                 }
 
-                //The the check anser method from the teacher object to update it
-                FreePlayLogic.checkAnswer(teacher[0]._id, userAnswer, questionID, function (result) {
-                    console.log("Question data added to teacher object");
-                })
+
             })
         }
 
@@ -210,7 +201,7 @@ function calcComprehension(numAttempts, numCorrect) {
     else if (compRatio < .75 && compRatio > .50) {
         retComprehension.intermediate = true;
     }
-    else {
+    else if (compRatio <= .50) {
         retComprehension.novice = true;
     }
 

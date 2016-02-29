@@ -1,5 +1,6 @@
 var expect = require("chai").expect;
 var DBFunctions = require("../DBWork/DBFunctions.js");
+var questionFunctions = require("../DBWork/questionFunctions");
 var assert = require('chai').assert;
 
 var db = require('../dbWork/db');
@@ -10,13 +11,15 @@ db.connect();
 
 describe ("DB Functions" , function (){
 
+    this.timeout(4000);
+
     describe ("#getNumberOfQuestionsPerCategory()", function (){
         it("should return the number of questions in the db of a specific category" , function(done){
 
             var category = "Constitutional Underpinnings";
 
             DBFunctions.getNumberOfQuestionsPerCategory(category, function(err, questionCount){
-                assert.equal( questionCount, 33, "The number of questions in a category");
+                assert.equal( questionCount, 24, "The number of questions in a category");
                 done();
             })
 
@@ -76,6 +79,8 @@ describe ("DB Functions" , function (){
 
     })
 
+
+
     //describe("#updateteacherQuestionSet()", function(){
     //
     //    var classToken = "33625fa";
@@ -87,6 +92,14 @@ describe ("DB Functions" , function (){
     //    })
     //
     //
+    //})
+
+    //describe("#generateQuestionsForUser()", function(){
+    //    it ("should populate the question database with the content of the users question set", function (done){
+    //        DBFunctions.generateQuestionsForUsers(function(err){
+    //            done();
+    //        })
+    //    })
     //})
 
 });

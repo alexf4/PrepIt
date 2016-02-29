@@ -12,6 +12,8 @@ db.connect();
 
 describe("Teacher Functions", function(){
 
+    this.timeout(4000);
+
     describe("#getClassAverageMasteryForQuestion()", function (){
         it("will return the average mastery for a specific question", function(done){
 
@@ -43,9 +45,9 @@ describe("Teacher Functions", function(){
             var category = "Constitutional Underpinnings";
 
             var expectedResults = {
-                mastered : 4,
+                mastered : 6,
                 intermediate : 0,
-                novice : 86
+                novice : 118
             }
 
             teacherFunctions.getClassAverageMasteryForCategory(teacherID, category , function(err, scores){
