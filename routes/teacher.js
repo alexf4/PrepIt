@@ -223,8 +223,13 @@ exports.renderQuestionAnalysis = function (req, res) {
             teacher.renderTeacherDashboard(req, res);
         }
         else {
-            //render teacher page
-            res.render("questionAnalysis", {questions: questions, ClassCode: this.classToken})
+
+            teacherFunctions.getMissedQuestionsList(userId, function (err, questions) {
+
+                //render teacher page
+                res.render("questionAnalysis", {questions: questions, ClassCode: this.classToken})
+            })
+
         }
     });
 

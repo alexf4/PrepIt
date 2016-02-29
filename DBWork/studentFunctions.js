@@ -11,6 +11,7 @@ var Dict = require("collections/dict");
 var list = require("collections/list");
 var DBFunctions = require("../DBWork/DBFunctions.js");
 var studentFunctions = require("./studentFunctions");
+var questionFunctions = require("./questionFunctions.js");
 
 
 /**
@@ -145,7 +146,7 @@ exports.getTeacherQuestion = function (classToken, inputBaseQuestionID, callback
             callback(err, null);
         }
 
-        questionFunctions.findQuestionsForUser(teacher._id.toString(), function (err, questions) {
+        questionFunctions.findQuestionsForUser(teacher[0]._id.toString(), function (err, questions) {
             if (err) {
                 callback(err, null);
             }

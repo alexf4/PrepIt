@@ -38,9 +38,10 @@ exports.getQuestionFromCategory = function (inputID, category, callback) {
         }
 
         //Find a question that has an incorrect
-        var foundQuestion = user.findNextQuestionFromCategory(category);
+        user.findNextQuestionFromCategory(category, function (err, foundQuestion) {
+            callback(foundQuestion);
+        });
 
-        callback(foundQuestion);
 
     });
 };
@@ -139,7 +140,6 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
         })
 
     });
-
 
 
 };
