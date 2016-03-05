@@ -9,10 +9,48 @@ var arrays = require("collections/shim-array");
 var teacherFunctions = require("./teacherFunctions");
 var freePlayLogic = require("../GameLogic/FreePlayLogic");
 
+var bCrypt = require('bcrypt-nodejs');
+
 var questionFunctions = require("../DBWork/questionFunctions");
 
 var async = require('async');
 
+/**
+ * This method updates a users password
+ * @param inputID
+ * @param oldPassword
+ * @param newPassword
+ * @param callback
+ */
+exports.updatePassword = function (req, inputID, oldPassword, newPassword, callback) {
+
+    userModel.findById(inputID, function (err, user) {
+        if (err) {
+            callback(err, null);
+        }
+
+        if (user.validPassword(oldPassword)) {
+
+            user.password = createHash(newPassword);
+
+            user.save(function (err, product) {
+                if (err) throw err;
+
+                req.flash('PasswordUpdated', 'Password Updated')
+                callback(null, "worked");
+
+            });
+        } else {
+            req.flash('PasswordUpdateError', 'Invalid Password')
+            callback("Didn't work", null);
+        }
+    })
+
+}
+
+var createHash = function (password) {
+    return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+}
 
 exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
 
