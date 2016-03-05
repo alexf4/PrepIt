@@ -19,7 +19,7 @@ describe ("DB Functions" , function (){
             var category = "Constitutional Underpinnings";
 
             DBFunctions.getNumberOfQuestionsPerCategory(category, function(err, questionCount){
-                assert.equal( questionCount, 24, "The number of questions in a category");
+                assert.equal( questionCount, 33, "The number of questions in a category");
                 done();
             })
 
