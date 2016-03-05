@@ -20,6 +20,8 @@ html
                             .ibox-content
                                 form.form-horizontal(action='/updatePassword', method= "POST")
                                     p Password Reset
+                                    .alert-danger #{error}
+                                    .alert-success #{success}
                                     .form-group
                                         label.col-lg-2.control-label Current Password
                                         .col-lg-10
