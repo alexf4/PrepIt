@@ -76,7 +76,7 @@ exports.startCategoryPlay = function(req, res){
 
     //compare to users input
 
-    freePlayLogic.checkAnswer(userId, req.body.answer, req.body.questionId ,  function(result){
+    freePlayLogic.checkAnswer(userId, req.body.answer, req.body.questionId ,  function( result){
 
             res.render("FreePlayReview" , {
                 question : result.question ,
