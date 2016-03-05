@@ -59,6 +59,8 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
         question: null
     };
 
+
+
     var foundUser;
 
     userModel.findById(inputId, function (err, user) {

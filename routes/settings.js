@@ -21,7 +21,7 @@ exports.settings = function (req, res) {
             //callback(err, null);
         }
 
-        if(user.isteacher){
+        if (user.isteacher) {
             isTeacherData = true;
         }
 
@@ -35,8 +35,10 @@ exports.settings = function (req, res) {
 };
 
 
-exports.updatePassword = function (req, res){
+exports.updatePassword = function (req, res) {
 
+
+    userId = req.session.passport.user;
 
     //Grab the old password, confirm its correct
     var oldPassword = req.body.OldPassword;
@@ -44,6 +46,14 @@ exports.updatePassword = function (req, res){
     //update the password with the new one
     var newPassword = req.body.NewPassword;
 
+    //pass info back into deb functions
+    DBFunctions.updatePassword(req, userId, oldPassword, newPassword, function (err, done) {
 
-    res.redirect("/settings");
+        if (err) {
+            res.render( "settings", {error: req.flash("PasswordUpdateError"), success: req.flash("PasswordUpdated")});
+        }
+        res.render( "settings", {error: req.flash("PasswordUpdateError"), success: req.flash("PasswordUpdated")});
+    })
+
+
 };
