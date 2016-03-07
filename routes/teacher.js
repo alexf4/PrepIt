@@ -97,6 +97,7 @@ exports.renderStudentView = function (req, res) {
 
             //TODO: Make this dynamic. We have a list of categories, but we need to clean up the names we use here
             //TODO: Cody can now render pass into the student page the side bar information on the categories.
+            //TODO: Change to use the real student charts page with more logic
             res.render("teacherStudentView",
                 {
                     //TODO: need to figure out what the total data will look like
