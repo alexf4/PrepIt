@@ -502,7 +502,8 @@ exports.getMissedQuestionsListPerCategory = function (inputTeacherID, category, 
             if (entry.category == category) {
                 var questionData = {
                     questionString: entry.questionText,
-                    questionMissed: entry.incorrectAttempts
+                    questionMissed: entry.incorrectAttempts,
+                    questionID: entry.baseQuestionID
                 };
 
                 if (entry.comprehension.mastered) {
