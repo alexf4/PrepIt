@@ -22,9 +22,9 @@ describe("Student Route Functions", function(){
         var req = {};
         var res = {};
 
-        req.session = {};
-        req.session.passport = {};
-        req.session.passport.user = "5684918fab13621200fe36bf";
+        req.user={};
+        req.user._id = "5684918fab13621200fe36bf";
+
 
 
         res.render = function(chunk, encoding) {

@@ -19,7 +19,7 @@ var student = require("./student");
 exports.studentPage = function (req, res) {
 
     //Get the users logged in id
-    var userId = req.session.passport.user;
+    userId = req.user._id.toString();
 
     DBFunctions.isNewUser(userId, function (err, userStatus) {
         if (userStatus) {
@@ -52,7 +52,7 @@ exports.renderNewStudent = function (req ,res) {
  */
 exports.renderStudentPage = function(req, res){
     //Get the users logged in id
-    var userId = req.session.passport.user;
+    userId = req.user._id.toString();
     var userEmail = "";
 
     /**

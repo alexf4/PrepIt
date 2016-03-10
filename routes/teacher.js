@@ -41,7 +41,7 @@ exports.emptyOutSessionData = function (req) {
 exports.renderStudentList = function (req, res) {
 
 
-    userId = req.session.passport.user;
+    userId = req.user._id.toString();
     //find the teachers class token
     teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
 
@@ -126,6 +126,10 @@ exports.renderStudentView = function (req, res) {
 exports.renderCategoryView = function (req, res) {
 
     //Render the teacher dashboard, but only focus on the category
+
+
+    userId = req.user._id.toString();
+
 
     var userEmail = "";
 
@@ -215,7 +219,7 @@ exports.renderQuestionView = function (req, res) {
 exports.renderQuestionAnalysis = function (req, res) {
 
     //Get the users logged in id
-    userId = req.session.passport.user;
+    userId = req.user._id.toString();
 
     DBFunctions.isNewUser(userId, function (err, userStatus) {
         if (userStatus) {
@@ -247,7 +251,7 @@ exports.teacherPage = function (req, res) {
     teacher.emptyOutSessionData(req);
 
     //Get the users logged in id
-    userId = req.session.passport.user;
+    userId = req.user._id.toString();
 
     DBFunctions.isNewUser(userId, function (err, userStatus) {
         if (userStatus) {
@@ -282,7 +286,9 @@ exports.renderNewTeacher = function (req, res) {
  */
 exports.renderTeacherDashboard = function (req, res) {
     //Get the users logged in id
-    userId = req.session.passport.user;
+
+    userId = req.user._id.toString();
+
 
     chartData = null;
 
