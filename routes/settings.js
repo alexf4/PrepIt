@@ -38,7 +38,7 @@ exports.settings = function (req, res) {
 exports.updatePassword = function (req, res) {
 
 
-    userId = req.session.passport.user;
+    userId = req.user._id.toString();
 
     //Grab the old password, confirm its correct
     var oldPassword = req.body.OldPassword;
