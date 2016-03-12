@@ -14,7 +14,7 @@ db.connect();
 
 describe("Student Route Functions", function(){
 
-    this.timeout(4000);
+    this.timeout(40000);
 
     describe("#studentPage()", function(){
         it("Will render the student page", function (done){
