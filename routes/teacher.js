@@ -35,6 +35,7 @@ exports.emptyOutSessionData = function (req) {
     req.session.category = null;
     req.session.studentEmail = null;
     req.session.questionText = null;
+    req.session.questionID = null;
 };
 
 
