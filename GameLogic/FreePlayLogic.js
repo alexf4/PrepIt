@@ -59,8 +59,6 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
         question: null
     };
 
-
-
     var foundUser;
 
     userModel.findById(inputId, function (err, user) {
@@ -138,9 +136,9 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
                         callback(result);
                     })
                 }
+
             });
         })
-
     });
 
 
@@ -169,7 +167,7 @@ exports.updateTeacherData = function (inputClassToken, inputBaseQuestionID, user
                 }
                 else {
                     //The the check answer method from the teacher object to update it
-                    FreePlayLogic.checkAnswer(teacher[0]._id, userAnswer, questionID, function (result) {
+                    FreePlayLogic.checkAnswer(teacher[0]._id, userAnswer, inputBaseQuestionID, function (result) {
                         console.log("Question data added to teacher object");
                     })
                 }
