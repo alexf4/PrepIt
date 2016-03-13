@@ -12,21 +12,40 @@ var list = require("collections/list");
 var DBFunctions = require("../DBWork/DBFunctions.js");
 var studentFunctions = require("./studentFunctions");
 var questionFunctions = require("./questionFunctions.js");
+var teacherFunctions = require("./teacherFunctions.js");
+
 
 
 /**
  * This method updates the user items teacher token slot
- * @param inputID the students id
+ * @param userId the students id
  * @param newlink the string input that will be the set as the teacher token element
  * @param callback the function to be called after the update is done in db
  */
-exports.updateStudentLink = function (inputID, newlink, callback) {
+exports.updateStudentLink = function (userId, newlink, callback) {
     userModel.findById(userId, function (err, user) {
-
+        if(err){
+            callback(err,null);
+        }
         user.classToken = newlink;
 
         user.save(function (err, user) {
-            callback();
+
+            if(err){
+                callback(err,null)
+            }
+
+            //Add users questions to teacher
+            teacherFunctions.addNewStudentsQuestionToTeacher(userId, newlink, function(err, worked){
+
+                if(err){
+                    callback(err,null)
+                }
+
+                callback(null, worked);
+
+            })
+
         })
     });
 };

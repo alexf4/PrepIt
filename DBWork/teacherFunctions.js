@@ -13,6 +13,7 @@ var studentFunctions = require("./studentFunctions");
 var teacherFunctions = require("./teacherFunctions");
 var DBFunctions = require("../DBWork/DBFunctions.js");
 var questionFunctions = require("../DBWork/questionFunctions");
+var freePlayLogic = require("../GameLogic/FreePlayLogic");
 
 var list = require("collections/list");
 /**
@@ -484,6 +485,95 @@ exports.getMissedQuestionsList = function (teacherID, routeCallback) {
     });
 
 };
+
+/**
+ * This method adds a new students questions to the teacher
+ * @param studentID
+ * @param classID
+ * @param callback
+ */
+exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback) {
+    //Find all the questions that the student has answered
+
+    var newQuestions;
+
+    var teacher;
+
+
+    async.waterfall([
+            function (wCallback) {
+                questionFunctions.findAnsweredQuestions(studentID, function (err, foundQuestions) {
+
+                    newQuestions = foundQuestions;
+                    wCallback();
+
+                })
+            },
+            function (wCallback) {
+                studentFunctions.getTeacher(classID, function (err, foundTeacher) {
+
+                    //TODO: Check if teacher is valid
+
+                    teacher = foundTeacher[0];
+                    wCallback();
+                })
+            }
+        ],
+        function () {
+
+
+            newQuestions.forEach(function (entry) {
+                //for each response
+                async.parallel([
+                    function(pCallback){
+                        if (entry.responses.a > 0) {
+                            teacherFunctions.addResponsesHelper(teacher._id.toString(), "a", entry._id.toString(), entry.responses.a, function (err, worked) {
+
+                            pCallback();
+                            })
+                        }
+                    },
+                    function(pCallback){
+
+                        if (entry.responses.b > 0) {
+                            teacherFunctions.addResponsesHelper(teacher._id.toString(), "b", entry._id.toString(), entry.responses.b, function (err, worked) {
+                                pCallback();
+                            })
+                        }
+                    },
+                    function(pCallback){
+                        if (entry.responses.c > 0) {
+                            teacherFunctions.addResponsesHelper(teacher._id.toString(), "c", entry._id.toString(), entry.responses.c, function (err, worked) {
+                                pCallback();
+                            })
+                        }
+                    },
+                    function(pCallback){
+                        if (entry.responses.d > 0) {
+                            teacherFunctions.addResponsesHelper(teacher._id.toString(), "d", entry._id.toString(), entry.responses.d, function (err, worked) {
+                                pCallback();
+                            })
+                        }
+                    }
+
+
+                ],function(){
+                    callback(err, "worked");
+                })
+            })
+
+        })
+}
+
+exports.addResponsesHelper = function (teacherID, response, questionID, count, callback) {
+    for (i = 0; i < count; i++) {
+        freePlayLogic.checkAnswer(teacherID, response, questionID, function (err, worked) {
+            callback(err, worked);
+
+
+        })
+    }
+}
 
 exports.getMissedQuestionsListPerCategory = function (inputTeacherID, category, routeCallback) {
     var retList = new list;
