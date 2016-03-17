@@ -95,31 +95,52 @@ exports.teacherDrillDown = function (req, res) {
 exports.renderStudentView = function (req, res) {
     //Find the users ID from their email
 
-    studentFunctions.getStudentFromEmail(req.session.studentEmail, function (err, studentID) {
-        studentFunctions.getMasteryScores(studentID, function (scores) {
-            var chartData = dataToChartHelper.createStudentMasteryChart(scores);
+    var studentScores;
 
-            //TODO: Make this dynamic. We have a list of categories, but we need to clean up the names we use here
-            //TODO: Cody can now render pass into the student page the side bar information on the categories.
-            //TODO: Change to use the real student charts page with more logic
-            res.render("teacherStudentView",
-                {
-                    //TODO: need to figure out what the total data will look like
-                    totalData: chartData.totalData,
-                    totalOptions: chartData.totalOptions,
-                    CUData: chartData.Constitutional_Underpinnings_Data,
-                    SectionOptions: chartData.sectionOptions,
-                    Civil_Rights_and_Liberties_Data: chartData.Civil_Rights_and_Liberties_Data,
-                    Political_Beliefs_and_Behaviors_Data: chartData.Political_Beliefs_and_Behaviors_Data,
-                    Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
-                    Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
-                    Public_Policy_Data: chartData.Public_Policy_Data,
-                    Title: "Student Dashboard View",
-                    activeSection: "Main View",
-                    ClassCode: this.classToken,
-                    studentEmail: req.session.studentEmail,
-                    userEmail: userEmail
-                });
+    var studentID;
+
+    var teacherEmail;
+
+    studentFunctions.getStudentFromEmail(req.session.studentEmail, function (err, inputStudentID) {
+        studentID = inputStudentID
+
+
+        studentFunctions.getMasteryScores(studentID, function (scores) {
+
+            studentScores = scores;
+
+
+            DBFunctions.getUserEmail(req.user._id.toString(), function (err, FoundTeacherEmail) {
+
+
+                teacherEmail = FoundTeacherEmail;
+
+
+                var chartData = dataToChartHelper.createStudentMasteryChart(scores);
+
+                //TODO: Make this dynamic. We have a list of categories, but we need to clean up the names we use here
+                //TODO: Cody can now render pass into the student page the side bar information on the categories.
+                //TODO: Change to use the real student charts page with more logic
+                res.render("teacherStudentView",
+                    {
+                        //TODO: need to figure out what the total data will look like
+                        totalData: chartData.totalData,
+                        totalOptions: chartData.totalOptions,
+                        CUData: chartData.Constitutional_Underpinnings_Data,
+                        SectionOptions: chartData.sectionOptions,
+                        Civil_Rights_and_Liberties_Data: chartData.Civil_Rights_and_Liberties_Data,
+                        Political_Beliefs_and_Behaviors_Data: chartData.Political_Beliefs_and_Behaviors_Data,
+                        Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
+                        Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
+                        Public_Policy_Data: chartData.Public_Policy_Data,
+                        Title: "Student Dashboard View",
+                        activeSection: "Main View",
+                        ClassCode: this.classToken,
+                        studentEmail: req.session.studentEmail,
+                        userEmail: FoundTeacherEmail
+                    });
+
+            });
 
         })
     });
