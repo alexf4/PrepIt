@@ -268,5 +268,22 @@ describe("Teacher Functions", function(){
     });
 
 
+    describe("#removeStudentFromClass()", function(){
+
+
+        var studentID = "5684918fab13621200fe36bf";
+
+        var studentEmail = ""
+        var classToken = "74fb18a";
+
+
+        it("should add questions from the student to the teacher", function(done){
+            teacherFunctions.addNewStudentsQuestionToTeacher(studentID, classToken, function(err, questionData){
+                //console.log(questionData);
+                done();
+            })
+        })
+    });
+
 
 });

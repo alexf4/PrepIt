@@ -33,6 +33,24 @@ exports.updateTeacherLink = function (inputID, updatedLink, callback) {
     });
 };
 
+
+/**
+ * This method removes a student from a class.
+ * @param inputID
+ * @param callback
+ */
+exports.removeStudentFromClass = function (studentEmail, callback){
+
+    //find the student
+
+    //Remove its link to the class
+
+    //remove its scores from the teacher
+
+
+
+}
+
 /**
  * This method will return the average mastery for a specific question
  * @param inputID the teachers ID
