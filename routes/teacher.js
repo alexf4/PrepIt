@@ -47,7 +47,10 @@ exports.renderStudentList = function (req, res) {
     teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
 
         teacherFunctions.listStudents(classToken, function (err, studentsList) {
-            res.render("studentList", {students: studentsList});
+            res.render("studentList", {
+                students: studentsList,
+                activeSection: "Student_Analysis"
+            });
         });
 
     });
@@ -114,7 +117,8 @@ exports.renderStudentView = function (req, res) {
                     Title: "Student Dashboard View",
                     activeSection: "Main View",
                     ClassCode: this.classToken,
-                    studentEmail: req.session.studentEmail
+                    studentEmail: req.session.studentEmail,
+                    userEmail: userEmail
                 });
 
         })
