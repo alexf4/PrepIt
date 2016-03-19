@@ -36,20 +36,116 @@ exports.updateTeacherLink = function (inputID, updatedLink, callback) {
 
 /**
  * This method removes a student from a class.
- * @param inputID
+ * @param teacherId
+ * @param studentEmail
  * @param callback
  */
-exports.removeStudentFromClass = function (studentEmail, callback){
+exports.removeStudentFromClass = function (teacherId, studentEmail, callback) {
 
     //find the student
+    studentFunctions.getStudentFromEmail(studentEmail, function (err, student) {
+
+        studentFunctions.removeStudentLink(student._id.toString(), function (err, worked) {
+
+
+            teacherFunctions.removeOldStudentQuestionsFromTeacher(teacherId, student._id.toString(), function (err, worked) {
+
+
+            })
+        });
+
+
+    })
+
 
     //Remove its link to the class
 
     //remove its scores from the teacher
 
 
-
 }
+
+exports.removeOldStudentQuestionsFromTeacher = function (teacherid, studentID, callback) {
+
+
+    var studentsQuestions;
+
+    var teacherQuestions;
+
+
+    //Find all the questions the student got correct
+    questionFunctions.findAnsweredQuestions(studentID, function (err, foundQuestions) {
+
+        studentsQuestions = foundQuestions;
+
+        //Find the correct teacher question
+        questionFunctions.findQuestionsForUser(teacherid, function (err, foundTeacherQuestions) {
+
+            teacherQuestions = foundTeacherQuestions;
+
+
+            //for each question
+            studentsQuestions.forEach(function (studentQuestion) {
+
+                teacherQuestions.forEach(function (teacherQuestion) {
+
+
+                    if (studentQuestion.baseQuestionID == teacherQuestion.baseQuestionID) {
+
+                        async.parallel([
+                            function (pCallback) {
+                                if (studentQuestion.responses.a > 0) {
+                                    teacherFunctions.removeResponsesHelper(teacherid, "a", teacherQuestion, entry.responses.a, function (err, worked) {
+
+                                        pCallback();
+                                    })
+                                }
+                            },
+                            function (pCallback) {
+
+                                if (studentQuestion.responses.b > 0) {
+                                    teacherFunctions.removeResponsesHelper(teacherid, "b", teacherQuestion, entry.responses.b, function (err, worked) {
+                                        pCallback();
+                                    })
+                                }
+                            },
+                            function (pCallback) {
+                                if (studentQuestion.responses.c > 0) {
+                                    teacherFunctions.removeResponsesHelper(teacherid, "c", teacherQuestion, entry.responses.c, function (err, worked) {
+                                        pCallback();
+                                    })
+                                }
+                            },
+                            function (pCallback) {
+                                if (studentQuestion.responses.d > 0) {
+                                    teacherFunctions.removeResponsesHelper(teacherid, "d", teacherQuestion, entry.responses.d, function (err, worked) {
+                                        pCallback();
+                                    })
+                                }
+                            }
+
+
+                        ], function () {
+                            callback(err, "worked");
+                        })
+
+
+                    }
+
+
+                })
+
+
+            })
+
+
+        })
+
+
+    })
+
+
+};
 
 /**
  * This method will return the average mastery for a specific question
@@ -543,15 +639,15 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
             newQuestions.forEach(function (entry) {
                 //for each response
                 async.parallel([
-                    function(pCallback){
+                    function (pCallback) {
                         if (entry.responses.a > 0) {
                             teacherFunctions.addResponsesHelper(teacher._id.toString(), "a", entry._id.toString(), entry.responses.a, function (err, worked) {
 
-                            pCallback();
+                                pCallback();
                             })
                         }
                     },
-                    function(pCallback){
+                    function (pCallback) {
 
                         if (entry.responses.b > 0) {
                             teacherFunctions.addResponsesHelper(teacher._id.toString(), "b", entry._id.toString(), entry.responses.b, function (err, worked) {
@@ -559,14 +655,14 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
                             })
                         }
                     },
-                    function(pCallback){
+                    function (pCallback) {
                         if (entry.responses.c > 0) {
                             teacherFunctions.addResponsesHelper(teacher._id.toString(), "c", entry._id.toString(), entry.responses.c, function (err, worked) {
                                 pCallback();
                             })
                         }
                     },
-                    function(pCallback){
+                    function (pCallback) {
                         if (entry.responses.d > 0) {
                             teacherFunctions.addResponsesHelper(teacher._id.toString(), "d", entry._id.toString(), entry.responses.d, function (err, worked) {
                                 pCallback();
@@ -575,7 +671,7 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
                     }
 
 
-                ],function(){
+                ], function () {
                     callback(err, "worked");
                 })
             })
@@ -591,6 +687,54 @@ exports.addResponsesHelper = function (teacherID, response, questionID, count, c
 
         })
     }
+}
+
+
+exports.removeResponsesHelper = function (teacherID, response, teacherQuestion, count, callback) {
+    //Find the question
+
+    //for each response
+
+
+    async.times(count, function (err, worked) {
+
+        switch (response) {
+            case a:
+                teacherQuestion.responses.a--;
+                break;
+            case b:
+                teacherQuestion.responses.b--;
+                break;
+            case c:
+                teacherQuestion.responses.c--;
+                break;
+            case d:
+                teacherQuestion.responses.d--;
+                break;
+        }
+
+        teacherQuestion.numberOfAttempts--;
+
+        if (teacherQuestion.solution == response) {
+            teacherQuestion.correctAttempts--;
+        } else {
+            teacherQuestion.incorrectAttempts--;
+        }
+
+
+        teacherQuestion.comprehension = calcComprehension(teacherQuestion.numberOfAttempts, teacherQuestion.correctAttempts);
+
+
+        teacherQuestion.save(function (err, savedQuestion) {
+            worked(null, savedQuestion)
+        })
+
+    }),
+
+        function (err, worked) {
+
+            callback(null, "worked");
+        };
 }
 
 exports.getMissedQuestionsListPerCategory = function (inputTeacherID, category, routeCallback) {
@@ -824,3 +968,35 @@ exports.listStudentsAndCategoryMastery = function (classToken, category, routeCa
 //
 //}
 
+
+/**
+ * This method will return an comprehension object
+ * @param numAttempts this is the current number of attempts on this question
+ * @param numCorrect this is the number correct answers of this question
+ * @returns {{mastered: boolean, intermediate: boolean, novice: boolean}} a comprehension object
+ */
+function calcComprehension(numAttempts, numCorrect) {
+
+    //TODO: this needs to be pushed to questionFunctions
+
+    var retComprehension = {
+        mastered: false,
+        intermediate: false,
+        novice: false
+    };
+
+    var compRatio = numCorrect / numAttempts;
+
+    if (compRatio > .75) {
+        retComprehension.mastered = true;
+    }
+    else if (compRatio < .75 && compRatio > .50) {
+        retComprehension.intermediate = true;
+    }
+    else if (compRatio <= .50) {
+        retComprehension.novice = true;
+    }
+
+    return retComprehension;
+
+}

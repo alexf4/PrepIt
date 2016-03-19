@@ -273,12 +273,37 @@ describe("Teacher Functions", function(){
 
         var studentID = "5684918fab13621200fe36bf";
 
+        var studentEmail = "student2@google.com"
+        var classToken = "74fb18a";
+
+
+        it("should add questions from the student to the teacher", function(done){
+
+            studentFunctions.updateStudentLink(studentID, classToken, function(err, worked){
+
+                teacherFunctions.addNewStudentsQuestionToTeacher(studentEmail, classToken, function(err, questionData){
+                    //console.log(questionData);
+                    done();
+                })
+
+            })
+
+
+        })
+    });
+
+
+    describe("#removeOldStudentQuestionsFromTeacher()", function(){
+
+
+        var studentID = "5684918fab13621200fe36bf";
+
         var studentEmail = ""
         var classToken = "74fb18a";
 
 
         it("should add questions from the student to the teacher", function(done){
-            teacherFunctions.addNewStudentsQuestionToTeacher(studentID, classToken, function(err, questionData){
+            teacherFunctions.removeOldStudentQuestionsFromTeacher(studentID, classToken, function(err, questionData){
                 //console.log(questionData);
                 done();
             })
