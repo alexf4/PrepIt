@@ -95,7 +95,7 @@ exports.removeOldStudentQuestionsFromTeacher = function (teacherid, studentID, c
                         async.parallel([
                             function (pCallback) {
                                 if (studentQuestion.responses.a > 0) {
-                                    teacherFunctions.removeResponsesHelper(teacherid, "a", teacherQuestion, entry.responses.a, function (err, worked) {
+                                    teacherFunctions.removeResponsesHelper(teacherid, "a", teacherQuestion, studentQuestion.responses.a, function (err, worked) {
 
                                         pCallback();
                                     })
@@ -104,21 +104,21 @@ exports.removeOldStudentQuestionsFromTeacher = function (teacherid, studentID, c
                             function (pCallback) {
 
                                 if (studentQuestion.responses.b > 0) {
-                                    teacherFunctions.removeResponsesHelper(teacherid, "b", teacherQuestion, entry.responses.b, function (err, worked) {
+                                    teacherFunctions.removeResponsesHelper(teacherid, "b", teacherQuestion, studentQuestion.responses.b, function (err, worked) {
                                         pCallback();
                                     })
                                 }
                             },
                             function (pCallback) {
                                 if (studentQuestion.responses.c > 0) {
-                                    teacherFunctions.removeResponsesHelper(teacherid, "c", teacherQuestion, entry.responses.c, function (err, worked) {
+                                    teacherFunctions.removeResponsesHelper(teacherid, "c", teacherQuestion, studentQuestion.responses.c, function (err, worked) {
                                         pCallback();
                                     })
                                 }
                             },
                             function (pCallback) {
                                 if (studentQuestion.responses.d > 0) {
-                                    teacherFunctions.removeResponsesHelper(teacherid, "d", teacherQuestion, entry.responses.d, function (err, worked) {
+                                    teacherFunctions.removeResponsesHelper(teacherid, "d", teacherQuestion, studentQuestion.responses.d, function (err, worked) {
                                         pCallback();
                                     })
                                 }
@@ -609,16 +609,18 @@ exports.getMissedQuestionsList = function (teacherID, routeCallback) {
 exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback) {
     //Find all the questions that the student has answered
 
-    var newQuestions;
+    var studentQuestions;
 
-    var teacher;
+    var teacherID;
+
+    var teacherQuestions;
 
 
     async.waterfall([
             function (wCallback) {
                 questionFunctions.findAnsweredQuestions(studentID, function (err, foundQuestions) {
 
-                    newQuestions = foundQuestions;
+                    studentQuestions = foundQuestions;
                     wCallback();
 
                 })
@@ -628,65 +630,146 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
 
                     //TODO: Check if teacher is valid
 
-                    teacher = foundTeacher[0];
+                    teacherID = foundTeacher[0]._id.toString();
+                    wCallback();
+                })
+            },
+            function (wCallback) {
+                questionFunctions.findQuestionsForUser(teacherID, function (err, foundQuestions) {
+                    teacherQuestions = foundQuestions;
                     wCallback();
                 })
             }
         ],
         function () {
 
+            //for each question
+            studentQuestions.forEach(function (studentQuestion) {
 
-            newQuestions.forEach(function (entry) {
-                //for each response
-                async.parallel([
-                    function (pCallback) {
-                        if (entry.responses.a > 0) {
-                            teacherFunctions.addResponsesHelper(teacher._id.toString(), "a", entry._id.toString(), entry.responses.a, function (err, worked) {
+                teacherQuestions.forEach(function (teacherQuestion) {
 
-                                pCallback();
-                            })
-                        }
-                    },
-                    function (pCallback) {
+                    if (studentQuestion.baseQuestionID == teacherQuestion.baseQuestionID) {
 
-                        if (entry.responses.b > 0) {
-                            teacherFunctions.addResponsesHelper(teacher._id.toString(), "b", entry._id.toString(), entry.responses.b, function (err, worked) {
-                                pCallback();
-                            })
-                        }
-                    },
-                    function (pCallback) {
-                        if (entry.responses.c > 0) {
-                            teacherFunctions.addResponsesHelper(teacher._id.toString(), "c", entry._id.toString(), entry.responses.c, function (err, worked) {
-                                pCallback();
-                            })
-                        }
-                    },
-                    function (pCallback) {
-                        if (entry.responses.d > 0) {
-                            teacherFunctions.addResponsesHelper(teacher._id.toString(), "d", entry._id.toString(), entry.responses.d, function (err, worked) {
-                                pCallback();
-                            })
-                        }
+                        async.series([
+                            function (pCallback) {
+                                if (studentQuestion.responses.a > 0) {
+                                    teacherFunctions.addResponsesHelper(teacherID, "a", teacherQuestion, studentQuestion.responses.a, function (err, worked) {
+
+                                        pCallback();
+                                    })
+                                }
+                            },
+                            function (pCallback) {
+
+                                if (studentQuestion.responses.b > 0) {
+                                    teacherFunctions.addResponsesHelper(teacherID, "b", teacherQuestion, studentQuestion.responses.b, function (err, worked) {
+                                        pCallback();
+                                    })
+                                }
+                            },
+                            function (pCallback) {
+                                if (studentQuestion.responses.c > 0) {
+                                    teacherFunctions.addResponsesHelper(teacherID, "c", teacherQuestion, studentQuestion.responses.c, function (err, worked) {
+                                        pCallback();
+                                    })
+                                }
+                            },
+                            function (pCallback) {
+                                if (studentQuestion.responses.d > 0) {
+                                    teacherFunctions.addResponsesHelper(teacherID, "d", teacherQuestion, studentQuestion.responses.d, function (err, worked) {
+                                        pCallback();
+                                    })
+                                }
+                            }
+
+
+                        ], function (err) {
+                            callback(err, "worked");
+                        })
+
                     }
 
-
-                ], function () {
-                    callback(err, "worked");
                 })
+
             })
 
         })
 }
 
-exports.addResponsesHelper = function (teacherID, response, questionID, count, callback) {
-    for (i = 0; i < count; i++) {
-        freePlayLogic.checkAnswer(teacherID, response, questionID, function (err, worked) {
-            callback(err, worked);
+exports.addResponsesHelper = function (teacherID, response, teacherQuestion, count, callback) {
 
 
-        })
+    switch (response) {
+        case "a":
+            teacherQuestion.responses.a = teacherQuestion.responses.a - count;
+            break;
+        case "b":
+            teacherQuestion.responses.b = teacherQuestion.responses.b - count;
+            break;
+        case "c":
+            teacherQuestion.responses.c = teacherQuestion.responses.c - count;
+            break;
+        case "d":
+            teacherQuestion.responses.d = teacherQuestion.responses.d - count;
+            break;
     }
+
+    teacherQuestion.numberOfAttempts =  teacherQuestion.numberOfAttempts - count;
+
+    if (teacherQuestion.solution == response) {
+        teacherQuestion.correctAttempts =  teacherQuestion.correctAttempts - count;
+    } else {
+        teacherQuestion.incorrectAttempts =  teacherQuestion.incorrectAttempts - count;
+    }
+
+
+    teacherQuestion.comprehension = calcComprehension(teacherQuestion.numberOfAttempts, teacherQuestion.correctAttempts);
+
+
+    teacherQuestion.save(function (err, savedQuestion) {
+        callback(null, savedQuestion);
+    });
+
+
+    //async.timesSeries(count, function (err, timesCallback) {
+    //
+    //        switch (response) {
+    //            case "a":
+    //                teacherQuestion.responses.a++;
+    //                break;
+    //            case "b":
+    //                teacherQuestion.responses.b++;
+    //                break;
+    //            case "c":
+    //                teacherQuestion.responses.c++;
+    //                break;
+    //            case "d":
+    //                teacherQuestion.responses.d++;
+    //                break;
+    //        }
+    //
+    //        teacherQuestion.numberOfAttempts++;
+    //
+    //        if (teacherQuestion.solution == response) {
+    //            teacherQuestion.correctAttempts++;
+    //        } else {
+    //            teacherQuestion.incorrectAttempts++;
+    //        }
+    //
+    //
+    //        teacherQuestion.comprehension = calcComprehension(teacherQuestion.numberOfAttempts, teacherQuestion.correctAttempts);
+    //
+    //
+    //        teacherQuestion.save(function (err, savedQuestion) {
+    //            timesCallback(null, savedQuestion)
+    //        })
+    //
+    //    },
+    //
+    //    function (err, savedQuestion) {
+    //
+    //        callback(null, "worked");
+    //    });
 }
 
 
@@ -696,45 +779,45 @@ exports.removeResponsesHelper = function (teacherID, response, teacherQuestion, 
     //for each response
 
 
-    async.times(count, function (err, worked) {
+    async.timesSeries(count, function (err, timesCallback) {
 
-        switch (response) {
-            case a:
-                teacherQuestion.responses.a--;
-                break;
-            case b:
-                teacherQuestion.responses.b--;
-                break;
-            case c:
-                teacherQuestion.responses.c--;
-                break;
-            case d:
-                teacherQuestion.responses.d--;
-                break;
-        }
+            switch (response) {
+                case "a":
+                    teacherQuestion.responses.a--;
+                    break;
+                case "b":
+                    teacherQuestion.responses.b--;
+                    break;
+                case "c":
+                    teacherQuestion.responses.c--;
+                    break;
+                case "d":
+                    teacherQuestion.responses.d--;
+                    break;
+            }
 
-        teacherQuestion.numberOfAttempts--;
+            teacherQuestion.numberOfAttempts--;
 
-        if (teacherQuestion.solution == response) {
-            teacherQuestion.correctAttempts--;
-        } else {
-            teacherQuestion.incorrectAttempts--;
-        }
-
-
-        teacherQuestion.comprehension = calcComprehension(teacherQuestion.numberOfAttempts, teacherQuestion.correctAttempts);
+            if (teacherQuestion.solution == response) {
+                teacherQuestion.correctAttempts--;
+            } else {
+                teacherQuestion.incorrectAttempts--;
+            }
 
 
-        teacherQuestion.save(function (err, savedQuestion) {
-            worked(null, savedQuestion)
-        })
+            teacherQuestion.comprehension = calcComprehension(teacherQuestion.numberOfAttempts, teacherQuestion.correctAttempts);
 
-    }),
 
-        function (err, worked) {
+            teacherQuestion.save(function (err, savedQuestion) {
+                timesCallback(null, savedQuestion)
+            })
+
+        },
+
+        function (err, savedQuestion) {
 
             callback(null, "worked");
-        };
+        });
 }
 
 exports.getMissedQuestionsListPerCategory = function (inputTeacherID, category, routeCallback) {

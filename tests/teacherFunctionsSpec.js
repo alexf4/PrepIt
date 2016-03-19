@@ -12,7 +12,7 @@ db.connect();
 
 describe("Teacher Functions", function(){
 
-    this.timeout(40000);
+    this.timeout(400000);
 
     describe("#getClassAverageMasteryForQuestion()", function (){
         it("will return the average mastery for a specific question", function(done){
@@ -252,7 +252,7 @@ describe("Teacher Functions", function(){
     });
 
 
-    describe("#addNewStudentsQuestionToTeacher()", function(){
+    describe.only("#addNewStudentsQuestionToTeacher()", function(){
 
 
         var studentID = "5684918fab13621200fe36bf";
