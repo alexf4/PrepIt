@@ -276,8 +276,25 @@ exports.renderNewTeacher = function (req, res) {
 
     //TODO: Cody to create a new jade view that holds the jpg. The side nave header and footer should be the same
     //res.render();
+    var userEmail = "";
 
-    res.render("newTeacher")
+
+    DBFunctions.getUserEmail(userId, function (err, email) {
+        userEmail = email;
+
+
+        teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
+            this.classToken = classToken;
+            res.render("newTeacher" , {ClassCode: this.classToken, userEmail: userEmail})
+        })
+
+    })
+
+
+
+
+
+
 
 };
 

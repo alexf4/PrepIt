@@ -12,49 +12,100 @@ html
             #page-wrapper.gray-bg
                 include ./includes/topBar.jade
                 .wrapper.wrapper-content.animated.fadeInRight
-                    //Main Charts
-                .row
-                    .col-lg-6
-                        .ibox.float-e-margins
-                            .ibox-title
-                                h5 New Teacher Tutorial
-                            .ibox-content
-                                figure
-                                    iframe(width='800', height='600', src='https://www.youtube.com/embed/Myd1-tU7oPo', frameborder='1', allowfullscreen='')
-                    .col-lg-6
-                        .ibox.float-e-margins
-                            .ibox-title
-                                h5 Key Concepts
-                            .ibox-content.profile-content
-                                h4
-                                    strong Microsoft's Concept of How 2019 Will Look Like - Official Video
-                                p
-                                    i.fa.fa-clock-o
-                                    |  Uploaded on October 27, 2011
-                                h5
-                                    | Science and Technology
-                                p
-                                    | What do you think the world will look like in 2019? Predicting future trends is usually done poorly by Analysts so company's seem to want to give consumer a glimpse of what
-                                    | they want the future to look like.
-                                    br
-                                    br
-                                    small
-                                        | Microsoft has just released a video showcasing magical
-                                        br
-                                        |  gadget after magical gadget.
-                                    br
-                                    br
-                                    |                                 Earlier this month "Microsoft Office Labs Vision 2019,"
-                                    |                                 was released and now we have "Productivity Future Vision (2011)". Both are inspiring and beautifully edited.
-                                .row.m-t-md
-                                    .col-md-3
-                                        h5
-                                            strong 169
-                                            |  Likes
-                                    .col-md-9
-                                        h5
-                                            strong 28
-                                            |  Comments
+                    .row
+                        .col-lg-6
+                            .ibox.float-e-margins
+                                .ibox-title
+                                    h5 Teacher Tutorial
+                                .ibox-content
+                                    figure
+                                        iframe(width='425', height='349', src='http://www.youtube.com/embed/Myd1-tU7oPo', frameborder='0', allowfullscreen='')
+                        .col-lg-6
+                            .ibox.float-e-margins
+                                .ibox-title
+                                    h5 Key Concepts
+                                .ibox-content.profile-content
+                                    p.c1
+                                        span.c0 Welcome to the PrepIT teacher dashboard for our beta release!
+                                    p.c1.c6
+                                        span
+                                    p.c1
+                                        span
+                                            | This screen will look quite different once students have joined your class.  The list below will get you started, but if you want a detailed look at all the features check out the video.
+                                    p.c1.c6
+                                        span
+                                    p.c1
+                                        span.c0 Getting Started:
+                                    ul.c2.lst-kix_iyum4rtxmdbh-0.start
+                                        li.c1.c3
+                                            span
+                                                | This dashboard doesn’t do much unless you have students linked to the account.  Give students your class code on the left so they can join.
+                                    p.c1.c6
+                                        span
+                                    ul.c2.lst-kix_wt09jhxh479f-0.start
+                                        li.c3.c1
+                                            span
+                                                | Your dashboard will begin to change as students answer questions.  PrepIT is tracking the questions they answer correctly and the questions they miss.
+                                    p.c1.c6
+                                        span
+                                    ul.c2.lst-kix_of1huu9ml8od-0.start
+                                        li.c3.c1
+                                            span
+                                                | The graphs communicate the average class performance for each category of review.
+                                    ul.c2.lst-kix_of1huu9ml8od-1.start
+                                        li.c1.c7
+                                            span.c0 Green
+                                            span
+                                                | = Average number of questions considered mastered (correct 75% of the time or more)
+                                        li.c7.c1
+                                            span.c0 Gray
+                                            span
+                                                | = Average number of questions considered intermediate (correct between 50 and 75% of the time)
+                                        li.c7.c1
+                                            span.c0 Red
+                                            span    = Average number of questions considered novice (correct 50% or less)
+                                    p.c1.c8
+                                        span  
+                                    ul.c2.lst-kix_cfpfxl4n8dok-0.start
+                                        li.c3.c1
+                                            span The
+                                            span.c0 Top Missed Questions
+                                            span  table shows you the questions your class is missing the most.  The
+                                            span.c0 Missed
+                                            span
+                                                | column communicates the number of times a specific question is missed, not the number of students who have missed it.
+                                    p.c1.c6
+                                        span
+                                    ul.c2.lst-kix_34b82d82qef3-0.start
+                                        li.c3.c1
+                                            span Click on a graph and the
+                                            span.c0 Top Ten Missed Questions
+                                            span  table and
+                                            span.c0 Student Performance
+                                            span  table will change to reflect that category.
+                                    p.c1.c6
+                                        span
+                                    ul.c2.lst-kix_do89athwxsqt-0.start
+                                        li.c3.c1
+                                            span Click on a question in the
+                                            span.c0  Top Ten Missed Questions
+                                            span  table, or click on
+                                            span.c0 Question Analysis
+                                            span
+                                                | in the navigation bar, and you can get more specific information on where students are making mistakes.
+                                    p.c1.c6
+                                        span
+                                    ul.c2.lst-kix_10awg7kb39js-0.start
+                                        li.c3.c1
+                                            span
+                                                | Click on a student's name in student analysis to see specifically where that student is struggling.
+                                    p.c1.c6
+                                        span
+                                    p.c1
+                                        span We hope you find the dashboard helpful, and let us know your thoughts at
+                                        span.c5
+                                            a.c4(href='mailto:info@prepit.io') info@prepit.io
+                                        span !
 
 
 
@@ -73,3 +124,11 @@ html
         script(src='js/plugins/pace/pace.min.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js')
         //inline scrip because I can not get to work with js in external file. makes file cleaner
+
+        // Custom and plugin javascript
+        script(src='js/plugins/pace/pace.min.js')
+        script(src='js/plugins/video/responsible-video.js')
+        script.
+            $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange', function (e){
+                $('body').hasClass('fullscreen-video') ? $('body').removeClass('fullscreen-video') : $('body').addClass('fullscreen-video')
+            });
