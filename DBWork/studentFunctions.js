@@ -15,38 +15,59 @@ var questionFunctions = require("./questionFunctions.js");
 var teacherFunctions = require("./teacherFunctions.js");
 
 
-
 /**
  * This method updates the user items teacher token slot
  * @param userId the students id
  * @param newlink the string input that will be the set as the teacher token element
  * @param callback the function to be called after the update is done in db
  */
-exports.updateStudentLink = function (userId, newlink, callback) {
+exports.updateStudentLink = function (req, userId, newlink, callback) {
     userModel.findById(userId, function (err, user) {
-        if(err){
-            callback(err,null);
+        if (err) {
+            callback(err, null);
         }
-        user.classToken = newlink;
 
-        user.save(function (err, user) {
 
-            if(err){
-                callback(err,null)
+        //find if class exists
+
+
+        DBFunctions.checkClass(newlink, function (err, found) {
+            if (!found) {
+
+                req.flash("LinkUpdateError", "Incorrect Class Token");
+                callback("Student class token didnt work", null);
+
+
+            } else {
+
+                user.classToken = newlink;
+
+                user.save(function (err, user) {
+
+                    if (err) {
+                        callback(err, null)
+                    }
+
+                    //Add users questions to teacher
+                    teacherFunctions.addNewStudentsQuestionToTeacher(userId, newlink, function (err, worked) {
+
+                        if (err) {
+                            callback(err, null)
+                        }
+
+                        req.flash("LinkUpdated", "Your have been added to class " + newlink);
+                        callback(null, worked);
+
+                    })
+
+                })
+
             }
 
-            //Add users questions to teacher
-            teacherFunctions.addNewStudentsQuestionToTeacher(userId, newlink, function(err, worked){
-
-                if(err){
-                    callback(err,null)
-                }
-
-                callback(null, worked);
-
-            })
 
         })
+
+
     });
 };
 
