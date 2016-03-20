@@ -32,7 +32,7 @@ exports.setQuestionText = function (questionText) {
     this.questionText = questionText;
 };
 
-exports.setUserEmail = function (userEmail) {
+var setUserEmail = function (userEmail) {
     this.userEmail = userEmail;
 };
 
@@ -295,7 +295,7 @@ exports.teacherPage = function (req, res) {
     userId = req.user._id.toString();
 
     DBFunctions.getUserEmail(req.user._id.toString(), function (err, FoundTeacherEmail) {
-        teacher.setUserEmail(FoundTeacherEmail);
+        setUserEmail(FoundTeacherEmail);
     });
 
     DBFunctions.isNewUser(userId, function (err, userStatus) {
