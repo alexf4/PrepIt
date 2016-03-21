@@ -9,6 +9,7 @@ var userModel = require("../models/user");
 var mongoose = require('mongoose');
 var async = require('async');
 var Dict = require("collections/dict");
+var List = require("collections/list");
 var studentFunctions = require("./studentFunctions");
 var teacherFunctions = require("./teacherFunctions");
 var DBFunctions = require("../DBWork/DBFunctions.js");
@@ -620,7 +621,15 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
             function (wCallback) {
                 questionFunctions.findAnsweredQuestions(studentID, function (err, foundQuestions) {
 
+<<<<<<< HEAD
                     studentQuestions = foundQuestions;
+=======
+                    //newQuestions = foundQuestions;
+
+
+                    newQuestions = new List(foundQuestions);
+
+>>>>>>> master
                     wCallback();
 
                 })
@@ -687,15 +696,104 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
                             callback(err, "worked");
                         })
 
+<<<<<<< HEAD
                     }
 
                 })
 
             })
+=======
+            async.forEachSeries(newQuestions.toArray(), function (entry, fourEachCallback) {
+
+                    async.parallel([
+                        function (pCallback) {
+                            if (entry.responses.a > 0) {
+                                teacherFunctions.addResponsesHelper(teacher._id.toString(), "a", entry._id.toString(), entry.responses.a, function (err, worked) {
+
+                                    pCallback();
+                                })
+                            }
+                        },
+                        function (pCallback) {
+
+                            if (entry.responses.b > 0) {
+                                teacherFunctions.addResponsesHelper(teacher._id.toString(), "b", entry._id.toString(), entry.responses.b, function (err, worked) {
+                                    pCallback();
+                                })
+                            }
+                        },
+                        function (pCallback) {
+                            if (entry.responses.c > 0) {
+                                teacherFunctions.addResponsesHelper(teacher._id.toString(), "c", entry._id.toString(), entry.responses.c, function (err, worked) {
+                                    pCallback();
+                                })
+                            }
+                        },
+                        function (pCallback) {
+                            if (entry.responses.d > 0) {
+                                teacherFunctions.addResponsesHelper(teacher._id.toString(), "d", entry._id.toString(), entry.responses.d, function (err, worked) {
+                                    pCallback();
+                                })
+                            }
+                        }
+
+
+                    ], function () {
+                        fourEachCallback(err, "worked");
+                    })
+
+
+                },
+                function (err) {
+                    callback(err, "worked");
+                })
+
+
+            //newQuestions.forEach(function (entry) {
+            //    //for each response
+            //    async.parallel([
+            //        function(pCallback){
+            //            if (entry.responses.a > 0) {
+            //                teacherFunctions.addResponsesHelper(teacher._id.toString(), "a", entry._id.toString(), entry.responses.a, function (err, worked) {
+            //
+            //                pCallback();
+            //                })
+            //            }
+            //        },
+            //        function(pCallback){
+            //
+            //            if (entry.responses.b > 0) {
+            //                teacherFunctions.addResponsesHelper(teacher._id.toString(), "b", entry._id.toString(), entry.responses.b, function (err, worked) {
+            //                    pCallback();
+            //                })
+            //            }
+            //        },
+            //        function(pCallback){
+            //            if (entry.responses.c > 0) {
+            //                teacherFunctions.addResponsesHelper(teacher._id.toString(), "c", entry._id.toString(), entry.responses.c, function (err, worked) {
+            //                    pCallback();
+            //                })
+            //            }
+            //        },
+            //        function(pCallback){
+            //            if (entry.responses.d > 0) {
+            //                teacherFunctions.addResponsesHelper(teacher._id.toString(), "d", entry._id.toString(), entry.responses.d, function (err, worked) {
+            //                    pCallback();
+            //                })
+            //            }
+            //        }
+            //
+            //
+            //    ],function(){
+            //        callback(err, "worked");
+            //    })
+            //})
+>>>>>>> master
 
         })
 }
 
+<<<<<<< HEAD
 exports.addResponsesHelper = function (teacherID, response, teacherQuestion, count, callback) {
 
 
@@ -720,6 +818,13 @@ exports.addResponsesHelper = function (teacherID, response, teacherQuestion, cou
         teacherQuestion.correctAttempts =  teacherQuestion.correctAttempts - count;
     } else {
         teacherQuestion.incorrectAttempts =  teacherQuestion.incorrectAttempts - count;
+=======
+exports.addResponsesHelper = function (teacherID, response, questionID, count, callback) {
+    for (i = 0; i < count; i++) {
+        freePlayLogic.checkAnswer(teacherID, response, questionID, function (err, worked) {
+            callback(err, worked);
+        })
+>>>>>>> master
     }
 
 

@@ -529,6 +529,30 @@ exports.updateCategoryCount = function (inputCategory, callback) {
 }
 
 /**
+ *
+ * @param classToken
+ * @param callback
+ */
+exports.checkClass = function(classToken, callback){
+
+    var classFound = false;
+
+
+    userModel.find({"classToken" :classToken }, function(err, users){
+
+        users.forEach(function(user){
+            if(user.isteacher){
+                classFound = true;
+            }
+        })
+
+
+        callback(err, classFound);
+
+    })
+}
+
+/**
  * This is just a util script, it should not be called during app usage.
  * @param callback
  */

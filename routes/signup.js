@@ -37,17 +37,17 @@ exports.signup = function(req, res) {
             newUser.token = token;
 
 
-            if (req.param('isTeacher')){
+            if(req.body.userType == "teacher"){
                 newUser.isteacher = true;
 
                 //If this is a teacher set its teacher token to itself
                 newUser.classToken = token;
-
             }
             else{
                 newUser.isteacher = false;
                 newUser.classToken = 0;
             }
+
 
             // save the user
             newUser.save(function(err , product) {

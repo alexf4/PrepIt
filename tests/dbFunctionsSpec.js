@@ -39,6 +39,36 @@ describe ("DB Functions" , function (){
         })
     });
 
+
+    describe ("#checkClass()", function(){
+        var classToken = "74fb18a";
+
+        it("should return that the class exists", function(done){
+
+            DBFunctions.checkClass(classToken, function(err, found){
+
+                assert.equal(true, found, "The class was found");
+
+                //console.log(questionData);
+                done();
+            })
+        })
+
+        var invalidClassToken = "zzzzzzz";
+
+        it("should return that the class does not exists", function(done){
+
+            DBFunctions.checkClass(invalidClassToken, function(err, found){
+
+                assert.equal(false, found, "The class was found");
+
+                //console.log(questionData);
+                done();
+            })
+        })
+
+    });
+
     describe("#isNewUser()", function(){
 
         var teacherWithStudents = "5684903dab13621200fe364f";
