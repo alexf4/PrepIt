@@ -329,7 +329,13 @@ exports.renderNewTeacher = function (req, res) {
 
         teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
             this.classToken = classToken;
-            res.render("newTeacher" , {ClassCode: this.classToken, userEmail: userEmail})
+            res.render("newTeacher" , {
+                ClassCode: this.classToken,
+                userEmail: this.userEmail,
+                newTeacher: true,
+                Title: "New Teacher Walkthrough",
+                activeSection: "Main_View"
+            })
         })
 
     })

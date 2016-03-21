@@ -43,19 +43,20 @@ nav.navbar-default.navbar-static-side(role='navigation')
                 li
                     mixin main
 
-            if activeSection == "Student_Analysis"
-                li.active
-                    mixin Student_Analysis
-            else
-                li
-                    mixin Student_Analysis
+            if newTeacher == null
+                if activeSection == "Student_Analysis"
+                    li.active
+                        mixin Student_Analysis
+                else
+                    li
+                        mixin Student_Analysis
 
-            if activeSection == "Question_Analysis"
-                li.active
-                    mixin Question_Analysis
-            else
-                li
-                    mixin Question_Analysis
+                if activeSection == "Question_Analysis"
+                    li.active
+                        mixin Question_Analysis
+                else
+                    li
+                        mixin Question_Analysis
 
             if activeSection == "Settings"
                 li.active
