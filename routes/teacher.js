@@ -18,6 +18,7 @@ var category;
 var studentEmail;
 var questionText;
 var classToken;
+var userEmail;
 
 exports.setCategory = function (category) {
     this.category = category;
@@ -31,11 +32,16 @@ exports.setQuestionText = function (questionText) {
     this.questionText = questionText;
 };
 
+var setUserEmail = function (userEmail) {
+    this.userEmail = userEmail;
+};
+
 exports.emptyOutSessionData = function (req) {
     req.session.category = null;
     req.session.studentEmail = null;
     req.session.questionText = null;
     req.session.questionID = null;
+    //req.session.userEmail = null;
 };
 
 
@@ -47,7 +53,13 @@ exports.renderStudentList = function (req, res) {
     teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
 
         teacherFunctions.listStudents(classToken, function (err, studentsList) {
-            res.render("studentList", {students: studentsList});
+            res.render("studentList", {
+                students: studentsList,
+                activeSection: "Student_Analysis",
+                Title: "Student Analysis",
+                ClassCode: this.classToken,
+                userEmail: this.userEmail
+            });
         });
 
     });
@@ -92,8 +104,20 @@ exports.teacherDrillDown = function (req, res) {
 exports.renderStudentView = function (req, res) {
     //Find the users ID from their email
 
-    studentFunctions.getStudentFromEmail(req.session.studentEmail, function (err, studentID) {
+    var studentScores;
+
+    var studentID;
+
+    var teacherEmail;
+
+    studentFunctions.getStudentFromEmail(req.session.studentEmail, function (err, inputStudentID) {
+        studentID = inputStudentID
+
+
         studentFunctions.getMasteryScores(studentID, function (scores) {
+
+            studentScores = scores;
+
             var chartData = dataToChartHelper.createStudentMasteryChart(scores);
 
             //TODO: Make this dynamic. We have a list of categories, but we need to clean up the names we use here
@@ -112,9 +136,10 @@ exports.renderStudentView = function (req, res) {
                     Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
                     Public_Policy_Data: chartData.Public_Policy_Data,
                     Title: "Student Dashboard View",
-                    activeSection: "Main View",
+                    activeSection: "Student_Analysis",
                     ClassCode: this.classToken,
-                    studentEmail: req.session.studentEmail
+                    studentEmail: req.session.studentEmail,
+                    userEmail: this.userEmail
                 });
 
         })
@@ -131,13 +156,13 @@ exports.renderCategoryView = function (req, res) {
 
     userId = req.user._id.toString();
 
-
-    var userEmail = "";
-
     async.waterfall([
         function (callback) {
+
+            //TODO:This is not needed but I dont know how to get rid of properly
             DBFunctions.getUserEmail(userId, function (err, email) {
-                userEmail = email;
+                // this is now reduntent and may mess up userEmail in future
+                // userEmail = email;
                 callback();
             })
         },
@@ -195,7 +220,8 @@ exports.renderCategoryView = function (req, res) {
             Title: "Teacher Dashboard",
             ClassCode: this.classToken,
             Category: req.session.category,
-            userEmail: userEmail
+            userEmail: this.userEmail,
+            activeSection: "Main_View"
         });
     });
 };
@@ -206,7 +232,15 @@ exports.renderQuestionView = function (req, res) {
 
     DBFunctions.getQuestionData(req.session.passport.user, req.session.questionID, function (err, questionData) {
 
-        res.render("questionResponsesView", {question: questionData});
+        res.render("questionResponsesView", {
+            question: questionData,
+
+            //TODO: Make real data
+            activeSection: "Question_Analysis",
+            Title: "Question Responses",
+            ClassCode: this.classToken,
+            userEmail: this.userEmail
+        });
 
     })
 
@@ -233,7 +267,13 @@ exports.renderQuestionAnalysis = function (req, res) {
             teacherFunctions.getMissedQuestionsList(userId, function (err, questions) {
 
                 //render teacher page
-                res.render("questionAnalysis", {questions: questions, ClassCode: this.classToken})
+                res.render("questionAnalysis", {
+                    questions: questions,
+                    activeSection: "Question_Analysis",
+                    Title: "Question Analysis",
+                    ClassCode: this.classToken,
+                    userEmail: this.userEmail
+                })
             })
 
         }
@@ -253,6 +293,10 @@ exports.teacherPage = function (req, res) {
 
     //Get the users logged in id
     userId = req.user._id.toString();
+
+    DBFunctions.getUserEmail(req.user._id.toString(), function (err, FoundTeacherEmail) {
+        setUserEmail(FoundTeacherEmail);
+    });
 
     DBFunctions.isNewUser(userId, function (err, userStatus) {
         if (userStatus) {
@@ -316,15 +360,14 @@ exports.renderTeacherDashboard = function (req, res) {
 
     questionList = null;
 
-    var userEmail = "";
-
 
     //https://github.com/caolan/async#waterfall
 
     async.waterfall([
         function (callback) {
+            //TODO: Alex not needed
             DBFunctions.getUserEmail(userId, function (err, email) {
-                userEmail = email;
+                //this.userEmail = email;
                 callback();
             })
         },
@@ -381,7 +424,8 @@ exports.renderTeacherDashboard = function (req, res) {
                 Title: "Teacher Dashboard",
                 ClassCode: this.classToken,
                 Category: req.session.category,
-                userEmail: userEmail
+                userEmail: this.userEmail,
+                activeSection: "Main_View"
             });
     });
 };
