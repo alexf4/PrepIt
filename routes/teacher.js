@@ -431,7 +431,8 @@ exports.renderTeacherDashboard = function (req, res) {
                 ClassCode: this.classToken,
                 Category: req.session.category,
                 userEmail: this.userEmail,
-                activeSection: "Main_View"
+                activeSection: "Main_View",
+                newTeacher: null
             });
     });
 };

@@ -66,6 +66,7 @@ exports.renderStudentPage = function(req, res){
         function(categories ,callback) {
             DBFunctions.getUserEmail(userId, function (err, email) {
                 userEmail = email;
+                req.session.userEmail=email;
                 callback(null, categories);
             });
         }

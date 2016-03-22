@@ -9,7 +9,11 @@ exports.StudentLink= function(req,res){
     //Get the users id
     userId = req.user._id.toString();
 
-    res.render('StudentLink',{Title: "Student Teacher Link",activeSection: "StudentLink"});
+    res.render('StudentLink',{
+        Title: "Student Teacher Link",
+        activeSection: "StudentLink",
+        userEmail: req.session.userEmail
+    });
 }
 /**
  * This method will catch posts to update the student link to teachers

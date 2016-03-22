@@ -43,7 +43,7 @@ nav.navbar-default.navbar-static-side(role='navigation')
                 li
                     mixin main
 
-            if newTeacher == null
+            if newTeacher != true
                 if activeSection == "Student_Analysis"
                     li.active
                         mixin Student_Analysis

@@ -26,18 +26,35 @@ exports.settings = function (req, res) {
         }
 
         //TODO: Alex please help
-        var newTeacher;
+        newTeacher=null;
+        var setNewTeacher =function (newTeacher){
+            if (newTeacher==false)
+            {
+                this.newTeacher=null;
+            }
+            else
+            {
+                this.newTeacher=newTeacher;
+            };
+        };
         userId = req.user._id.toString();
         DBFunctions.isNewUser(userId, function (err, userStatus) {
-            newTeacher=userStatus;
+            setNewTeacher(userStatus);
+
+            DBFunctions.getUserEmail(userId, function (err, email) {
+                userEmail = email;
+                req.session.userEmail=email;
+
+                res.render("settings", {
+                    ClassCode: this.classToken,
+                    studentEmail: req.session.studentEmail,
+                    activeSection: "Settings",
+                    isTeacher: isTeacherData,
+                    newTeacher: newTeacher
+                });
+            });
         });
-        res.render("settings", {
-            ClassCode: this.classToken,
-            studentEmail: req.session.studentEmail,
-            activeSection: "Settings",
-            isTeacher: isTeacherData,
-            newTeacher: newTeacher
-        });
+
     });
 };
 
