@@ -25,11 +25,18 @@ exports.settings = function (req, res) {
             isTeacherData = true;
         }
 
+        //TODO: Alex please help
+        var newTeacher;
+        userId = req.user._id.toString();
+        DBFunctions.isNewUser(userId, function (err, userStatus) {
+            newTeacher=userStatus;
+        });
         res.render("settings", {
             ClassCode: this.classToken,
             studentEmail: req.session.studentEmail,
             activeSection: "Settings",
-            isTeacher: isTeacherData
+            isTeacher: isTeacherData,
+            newTeacher: newTeacher
         });
     });
 };

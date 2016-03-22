@@ -324,7 +324,7 @@ exports.renderNewTeacher = function (req, res) {
 
 
     DBFunctions.getUserEmail(userId, function (err, email) {
-        userEmail = email;
+        //userEmail = email;
 
 
         teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
