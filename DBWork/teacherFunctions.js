@@ -8,6 +8,7 @@ var category = require("../models/category");
 var userModel = require("../models/user");
 var mongoose = require('mongoose');
 var async = require('async');
+
 var Dict = require("collections/dict");
 var List = require("collections/list");
 var studentFunctions = require("./studentFunctions");
@@ -43,109 +44,173 @@ exports.updateTeacherLink = function (inputID, updatedLink, callback) {
  */
 exports.removeStudentFromClass = function (teacherId, studentEmail, callback) {
 
+    var studentID;
+
     //find the student
     studentFunctions.getStudentFromEmail(studentEmail, function (err, student) {
 
-        studentFunctions.removeStudentLink(student._id.toString(), function (err, worked) {
+
+        studentID = student;
+
+        studentFunctions.removeStudentLink(studentID, function (err, worked) {
 
 
-            teacherFunctions.removeOldStudentQuestionsFromTeacher(teacherId, student._id.toString(), function (err, worked) {
+            teacherFunctions.removeOldStudentQuestionsFromTeacher(teacherId, studentID, function (err, worked) {
 
-
+                callback(err, worked);
             })
         });
 
 
-    })
-
-
-    //Remove its link to the class
-
-    //remove its scores from the teacher
+    });
 
 
 }
 
-exports.removeOldStudentQuestionsFromTeacher = function (teacherid, studentID, callback) {
+/**
+ * This method will remove an a students question data from the teachers question data.
+ *
+ * @param teacherid The teachers ID
+ * @param studentID The student that is leaving the class.
+ * @param callback
+ */
+exports.removeOldStudentQuestionsFromTeacher = function (teacherID, studentID, callback) {
 
-
-    var studentsQuestions;
-
+    var studentQuestions;
+    var studentQuestion;
     var teacherQuestions;
+    var teacherQuestion;
 
+    /**
+     * This waterfall will:
+     *      Find the students questions
+     *      Find the teachers questions
+     *          For each question in common remove the data from the teachers question
+     */
 
-    //Find all the questions the student got correct
-    questionFunctions.findAnsweredQuestions(studentID, function (err, foundQuestions) {
-
-        studentsQuestions = foundQuestions;
-
-        //Find the correct teacher question
-        questionFunctions.findQuestionsForUser(teacherid, function (err, foundTeacherQuestions) {
-
-            teacherQuestions = foundTeacherQuestions;
-
-
-            //for each question
-            studentsQuestions.forEach(function (studentQuestion) {
-
-                teacherQuestions.forEach(function (teacherQuestion) {
-
-
-                    if (studentQuestion.baseQuestionID == teacherQuestion.baseQuestionID) {
-
-                        async.parallel([
-                            function (pCallback) {
-                                if (studentQuestion.responses.a > 0) {
-                                    teacherFunctions.removeResponsesHelper(teacherid, "a", teacherQuestion, studentQuestion.responses.a, function (err, worked) {
-
-                                        pCallback();
-                                    })
-                                }
-                            },
-                            function (pCallback) {
-
-                                if (studentQuestion.responses.b > 0) {
-                                    teacherFunctions.removeResponsesHelper(teacherid, "b", teacherQuestion, studentQuestion.responses.b, function (err, worked) {
-                                        pCallback();
-                                    })
-                                }
-                            },
-                            function (pCallback) {
-                                if (studentQuestion.responses.c > 0) {
-                                    teacherFunctions.removeResponsesHelper(teacherid, "c", teacherQuestion, studentQuestion.responses.c, function (err, worked) {
-                                        pCallback();
-                                    })
-                                }
-                            },
-                            function (pCallback) {
-                                if (studentQuestion.responses.d > 0) {
-                                    teacherFunctions.removeResponsesHelper(teacherid, "d", teacherQuestion, studentQuestion.responses.d, function (err, worked) {
-                                        pCallback();
-                                    })
-                                }
-                            }
-
-
-                        ], function () {
-                            callback(err, "worked");
-                        })
-
-
-                    }
-
-
+    async.waterfall([
+            /**
+             * Find the students questions
+             * @param wCallback
+             */
+                function (wCallback) {
+                questionFunctions.findAnsweredQuestions(studentID, function (err, foundQuestions) {
+                    studentQuestions = foundQuestions;
+                    studentQuestions = new List(foundQuestions);
+                    wCallback();
                 })
+            },
+            /**
+             * Find the teachers questions
+             * @param wCallback
+             */
+                function (wCallback) {
+                questionFunctions.findQuestionsForUser(teacherID, function (err, foundQuestions) {
+                    teacherQuestions = foundQuestions;
+                    wCallback();
+                })
+            },
 
+            /**
+             * For each question in common, remove the data from teh teachers question.
+             * @param wCallback
+             */
+                function (wCallback) {
+                //For each item in the students questions
+                async.eachSeries(studentQuestions.toArray(), function (iStudentQuestion, sSeries) {
 
-            })
+                        //Set the students data
+                        studentQuestion = iStudentQuestion;
 
+                        //For each item in the teachers questions
+                        async.eachSeries(teacherQuestions.toArray(), function (iTeacherQuestion, tSeries) {
 
-        })
+                                //Set the teachers data
+                                teacherQuestion = iTeacherQuestion;
 
+                                //if the questions are the same remove the data
+                                if (studentQuestion.baseQuestionID == teacherQuestion.baseQuestionID) {
 
-    })
+                                    //In series, for each response remove the question data.
+                                    async.series([
+                                            function (seriesCallback) {
+                                                if (studentQuestion.responses.a > 0) {
+                                                    teacherFunctions.removeResponsesHelper(teacherID, "a", teacherQuestion, studentQuestion.responses.a, function (err, worked) {
 
+                                                        seriesCallback(err, worked);
+                                                    })
+                                                } else {
+                                                    seriesCallback(null, "notNeeded");
+                                                }
+                                            },
+                                            function (seriesCallback) {
+                                                if (studentQuestion.responses.b > 0) {
+                                                    teacherFunctions.removeResponsesHelper(teacherID, "b", teacherQuestion, studentQuestion.responses.b, function (err, worked) {
+                                                        seriesCallback(err, worked);
+                                                    })
+                                                } else {
+                                                    seriesCallback(null, "notNeeded");
+                                                }
+                                            },
+                                            function (seriesCallback) {
+                                                if (studentQuestion.responses.c > 0) {
+                                                    teacherFunctions.removeResponsesHelper(teacherID, "c", teacherQuestion, studentQuestion.responses.c, function (err, worked) {
+                                                        seriesCallback(err, worked);
+                                                    })
+                                                } else {
+                                                    seriesCallback(null, "notNeeded");
+                                                }
+                                            },
+                                            function (seriesCallback) {
+                                                if (studentQuestion.responses.d > 0) {
+                                                    teacherFunctions.removeResponsesHelper(teacherID, "d", teacherQuestion, studentQuestion.responses.d, function (err, worked) {
+                                                        seriesCallback(err, worked);
+                                                    })
+                                                } else {
+                                                    seriesCallback(null, "notNeeded");
+                                                }
+                                            }
+                                        ],
+                                        /**
+                                         * This question is done and we need to start on the next one.
+                                         * @param err
+                                         * @param results
+                                         */
+                                        function (err, results) {
+                                            tSeries(err, "worked");
+                                        }
+                                    );
+                                }
+                                //There is no match for this questions.
+                                else {
+                                    tSeries(null, "worked");
+                                }
+                            },
+                            /**
+                             * The students question is done
+                             * @param err
+                             * @param result
+                             */
+                            function (err, result) {
+                                sSeries(err, result);
+                            })
 
+                    },
+                    /**
+                     * This waterfall async program flow is done
+                     */
+                    function () {
+                        wCallback();
+                    })
+            }
+        ],
+        /**
+         * Call back out of this method.
+         */
+        function () {
+            callback(null, "worked");
+        }
+    )
 };
 
 /**
@@ -479,7 +544,6 @@ exports.numberOfStudentsInClass = function (teacherToken, callback) {
  */
 exports.getStudentsMasterys = function (inputID, routeCallback) {
 
-
     var retDict = new Dict;
 
     //Find the users token
@@ -611,27 +675,20 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
     //Find all the questions that the student has answered
 
     var studentQuestions;
+    var studentQuestion;
 
     var teacherID;
 
     var teacherQuestions;
-
+    var teacherQuestion;
 
     async.waterfall([
             function (wCallback) {
                 questionFunctions.findAnsweredQuestions(studentID, function (err, foundQuestions) {
-
-<<<<<<< HEAD
                     studentQuestions = foundQuestions;
-=======
                     //newQuestions = foundQuestions;
-
-
-                    newQuestions = new List(foundQuestions);
-
->>>>>>> master
+                    studentQuestions = new List(foundQuestions);
                     wCallback();
-
                 })
             },
             function (wCallback) {
@@ -648,153 +705,140 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
                     teacherQuestions = foundQuestions;
                     wCallback();
                 })
+            },
+
+            function (wCallback) {
+                async.eachSeries(studentQuestions.toArray(), function (iStudentQuestion, sSeries) {
+
+                        studentQuestion = iStudentQuestion;
+
+                        async.eachSeries(teacherQuestions.toArray(), function (iTeacherQuestion, tSeries) {
+
+                            teacherQuestion = iTeacherQuestion;
+
+                            if (studentQuestion.baseQuestionID == teacherQuestion.baseQuestionID) {
+
+                                async.series([
+                                        function (seriesCallback) {
+                                            if (studentQuestion.responses.a > 0) {
+                                                teacherFunctions.addResponsesHelper(teacherID, "a", teacherQuestion, studentQuestion.responses.a, function (err, worked) {
+
+                                                    seriesCallback(err, worked);
+                                                })
+                                            } else {
+                                                seriesCallback(null, "notNeeded");
+                                            }
+                                        },
+                                        function (seriesCallback) {
+                                            if (studentQuestion.responses.b > 0) {
+                                                teacherFunctions.addResponsesHelper(teacherID, "b", teacherQuestion, studentQuestion.responses.b, function (err, worked) {
+                                                    seriesCallback(err, worked);
+                                                })
+                                            } else {
+                                                seriesCallback(null, "notNeeded");
+                                            }
+                                        },
+                                        function (seriesCallback) {
+                                            if (studentQuestion.responses.c > 0) {
+                                                teacherFunctions.addResponsesHelper(teacherID, "c", teacherQuestion, studentQuestion.responses.c, function (err, worked) {
+                                                    seriesCallback(err, worked);
+                                                })
+                                            } else {
+                                                seriesCallback(null, "notNeeded");
+                                            }
+                                        },
+                                        function (seriesCallback) {
+                                            if (studentQuestion.responses.d > 0) {
+                                                teacherFunctions.addResponsesHelper(teacherID, "d", teacherQuestion, studentQuestion.responses.d, function (err, worked) {
+                                                    seriesCallback(err, worked);
+                                                })
+                                            } else {
+                                                seriesCallback(null, "notNeeded");
+                                            }
+                                        }
+                                    ],
+                                    function (err, results) {
+                                        tSeries(err, "worked");
+                                    }
+                                );
+                            }
+                            else {
+                                tSeries(null, "worked");
+                            }
+
+                        }, function (err, result) {
+                            sSeries(err, result);
+                        })
+
+                    },
+                    function () {
+                        wCallback();
+                    })
             }
         ],
         function () {
-
-            //for each question
-            studentQuestions.forEach(function (studentQuestion) {
-
-                teacherQuestions.forEach(function (teacherQuestion) {
-
-                    if (studentQuestion.baseQuestionID == teacherQuestion.baseQuestionID) {
-
-                        async.series([
-                            function (pCallback) {
-                                if (studentQuestion.responses.a > 0) {
-                                    teacherFunctions.addResponsesHelper(teacherID, "a", teacherQuestion, studentQuestion.responses.a, function (err, worked) {
-
-                                        pCallback();
-                                    })
-                                }
-                            },
-                            function (pCallback) {
-
-                                if (studentQuestion.responses.b > 0) {
-                                    teacherFunctions.addResponsesHelper(teacherID, "b", teacherQuestion, studentQuestion.responses.b, function (err, worked) {
-                                        pCallback();
-                                    })
-                                }
-                            },
-                            function (pCallback) {
-                                if (studentQuestion.responses.c > 0) {
-                                    teacherFunctions.addResponsesHelper(teacherID, "c", teacherQuestion, studentQuestion.responses.c, function (err, worked) {
-                                        pCallback();
-                                    })
-                                }
-                            },
-                            function (pCallback) {
-                                if (studentQuestion.responses.d > 0) {
-                                    teacherFunctions.addResponsesHelper(teacherID, "d", teacherQuestion, studentQuestion.responses.d, function (err, worked) {
-                                        pCallback();
-                                    })
-                                }
-                            }
-
-
-                        ], function (err) {
-                            callback(err, "worked");
-                        })
-
-<<<<<<< HEAD
-                    }
-
-                })
-
-            })
-=======
-            async.forEachSeries(newQuestions.toArray(), function (entry, fourEachCallback) {
-
-                    async.parallel([
-                        function (pCallback) {
-                            if (entry.responses.a > 0) {
-                                teacherFunctions.addResponsesHelper(teacher._id.toString(), "a", entry._id.toString(), entry.responses.a, function (err, worked) {
-
-                                    pCallback();
-                                })
-                            }
-                        },
-                        function (pCallback) {
-
-                            if (entry.responses.b > 0) {
-                                teacherFunctions.addResponsesHelper(teacher._id.toString(), "b", entry._id.toString(), entry.responses.b, function (err, worked) {
-                                    pCallback();
-                                })
-                            }
-                        },
-                        function (pCallback) {
-                            if (entry.responses.c > 0) {
-                                teacherFunctions.addResponsesHelper(teacher._id.toString(), "c", entry._id.toString(), entry.responses.c, function (err, worked) {
-                                    pCallback();
-                                })
-                            }
-                        },
-                        function (pCallback) {
-                            if (entry.responses.d > 0) {
-                                teacherFunctions.addResponsesHelper(teacher._id.toString(), "d", entry._id.toString(), entry.responses.d, function (err, worked) {
-                                    pCallback();
-                                })
-                            }
-                        }
-
-
-                    ], function () {
-                        fourEachCallback(err, "worked");
-                    })
-
-
-                },
-                function (err) {
-                    callback(err, "worked");
-                })
-
-
-            //newQuestions.forEach(function (entry) {
-            //    //for each response
-            //    async.parallel([
-            //        function(pCallback){
-            //            if (entry.responses.a > 0) {
-            //                teacherFunctions.addResponsesHelper(teacher._id.toString(), "a", entry._id.toString(), entry.responses.a, function (err, worked) {
-            //
-            //                pCallback();
-            //                })
-            //            }
-            //        },
-            //        function(pCallback){
-            //
-            //            if (entry.responses.b > 0) {
-            //                teacherFunctions.addResponsesHelper(teacher._id.toString(), "b", entry._id.toString(), entry.responses.b, function (err, worked) {
-            //                    pCallback();
-            //                })
-            //            }
-            //        },
-            //        function(pCallback){
-            //            if (entry.responses.c > 0) {
-            //                teacherFunctions.addResponsesHelper(teacher._id.toString(), "c", entry._id.toString(), entry.responses.c, function (err, worked) {
-            //                    pCallback();
-            //                })
-            //            }
-            //        },
-            //        function(pCallback){
-            //            if (entry.responses.d > 0) {
-            //                teacherFunctions.addResponsesHelper(teacher._id.toString(), "d", entry._id.toString(), entry.responses.d, function (err, worked) {
-            //                    pCallback();
-            //                })
-            //            }
-            //        }
-            //
-            //
-            //    ],function(){
-            //        callback(err, "worked");
-            //    })
-            //})
->>>>>>> master
-
+            callback(null, "worked");
         })
 }
 
-<<<<<<< HEAD
+/**
+ * This method will add responses to a teachers question
+ * @param teacherID
+ * @param response
+ * @param teacherQuestion
+ * @param count
+ * @param callback
+ */
 exports.addResponsesHelper = function (teacherID, response, teacherQuestion, count, callback) {
+
+
+    switch (response) {
+        case "a":
+            teacherQuestion.responses.a = teacherQuestion.responses.a + count;
+            break;
+        case "b":
+            teacherQuestion.responses.b = teacherQuestion.responses.b + count;
+            break;
+        case "c":
+            teacherQuestion.responses.c = teacherQuestion.responses.c + count;
+            break;
+        case "d":
+            teacherQuestion.responses.d = teacherQuestion.responses.d + count;
+            break;
+    }
+
+    teacherQuestion.numberOfAttempts = teacherQuestion.numberOfAttempts + count;
+
+    if (teacherQuestion.solution == response) {
+        teacherQuestion.correctAttempts = teacherQuestion.correctAttempts + count;
+    } else {
+        teacherQuestion.incorrectAttempts = teacherQuestion.incorrectAttempts + count;
+
+    }
+
+
+    teacherQuestion.comprehension = calcComprehension(teacherQuestion.numberOfAttempts, teacherQuestion.correctAttempts);
+
+
+    teacherQuestion.save(function (err, savedQuestion) {
+        callback(null, savedQuestion);
+    });
+
+}
+
+
+/**
+ * This method will add responses to a teachers question
+ * @param teacherID
+ * @param response
+ * @param teacherQuestion
+ * @param count
+ * @param callback
+ */
+exports.removeResponsesHelper = function (teacherID, response, teacherQuestion, count, callback) {
+    //Find the question
+
+    //for each response
 
 
     switch (response) {
@@ -812,19 +856,13 @@ exports.addResponsesHelper = function (teacherID, response, teacherQuestion, cou
             break;
     }
 
-    teacherQuestion.numberOfAttempts =  teacherQuestion.numberOfAttempts - count;
+    teacherQuestion.numberOfAttempts = teacherQuestion.numberOfAttempts - count;
 
     if (teacherQuestion.solution == response) {
-        teacherQuestion.correctAttempts =  teacherQuestion.correctAttempts - count;
+        teacherQuestion.correctAttempts = teacherQuestion.correctAttempts - count;
     } else {
-        teacherQuestion.incorrectAttempts =  teacherQuestion.incorrectAttempts - count;
-=======
-exports.addResponsesHelper = function (teacherID, response, questionID, count, callback) {
-    for (i = 0; i < count; i++) {
-        freePlayLogic.checkAnswer(teacherID, response, questionID, function (err, worked) {
-            callback(err, worked);
-        })
->>>>>>> master
+        teacherQuestion.incorrectAttempts = teacherQuestion.incorrectAttempts - count;
+
     }
 
 
@@ -835,94 +873,6 @@ exports.addResponsesHelper = function (teacherID, response, questionID, count, c
         callback(null, savedQuestion);
     });
 
-
-    //async.timesSeries(count, function (err, timesCallback) {
-    //
-    //        switch (response) {
-    //            case "a":
-    //                teacherQuestion.responses.a++;
-    //                break;
-    //            case "b":
-    //                teacherQuestion.responses.b++;
-    //                break;
-    //            case "c":
-    //                teacherQuestion.responses.c++;
-    //                break;
-    //            case "d":
-    //                teacherQuestion.responses.d++;
-    //                break;
-    //        }
-    //
-    //        teacherQuestion.numberOfAttempts++;
-    //
-    //        if (teacherQuestion.solution == response) {
-    //            teacherQuestion.correctAttempts++;
-    //        } else {
-    //            teacherQuestion.incorrectAttempts++;
-    //        }
-    //
-    //
-    //        teacherQuestion.comprehension = calcComprehension(teacherQuestion.numberOfAttempts, teacherQuestion.correctAttempts);
-    //
-    //
-    //        teacherQuestion.save(function (err, savedQuestion) {
-    //            timesCallback(null, savedQuestion)
-    //        })
-    //
-    //    },
-    //
-    //    function (err, savedQuestion) {
-    //
-    //        callback(null, "worked");
-    //    });
-}
-
-
-exports.removeResponsesHelper = function (teacherID, response, teacherQuestion, count, callback) {
-    //Find the question
-
-    //for each response
-
-
-    async.timesSeries(count, function (err, timesCallback) {
-
-            switch (response) {
-                case "a":
-                    teacherQuestion.responses.a--;
-                    break;
-                case "b":
-                    teacherQuestion.responses.b--;
-                    break;
-                case "c":
-                    teacherQuestion.responses.c--;
-                    break;
-                case "d":
-                    teacherQuestion.responses.d--;
-                    break;
-            }
-
-            teacherQuestion.numberOfAttempts--;
-
-            if (teacherQuestion.solution == response) {
-                teacherQuestion.correctAttempts--;
-            } else {
-                teacherQuestion.incorrectAttempts--;
-            }
-
-
-            teacherQuestion.comprehension = calcComprehension(teacherQuestion.numberOfAttempts, teacherQuestion.correctAttempts);
-
-
-            teacherQuestion.save(function (err, savedQuestion) {
-                timesCallback(null, savedQuestion)
-            })
-
-        },
-
-        function (err, savedQuestion) {
-
-            callback(null, "worked");
-        });
 }
 
 exports.getMissedQuestionsListPerCategory = function (inputTeacherID, category, routeCallback) {

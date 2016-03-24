@@ -280,6 +280,35 @@ exports.renderNewTeacher = function (req, res) {
 };
 
 
+exports.removeStudent = function (req, res) {
+    //Get the student to remove
+
+    studentEmail = req.body.studentEmail;
+    userId = req.user._id.toString();
+
+
+    teacherFunctions.removeStudentFromClass(userId, studentEmail, function (err, worked) {
+
+        //res.redirect()
+
+        //teacher.renderStudentList(req, res);
+
+        //find the teachers class token
+        teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
+
+            teacherFunctions.listStudents(classToken, function (err, studentsList) {
+                teacher.teacherPage(req,res);
+
+                //res.render("studentList", {students: studentsList});
+            });
+
+        });
+
+
+    })
+
+};
+
 /**
  * This method is used to show a teacher their dashboard.
  * @param req

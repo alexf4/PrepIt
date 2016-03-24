@@ -27,10 +27,7 @@ exports.updateStudentLink = function (req, userId, newlink, callback) {
             callback(err, null);
         }
 
-
         //find if class exists
-
-
         DBFunctions.checkClass(newlink, function (err, found) {
             if (!found) {
 
@@ -38,29 +35,72 @@ exports.updateStudentLink = function (req, userId, newlink, callback) {
                 callback("Student class token didnt work", null);
 
 
-            } else {
+            }else if(user.classToken == newlink){
+                req.flash("LinkUpdateError", "Already in that class " + newlink);
+                callback("Student class token didnt work", null);
+            }
+            else {
 
-                user.classToken = newlink;
+                //IF the student is already apart of a class, remove it from that class
+                if (user.classToken != "0") {
+                    //Find the teacher
 
-                user.save(function (err, user) {
+                    studentFunctions.getTeacher(user.classToken, function (err, teacher) {
 
-                    if (err) {
-                        callback(err, null)
-                    }
+                        teacherFunctions.removeOldStudentQuestionsFromTeacher(teacher, userId, function (err, worked) {
 
-                    //Add users questions to teacher
-                    teacherFunctions.addNewStudentsQuestionToTeacher(userId, newlink, function (err, worked) {
+                            user.classToken = newlink;
+
+                            user.save(function (err, user) {
+
+                                if (err) {
+                                    callback(err, null)
+                                }
+
+                                //Add users questions to teacher
+                                teacherFunctions.addNewStudentsQuestionToTeacher(userId, newlink, function (err, worked) {
+
+                                    if (err) {
+                                        callback(err, null)
+                                    }
+
+                                    req.flash("LinkUpdated", "Your have been added to class " + newlink);
+                                    callback(null, worked);
+
+                                })
+
+                            })
+
+                        })
+
+                    })
+
+                } else {//This is a brand new user.
+
+
+                    user.classToken = newlink;
+
+                    user.save(function (err, user) {
 
                         if (err) {
                             callback(err, null)
                         }
 
-                        req.flash("LinkUpdated", "Your have been added to class " + newlink);
-                        callback(null, worked);
+                        //Add users questions to teacher
+                        teacherFunctions.addNewStudentsQuestionToTeacher(userId, newlink, function (err, worked) {
+
+                            if (err) {
+                                callback(err, null)
+                            }
+
+                            req.flash("LinkUpdated", "Your have been added to class " + newlink);
+                            callback(null, worked);
+
+                        })
 
                     })
+                }
 
-                })
 
             }
 
@@ -82,7 +122,7 @@ exports.removeStudentLink = function (inputID, callback) {
             callback(err, null);
         }
 
-        user.classToken = 0;
+        user.classToken = "0";
 
         user.save(function (err, user) {
             callback();
