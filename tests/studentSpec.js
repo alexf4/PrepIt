@@ -24,6 +24,8 @@ describe("Student Route Functions", function(){
 
         req.user={};
         req.user._id = "5684918fab13621200fe36bf";
+        req.session = {};
+        req.session.userEmail = "";
 
 
 
