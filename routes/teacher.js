@@ -18,6 +18,7 @@ var category;
 var studentEmail;
 var questionText;
 var classToken;
+var userEmail;
 
 exports.setCategory = function (category) {
     this.category = category;
@@ -31,22 +32,34 @@ exports.setQuestionText = function (questionText) {
     this.questionText = questionText;
 };
 
+var setUserEmail = function (userEmail) {
+    this.userEmail = userEmail;
+};
+
 exports.emptyOutSessionData = function (req) {
     req.session.category = null;
     req.session.studentEmail = null;
     req.session.questionText = null;
+    req.session.questionID = null;
+    //req.session.userEmail = null;
 };
 
 
 exports.renderStudentList = function (req, res) {
 
 
-    userId = req.session.passport.user;
+    userId = req.user._id.toString();
     //find the teachers class token
     teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
 
         teacherFunctions.listStudents(classToken, function (err, studentsList) {
-            res.render("studentList", {students: studentsList});
+            res.render("studentList", {
+                students: studentsList,
+                activeSection: "Student_Analysis",
+                Title: "Student Analysis",
+                ClassCode: this.classToken,
+                userEmail: this.userEmail
+            });
         });
 
     });
@@ -91,12 +104,25 @@ exports.teacherDrillDown = function (req, res) {
 exports.renderStudentView = function (req, res) {
     //Find the users ID from their email
 
-    studentFunctions.getStudentFromEmail(req.session.studentEmail, function (err, studentID) {
+    var studentScores;
+
+    var studentID;
+
+    var teacherEmail;
+
+    studentFunctions.getStudentFromEmail(req.session.studentEmail, function (err, inputStudentID) {
+        studentID = inputStudentID
+
+
         studentFunctions.getMasteryScores(studentID, function (scores) {
+
+            studentScores = scores;
+
             var chartData = dataToChartHelper.createStudentMasteryChart(scores);
 
             //TODO: Make this dynamic. We have a list of categories, but we need to clean up the names we use here
             //TODO: Cody can now render pass into the student page the side bar information on the categories.
+            //TODO: Change to use the real student charts page with more logic
             res.render("teacherStudentView",
                 {
                     //TODO: need to figure out what the total data will look like
@@ -110,9 +136,10 @@ exports.renderStudentView = function (req, res) {
                     Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
                     Public_Policy_Data: chartData.Public_Policy_Data,
                     Title: "Student Dashboard View",
-                    activeSection: "Main View",
+                    activeSection: "Student_Analysis",
                     ClassCode: this.classToken,
-                    studentEmail: req.session.studentEmail
+                    studentEmail: req.session.studentEmail,
+                    userEmail: this.userEmail
                 });
 
         })
@@ -126,12 +153,16 @@ exports.renderCategoryView = function (req, res) {
 
     //Render the teacher dashboard, but only focus on the category
 
-    var userEmail = "";
+
+    userId = req.user._id.toString();
 
     async.waterfall([
         function (callback) {
+
+            //TODO:This is not needed but I dont know how to get rid of properly
             DBFunctions.getUserEmail(userId, function (err, email) {
-                userEmail = email;
+                // this is now reduntent and may mess up userEmail in future
+                // userEmail = email;
                 callback();
             })
         },
@@ -189,7 +220,8 @@ exports.renderCategoryView = function (req, res) {
             Title: "Teacher Dashboard",
             ClassCode: this.classToken,
             Category: req.session.category,
-            userEmail: userEmail
+            userEmail: this.userEmail,
+            activeSection: "Main_View"
         });
     });
 };
@@ -200,7 +232,15 @@ exports.renderQuestionView = function (req, res) {
 
     DBFunctions.getQuestionData(req.session.passport.user, req.session.questionID, function (err, questionData) {
 
-        res.render("questionResponsesView", {question: questionData});
+        res.render("questionResponsesView", {
+            question: questionData,
+
+            //TODO: Make real data
+            activeSection: "Question_Analysis",
+            Title: "Question Responses",
+            ClassCode: this.classToken,
+            userEmail: this.userEmail
+        });
 
     })
 
@@ -214,7 +254,7 @@ exports.renderQuestionView = function (req, res) {
 exports.renderQuestionAnalysis = function (req, res) {
 
     //Get the users logged in id
-    userId = req.session.passport.user;
+    userId = req.user._id.toString();
 
     DBFunctions.isNewUser(userId, function (err, userStatus) {
         if (userStatus) {
@@ -227,7 +267,13 @@ exports.renderQuestionAnalysis = function (req, res) {
             teacherFunctions.getMissedQuestionsList(userId, function (err, questions) {
 
                 //render teacher page
-                res.render("questionAnalysis", {questions: questions, ClassCode: this.classToken})
+                res.render("questionAnalysis", {
+                    questions: questions,
+                    activeSection: "Question_Analysis",
+                    Title: "Question Analysis",
+                    ClassCode: this.classToken,
+                    userEmail: this.userEmail
+                })
             })
 
         }
@@ -246,13 +292,17 @@ exports.teacherPage = function (req, res) {
     teacher.emptyOutSessionData(req);
 
     //Get the users logged in id
-    userId = req.session.passport.user;
+    userId = req.user._id.toString();
+
+    DBFunctions.getUserEmail(req.user._id.toString(), function (err, FoundTeacherEmail) {
+        setUserEmail(FoundTeacherEmail);
+    });
 
     DBFunctions.isNewUser(userId, function (err, userStatus) {
         if (userStatus) {
             //render new user page
             //teacher.renderNewTeacher(req, res);
-            teacher.renderTeacherDashboard(req, res);
+            teacher.renderNewTeacher(req, res);
         }
         else {
             //render teacher page
@@ -270,9 +320,63 @@ exports.renderNewTeacher = function (req, res) {
 
     //TODO: Cody to create a new jade view that holds the jpg. The side nave header and footer should be the same
     //res.render();
+    var userEmail = "";
+
+
+    DBFunctions.getUserEmail(userId, function (err, email) {
+        //userEmail = email;
+
+
+        teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
+            this.classToken = classToken;
+            res.render("newTeacher" , {
+                ClassCode: this.classToken,
+                userEmail: this.userEmail,
+                newTeacher: true,
+                Title: "New Teacher Walkthrough",
+                activeSection: "Main_View"
+            })
+        })
+
+    })
+
+
+
+
+
+
 
 };
 
+
+exports.removeStudent = function (req, res) {
+    //Get the student to remove
+
+    studentEmail = req.body.studentEmail;
+    userId = req.user._id.toString();
+
+
+    teacherFunctions.removeStudentFromClass(userId, studentEmail, function (err, worked) {
+
+        //res.redirect()
+
+        //teacher.renderStudentList(req, res);
+
+        //find the teachers class token
+        teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
+
+            teacherFunctions.listStudents(classToken, function (err, studentsList) {
+                teacher.teacherPage(req,res);
+
+                //res.render("studentList", {students: studentsList});
+            });
+
+        });
+
+
+    })
+
+};
 
 /**
  * This method is used to show a teacher their dashboard.
@@ -281,7 +385,9 @@ exports.renderNewTeacher = function (req, res) {
  */
 exports.renderTeacherDashboard = function (req, res) {
     //Get the users logged in id
-    userId = req.session.passport.user;
+
+    userId = req.user._id.toString();
+
 
     chartData = null;
 
@@ -289,15 +395,14 @@ exports.renderTeacherDashboard = function (req, res) {
 
     questionList = null;
 
-    var userEmail = "";
-
 
     //https://github.com/caolan/async#waterfall
 
     async.waterfall([
         function (callback) {
+            //TODO: Alex not needed
             DBFunctions.getUserEmail(userId, function (err, email) {
-                userEmail = email;
+                //this.userEmail = email;
                 callback();
             })
         },
@@ -354,7 +459,9 @@ exports.renderTeacherDashboard = function (req, res) {
                 Title: "Teacher Dashboard",
                 ClassCode: this.classToken,
                 Category: req.session.category,
-                userEmail: userEmail
+                userEmail: this.userEmail,
+                activeSection: "Main_View",
+                newTeacher: null
             });
     });
 };

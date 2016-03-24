@@ -11,7 +11,7 @@ var studentID = "5684918fab13621200fe36bf";
 
 describe("Data to Chart Helper Functions", function(){
 
-    this.timeout(4000);
+    this.timeout(40000);
 
     describe("#createStudentChart()", function (){
 

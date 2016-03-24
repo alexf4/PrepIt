@@ -24,7 +24,7 @@ html
                                  .row
                                     .col-sm-6.b-r
                                        h3.m-t-none.m-b Category: #{question.category}
-                                       p Subcategory: #{question.subcategory}
+                                       p 
                                           p Question Text: #{question.questionText}
                                     .col-sm-6
                                        .ibox.float-e-margins
@@ -113,6 +113,10 @@ html
                                                         h3.list-group-item-heading D 0 %
                                                             p.list-group-item-text
                                                                 | #{question.answers.d}
+                                    .row.text-center
+                                        br
+                                        strong
+                                            a(href='javascript:history.back()') click here to go back
                 //footer
                 include ./includes/footer.jade
         // Mainly scripts

@@ -2,6 +2,7 @@
  * Created by beckyedithbrooker on 7/18/15.
  */
 var freePlayLogic = require("../GameLogic/FreePlayLogic");
+var DBFunctions = require("../DBWork/DBFunctions.js");
 var userModel = require("../models/user");
 var category;
 
@@ -13,20 +14,26 @@ exports.startFreePlay = function(req, res) {
 
     //grab a question that the user has not gotten right
     //Get the users logged in id
-    userId = req.session.passport.user;
+    userId = req.user._id.toString();
 
     req.session.category="All Categories";
 
     //TODO: try to clean this up and not need it (figure out how to call category play)
     freePlayLogic.getQuestion(userId, function(question){
 
+        DBFunctions.getUserEmail(userId, function (err, email) {
+            userEmail = email;
+            req.session.userEmail = email;
 
-        res.render("FreePlayQuestion", {
-            question: question ,
-            questionID : question._id.toString(),
-            Title: "All Categories",
-            activeSection: "Freeplay",
-            activeSubsection: req.session.category});
+            res.render("FreePlayQuestion", {
+                question: question,
+                questionID: question._id.toString(),
+                Title: "All Categories",
+                activeSection: "Freeplay",
+                activeSubsection: req.session.category,
+                studentEmail: req.session.userEmail
+            });
+        });
     })
 
     //Pass the question to render
@@ -36,7 +43,7 @@ exports.startFreePlay = function(req, res) {
 exports.startCategoryPlay = function(req, res){
     //grab a question that the user has not gotten right
     //Get the users logged in id
-    userId = req.session.passport.user;
+    userId = req.user._id.toString();
 
     //TODO: try to not make only one render call and add suport for highlighting what the current category is
     if (req.session.category===null||req.session.category==="All Categories")
@@ -45,24 +52,37 @@ exports.startCategoryPlay = function(req, res){
 
         freePlayLogic.getQuestion(userId, function(question){
 
-            res.render("FreePlayQuestion", {
-                question: question ,
-                questionID : question._id.toString(),
-                Title: "All Categories",
-                activeSection: "Freeplay",
-                activeSubsection: req.session.category});
+            DBFunctions.getUserEmail(userId, function (err, email) {
+                userEmail = email;
+                req.session.userEmail = email;
 
+                res.render("FreePlayQuestion", {
+                    question: question,
+                    questionID: question._id.toString(),
+                    Title: "All Categories",
+                    activeSection: "Freeplay",
+                    activeSubsection: req.session.category,
+                    studentEmail: req.session.userEmail
+                });
+            });
         })
     }
     else {
         freePlayLogic.getQuestionFromCategory(userId, req.session.category, function (question) {
 
-            res.render("FreePlayQuestion", {
-                question: question,
-                questionID: question._id.toString(),
-                Title: req.session.category,
-                activeSection: "Freeplay",
-                activeSubsection: req.session.category});
+            DBFunctions.getUserEmail(userId, function (err, email) {
+                userEmail = email;
+                req.session.userEmail = email;
+
+                res.render("FreePlayQuestion", {
+                    question: question,
+                    questionID: question._id.toString(),
+                    Title: "Freeplay",
+                    activeSection: "Freeplay",
+                    activeSubsection: req.session.category,
+                    studentEmail: req.session.userEmail
+                });
+            });
 
         })
     }
@@ -72,7 +92,7 @@ exports.startCategoryPlay = function(req, res){
 
     //grab the questions correct answer
 
-    userId = req.session.passport.user;
+        userId = req.user._id.toString();
 
     //compare to users input
 

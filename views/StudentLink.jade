@@ -15,7 +15,6 @@ html
                     .row
                         .col-lg-12
                             .ibox
-
                                 form#form.wizard-big(action='/updateStudentLink', method= "POST")
                                     h1 Class Code
 
@@ -25,6 +24,8 @@ html
                                         .row
                                             .col-lg-8
                                                 .form-group
+                                                    .alert-danger #{error}
+                                                    .alert-success #{success}
                                                     label Teacher ID *
 
                                                     //Change to drop down from backend data

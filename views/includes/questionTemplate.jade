@@ -14,7 +14,7 @@
                             input(type='hidden', value=questionID, name='questionId')
                             .col-sm-6.b-r
                                 h3.m-t-none.m-b #{question.category}
-                                p #{question.subcategory}
+                                p
                                     p #{question.questionText}
                                     div
                                         button.btn.btn-sm.btn-primary.pull-right.m-t-n-xs(type='submit')
@@ -43,3 +43,6 @@
                                                 input(type='radio', name='answer', value='d')
                                                 p.list-group-item-text
                                                     | #{question.answers.d}
+                    .row
+                        p
+                            a(href='https://docs.google.com/a/prepit.io/forms/d/1ORaafeZhhpV2a-ne0HBzTOpesUYbaXJ0X1qvmEbY63E/viewform', target='_newtab') Question Feedback

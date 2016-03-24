@@ -333,28 +333,7 @@ exports.getQuestionData = function (inputID, questionID, callback) {
         if (!found) {
             callback("could not find question", null);
         }
-    })
-
-
-    ////find the user
-    //userModel.findById(inputID, function (err, user) {
-    //    if (err) {
-    //        callback(err, null);
-    //    }
-    //
-    //
-    //    user.questions.forEach(function (entry) {
-    //        if (entry.baseQuestionID == questionID) {
-    //            found = true;
-    //            callback(null, entry);
-    //        }
-    //    });
-    //
-    //    if (!found) {
-    //        callback("could not find question", null);
-    //    }
-    //});
-
+    });
 };
 
 /**
@@ -440,25 +419,7 @@ exports.removeQuestion = function (baseQuestionId, callback) {
                 }
             }
 
-            //user.questions.forEach(function(entry){
-            //
-            //    if(entry.baseQuestionID == baseQuestionId){
-            //        //questionAttempted = true;
-            //
-            //        user.questions.
-            //    }
-            //
-            //});
 
-            //
-            ////Create new question
-            //var userQuestion = new questionModel(foundQuestion);
-            //userQuestion._id = mongoose.Types.ObjectId().toString();
-
-            //user.questions
-
-            //Add that question to that users question set
-            //user.questions.push(userQuestion);
 
             user.save(function (error, data) {
             });
@@ -564,6 +525,30 @@ exports.updateCategoryCount = function (inputCategory, callback) {
             callback(null, "worked");
 
         });
+    })
+}
+
+/**
+ *
+ * @param classToken
+ * @param callback
+ */
+exports.checkClass = function(classToken, callback){
+
+    var classFound = false;
+
+
+    userModel.find({"classToken" :classToken }, function(err, users){
+
+        users.forEach(function(user){
+            if(user.isteacher){
+                classFound = true;
+            }
+        })
+
+
+        callback(err, classFound);
+
     })
 }
 

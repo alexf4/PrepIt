@@ -8,25 +8,36 @@ var db = require('../dbWork/db');
 db.connect();
 
 
+describe("DB Functions", function () {
 
-describe ("DB Functions" , function (){
-
-    this.timeout(4000);
-
+    this.timeout(40000);
 
 
-    describe("#findQuestionsForUser()", function(){
+    describe("#findQuestionsForUser()", function () {
 
         var UserID = "5684903dab13621200fe364f";
 
-        it ("Should find all the questionf for a user", function (done){
-            questionFunctions.findQuestionsForUser(UserID, function(err, foundQuestions){
+        it("Should find all the questionf for a user", function (done) {
+            questionFunctions.findQuestionsForUser(UserID, function (err, foundQuestions) {
                 //console.log(foundQuestions);
-             done()
+                done()
             })
         })
     })
 
+
+    describe("#findAnsweredQuestions()", function () {
+
+        var UserID = "5684903dab13621200fe364f";
+
+        it("Should find all the question of for a user that has been answered", function (done) {
+            questionFunctions.findAnsweredQuestions(UserID, function (err, foundQuestions) {
+                assert.equal( foundQuestions.length, 21, "The number of questions user has answered");
+                done()
+            })
+        })
+
+    })
 
 
 });

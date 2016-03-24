@@ -3,6 +3,7 @@ var teacherFunctions = require("../DBWork/teacherFunctions.js");
 var studentFunctions = require("../DBWork/studentFunctions.js");
 var assert = require('chai').assert;
 var async = require('async');
+var questionModel = require("../models/question");
 
 var db = require('../dbWork/db');
 
@@ -10,22 +11,22 @@ db.connect();
 
 //TODO: need to create the test database for this stuff
 
-describe("Teacher Functions", function(){
+describe("Teacher Functions", function () {
 
-    this.timeout(4000);
+    this.timeout(400000);
 
-    describe("#getClassAverageMasteryForQuestion()", function (){
-        it("will return the average mastery for a specific question", function(done){
+    describe("#getClassAverageMasteryForQuestion()", function () {
+        it("will return the average mastery for a specific question", function (done) {
 
             var teacherID = "5684903dab13621200fe364f";
             var questionBaseID = "55b13ceb89484e1300065788";
             var expectedResults = {
-                mastered : 50,
-                intermediate : 0,
-                novice : 50
+                mastered: 50,
+                intermediate: 0,
+                novice: 50
             }
 
-            teacherFunctions.getClassAverageMasteryForQuestion(teacherID, questionBaseID, function(err, scores){
+            teacherFunctions.getClassAverageMasteryForQuestion(teacherID, questionBaseID, function (err, scores) {
 
                 assert.equal(scores.mastered, expectedResults.mastered, "mastered should be 0");
                 assert.equal(scores.intermediate, expectedResults.intermediate, "intermediate should be 0");
@@ -38,19 +39,19 @@ describe("Teacher Functions", function(){
 
     });
 
-    describe("#getClassAverageMasteryForCategory()", function (){
-        it("will return the average mastery for a specific category", function(done){
+    describe("#getClassAverageMasteryForCategory()", function () {
+        it("will return the average mastery for a specific category", function (done) {
 
             var teacherID = "5684903dab13621200fe364f";
             var category = "Constitutional Underpinnings";
 
             var expectedResults = {
-                mastered : 4,
-                intermediate : 0,
-                novice : 86
+                mastered: 3,
+                intermediate: 0,
+                novice: 91
             }
 
-            teacherFunctions.getClassAverageMasteryForCategory(teacherID, category , function(err, scores){
+            teacherFunctions.getClassAverageMasteryForCategory(teacherID, category, function (err, scores) {
                 assert.equal(scores.mastered, expectedResults.mastered, "mastered should be 0");
                 assert.equal(scores.intermediate, expectedResults.intermediate, "intermediate should be 0");
                 assert.equal(scores.novice, expectedResults.novice, "novice should be 86");
@@ -59,25 +60,25 @@ describe("Teacher Functions", function(){
         })
 
     });
-    describe("#numberOfStudentsInClass()", function (){
-        it("returns the number of students in a class", function(done){
+    describe("#numberOfStudentsInClass()", function () {
+        it("returns the number of students in a class", function (done) {
 
             var classToken = "74fb18a";
 
-            teacherFunctions.numberOfStudentsInClass(classToken, function(err, users){
-                assert.equal(users, 4 ,"should be one student" );
+            teacherFunctions.numberOfStudentsInClass(classToken, function (err, users) {
+                assert.equal(users, 4, "should be one student");
                 done();
             });
         })
 
     })
 
-    describe("#getStudentScores()", function (){
+    describe("#getStudentScores()", function () {
 
         var teacherID = "5684903dab13621200fe364f";
 
-        it("returns the scores for all the students that are in the teachers class.", function (done){
-            teacherFunctions.getStudentsScores(teacherID, function(retDict){
+        it("returns the scores for all the students that are in the teachers class.", function (done) {
+            teacherFunctions.getStudentsScores(teacherID, function (retDict) {
                 //console.log(retDict);
                 done();
 
@@ -86,7 +87,7 @@ describe("Teacher Functions", function(){
         })
     })
 
-    describe("#addStudentScoresToTotal", function(){
+    describe("#addStudentScoresToTotal", function () {
 
         var numStudents = 0;
 
@@ -98,24 +99,24 @@ describe("Teacher Functions", function(){
 
         var studentScore;
 
-        it("adds all the students scores together", function(done){
+        it("adds all the students scores together", function (done) {
 
             async.waterfall([
-                function(callback){
-                    teacherFunctions.numberOfStudentsInClass(classToken , function(err, studentCount){
-                        numStudents = studentCount;
-                        callback();
-                    })
-                },
-                function(callback){
-                    studentFunctions.getUserScores(studentID, function(scores){
-                        totalScores = scores;
-                        studentScore = scores;
-                        callback();
-                    })
-                }
+                    function (callback) {
+                        teacherFunctions.numberOfStudentsInClass(classToken, function (err, studentCount) {
+                            numStudents = studentCount;
+                            callback();
+                        })
+                    },
+                    function (callback) {
+                        studentFunctions.getUserScores(studentID, function (scores) {
+                            totalScores = scores;
+                            studentScore = scores;
+                            callback();
+                        })
+                    }
                 ],
-                function(callback){
+                function (callback) {
                     teacherFunctions.addStudentScoresToTotal(numStudents, totalScores, studentScore);
                     //console.log(totalScores);
                     done();
@@ -123,13 +124,13 @@ describe("Teacher Functions", function(){
         })
     });
 
-    describe("#getStudentMasteries()", function (){
+    describe("#getStudentMasteries()", function () {
 
         var teacherID = "5684903dab13621200fe364f";
 
-        it("returns the scores for all the students that are in the teachers class.", function (done){
+        it("returns the scores for all the students that are in the teachers class.", function (done) {
 
-            teacherFunctions.getStudentsMasterys(teacherID, function(retDict){
+            teacherFunctions.getStudentsMasterys(teacherID, function (retDict) {
                 //console.log(retDict);
                 done();
 
@@ -137,7 +138,7 @@ describe("Teacher Functions", function(){
         })
     })
 
-    describe("#addStudentMasteriesToTotal()", function(){
+    describe("#addStudentMasteriesToTotal()", function () {
 
         var numStudents = 2;
         var classToken = "74fb18a";
@@ -147,9 +148,9 @@ describe("Teacher Functions", function(){
 
         var studentMastery;
 
-        it("adds all the students scores together", function(done){
+        it("adds all the students scores together", function (done) {
 
-            studentFunctions.getMasteryScores(studentID, function(scores){
+            studentFunctions.getMasteryScores(studentID, function (scores) {
                 totalMastery = scores;
                 studentMastery = scores;
 
@@ -160,18 +161,18 @@ describe("Teacher Functions", function(){
         })
     })
 
-    describe("#listStudents()", function(){
+    describe("#listStudents()", function () {
         var classToken = "74fb18a";
 
         var listData = [
-            { email: 'student2@google.com', totalMastery: 11.5 },
-            { email: 'student4@google.com', totalMastery: 6.5 },
-            { email: 'student1@google.com', totalMastery: 9 },
-            { email: 'student3@google.com', totalMastery: 19.5 }
+            {email: 'student2@google.com', totalMastery: 11.5},
+            {email: 'student4@google.com', totalMastery: 6.5},
+            {email: 'student1@google.com', totalMastery: 9},
+            {email: 'student3@google.com', totalMastery: 19.5}
         ]
 
-        it("should return a list of student objects that hold name, and percent of all questions mastered", function (done){
-            teacherFunctions.listStudents(classToken, function(studentList){
+        it("should return a list of student objects that hold name, and percent of all questions mastered", function (done) {
+            teacherFunctions.listStudents(classToken, function (studentList) {
 
                 //TODO see why this is failing on occastion
                 //assert.deepEqual(listData , studentList , "These should be equal");
@@ -183,13 +184,13 @@ describe("Teacher Functions", function(){
         })
     })
 
-    describe("#getTeacherClassToken()", function(){
+    describe("#getTeacherClassToken()", function () {
         var teacherID = "5684903dab13621200fe364f";
         var classToken = "74fb18a";
 
-        it("returns the class token of a the teacher", function(done){
+        it("returns the class token of a the teacher", function (done) {
 
-            teacherFunctions.getTeacherClassToken (teacherID, function(err, retClassToken){
+            teacherFunctions.getTeacherClassToken(teacherID, function (err, retClassToken) {
 
 
                 assert.equal(classToken, retClassToken, "the Tokens should match")
@@ -198,12 +199,12 @@ describe("Teacher Functions", function(){
         })
     })
 
-    describe("getMissedQuestionList", function(){
+    describe("getMissedQuestionList", function () {
         var teacherID = "5684903dab13621200fe364f";
 
-        it("should return a list of question objects from the teacher object that rep the most missed questions", function (done){
+        it("should return a list of question objects from the teacher object that rep the most missed questions", function (done) {
 
-            teacherFunctions.getMissedQuestionsList(teacherID, function(err, retQuestionList){
+            teacherFunctions.getMissedQuestionsList(teacherID, function (err, retQuestionList) {
                 //console.log(retQuestionList);
                 done();
 
@@ -213,13 +214,13 @@ describe("Teacher Functions", function(){
     })
 
 
-    describe("#listStudentsAndCategoryMastery()", function(){
+    describe("#listStudentsAndCategoryMastery()", function () {
 
         var classToken = "74fb18a";
         var category = "Constitutional Underpinnings";
 
-        it("should return a list of all the students and their mastery of a specific category", function (done){
-            teacherFunctions.listStudentsAndCategoryMastery(classToken, category, function(err, studentlist){
+        it("should return a list of all the students and their mastery of a specific category", function (done) {
+            teacherFunctions.listStudentsAndCategoryMastery(classToken, category, function (err, studentlist) {
                 //console.log(studentlist);
                 done();
             })
@@ -237,20 +238,130 @@ describe("Teacher Functions", function(){
     //    })
     //});
 
-    describe("#getMissedQuestionsListPerCategory()", function(){
+    describe("#getMissedQuestionsListPerCategory()", function () {
 
 
         var teacherID = "5684903dab13621200fe364f";
 
         var category = "Constitutional Underpinnings";
-        it("should return all of the question data assocaited to the teacher of a category", function(done){
-            teacherFunctions.getMissedQuestionsListPerCategory(teacherID, category, function(err, questionData){
+        it("should return all of the question data assocaited to the teacher of a category", function (done) {
+            teacherFunctions.getMissedQuestionsListPerCategory(teacherID, category, function (err, questionData) {
                 //console.log(questionData);
                 done();
             })
         })
     });
 
+
+    describe("#addNewStudentsQuestionToTeacher()", function () {
+
+        var studentID = "5684918fab13621200fe36bf";
+        var classToken = "74fb18a";
+
+
+        it("should add questions from the student to the teacher", function (done) {
+            teacherFunctions.addNewStudentsQuestionToTeacher(studentID, classToken, function (err, questionData) {
+                //console.log(questionData);
+                done();
+            })
+        })
+    });
+
+    describe("#addResponsesHelper()", function () {
+        var teacherQuestionID = "56e1150e2612cd0d001d0fe7";
+        var teacherID = "56e1150d2612cd0d001d0fa3";
+        var response = "a";
+        var count = 3;
+
+        it("should remove three as from the question", function (done) {
+
+            questionModel.findById(teacherQuestionID, function (err, foundTeacherQuestion) {
+
+                console.log(foundTeacherQuestion.toJSON());
+
+                teacherFunctions.addResponsesHelper(teacherID, response, foundTeacherQuestion, count, function (err, question) {
+
+                    console.log(foundTeacherQuestion.toJSON());
+                    done();
+                })
+
+            })
+
+        })
+
+    })
+
+
+    describe("#removeResponsesHelper()", function () {
+
+        var teacherQuestionID = "56e1150e2612cd0d001d0fe7";
+        var teacherID = "56e1150d2612cd0d001d0fa3";
+        var response = "a";
+        var count = 3;
+
+        it("should remove three as from the question", function (done) {
+
+            questionModel.findById(teacherQuestionID, function (err, foundTeacherQuestion) {
+
+                console.log(foundTeacherQuestion.toJSON());
+
+                teacherFunctions.removeResponsesHelper(teacherID, response, foundTeacherQuestion, count, function (err, question) {
+
+                    console.log(foundTeacherQuestion.toJSON());
+                    done();
+                })
+
+            })
+
+        })
+
+
+        //find the teachers question
+
+
+    })
+
+    //describe.only("#addNewStudentsQuestionToTeacher()", function () {
+    //
+    //
+    //    var studentID = "5684918fab13621200fe36bf";
+    //
+    //    var studentEmail = "student2@google.com"
+    //    var classToken = "74fb18a";
+    //
+    //
+    //    it("should add questions from the student to the teacher", function (done) {
+    //
+    //        studentFunctions.updateStudentLink(studentID, classToken, function (err, worked) {
+    //
+    //            teacherFunctions.addNewStudentsQuestionToTeacher(studentEmail, classToken, function (err, questionData) {
+    //                //console.log(questionData);
+    //                done();
+    //            })
+    //
+    //        })
+    //
+    //
+    //    })
+    //});
+
+
+    describe("#removeOldStudentQuestionsFromTeacher()", function () {
+
+
+        var studentID = "5684918fab13621200fe36bf";
+
+        var studentEmail = ""
+        var classToken = "74fb18a";
+
+
+        it("should add questions from the student to the teacher", function (done) {
+            teacherFunctions.removeOldStudentQuestionsFromTeacher(studentID, classToken, function (err, questionData) {
+                //console.log(questionData);
+                done();
+            })
+        })
+    });
 
 
 });

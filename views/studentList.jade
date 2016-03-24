@@ -27,7 +27,7 @@ html
                            tr
                               th <br />#
                               th <br />Student Username
-                              th Precent of<br />Questions mastered
+                              th Percent of<br />Questions Mastered
                         tbody
                            each studentObject, index in studentsList
                               a(href='/teacherDrilldown/student/#{studentObject.email}')
@@ -37,6 +37,10 @@ html
                                        a(href='/teacherDrilldown/student/#{studentObject.email}')
                                           p #{studentObject.email}
                                     td #{studentObject.totalMastery}
+                                    td
+                                       form(role='form', action='/removeStudent', method='POST')
+                                          input(type='hidden', value=studentObject.email, name='studentEmail')
+                                          button.btn.btn-primary.block.half-width.m-b(type='submit') Remove Student!
             //footer
             include ./includes/footer.jade
       // Mainly scripts

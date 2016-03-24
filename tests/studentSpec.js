@@ -14,7 +14,7 @@ db.connect();
 
 describe("Student Route Functions", function(){
 
-    this.timeout(4000);
+    this.timeout(40000);
 
     describe("#studentPage()", function(){
         it("Will render the student page", function (done){
@@ -22,9 +22,11 @@ describe("Student Route Functions", function(){
         var req = {};
         var res = {};
 
+        req.user={};
+        req.user._id = "5684918fab13621200fe36bf";
         req.session = {};
-        req.session.passport = {};
-        req.session.passport.user = "5684918fab13621200fe36bf";
+        req.session.userEmail = "";
+
 
 
         res.render = function(chunk, encoding) {

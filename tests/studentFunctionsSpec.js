@@ -7,16 +7,16 @@ var db = require('../dbWork/db');
 db.connect();
 describe ("Student Functions", function(){
 
-    this.timeout(4000);
+    this.timeout(40000);
     describe("#getMasterOfCategory()", function (){
 
         var studentID = "5684918fab13621200fe36bf";
         var category = "Constitutional Underpinnings";
 
         var expectedResults = {
-            mastered : 6,
+            mastered : 4,
             intermediate : 0,
-            novice : 84
+            novice : 90
         };
 
         it("should return the mastery levels of category for a student", function(done){

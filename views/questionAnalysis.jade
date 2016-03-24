@@ -24,7 +24,7 @@ html
                                         thead
                                             tr
                                                 th Question
-                                                th Mastered
+                                                th Knowledge Level
                                                 th Missed
                                         tbody
                                             - for (var i=0;i<questions.length;i++)
@@ -35,6 +35,7 @@ html
                                                                 p #{questions[i].questionString}
                                                         td #{questions[i].questionMastered}
                                                         td #{questions[i].questionMissed}
+
                 //footer
                 include ./includes/footer.jade
 

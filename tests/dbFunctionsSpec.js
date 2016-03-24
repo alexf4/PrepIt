@@ -11,7 +11,7 @@ db.connect();
 
 describe ("DB Functions" , function (){
 
-    this.timeout(4000);
+    this.timeout(40000);
 
     describe ("#getNumberOfQuestionsPerCategory()", function (){
         it("should return the number of questions in the db of a specific category" , function(done){
@@ -19,7 +19,7 @@ describe ("DB Functions" , function (){
             var category = "Constitutional Underpinnings";
 
             DBFunctions.getNumberOfQuestionsPerCategory(category, function(err, questionCount){
-                assert.equal( questionCount, 33, "The number of questions in a category");
+                assert.equal( questionCount, 50, "The number of questions in a category");
                 done();
             })
 
@@ -37,6 +37,36 @@ describe ("DB Functions" , function (){
                 done();
             })
         })
+    });
+
+
+    describe ("#checkClass()", function(){
+        var classToken = "74fb18a";
+
+        it("should return that the class exists", function(done){
+
+            DBFunctions.checkClass(classToken, function(err, found){
+
+                assert.equal(true, found, "The class was found");
+
+                //console.log(questionData);
+                done();
+            })
+        })
+
+        var invalidClassToken = "zzzzzzz";
+
+        it("should return that the class does not exists", function(done){
+
+            DBFunctions.checkClass(invalidClassToken, function(err, found){
+
+                assert.equal(false, found, "The class was found");
+
+                //console.log(questionData);
+                done();
+            })
+        })
+
     });
 
     describe("#isNewUser()", function(){

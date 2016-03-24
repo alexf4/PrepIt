@@ -12,22 +12,102 @@ var list = require("collections/list");
 var DBFunctions = require("../DBWork/DBFunctions.js");
 var studentFunctions = require("./studentFunctions");
 var questionFunctions = require("./questionFunctions.js");
+var teacherFunctions = require("./teacherFunctions.js");
 
 
 /**
  * This method updates the user items teacher token slot
- * @param inputID the students id
+ * @param userId the students id
  * @param newlink the string input that will be the set as the teacher token element
  * @param callback the function to be called after the update is done in db
  */
-exports.updateStudentLink = function (inputID, newlink, callback) {
+exports.updateStudentLink = function (req, userId, newlink, callback) {
     userModel.findById(userId, function (err, user) {
+        if (err) {
+            callback(err, null);
+        }
 
-        user.classToken = newlink;
+        //find if class exists
+        DBFunctions.checkClass(newlink, function (err, found) {
+            if (!found) {
 
-        user.save(function (err, user) {
-            callback();
+                req.flash("LinkUpdateError", "Incorrect Class Token");
+                callback("Student class token didnt work", null);
+
+
+            }else if(user.classToken == newlink){
+                req.flash("LinkUpdateError", "Already in that class " + newlink);
+                callback("Student class token didnt work", null);
+            }
+            else {
+
+                //IF the student is already apart of a class, remove it from that class
+                if (user.classToken != "0") {
+                    //Find the teacher
+
+                    studentFunctions.getTeacher(user.classToken, function (err, teacher) {
+
+                        teacherFunctions.removeOldStudentQuestionsFromTeacher(teacher, userId, function (err, worked) {
+
+                            user.classToken = newlink;
+
+                            user.save(function (err, user) {
+
+                                if (err) {
+                                    callback(err, null)
+                                }
+
+                                //Add users questions to teacher
+                                teacherFunctions.addNewStudentsQuestionToTeacher(userId, newlink, function (err, worked) {
+
+                                    if (err) {
+                                        callback(err, null)
+                                    }
+
+                                    req.flash("LinkUpdated", "Your have been added to class " + newlink);
+                                    callback(null, worked);
+
+                                })
+
+                            })
+
+                        })
+
+                    })
+
+                } else {//This is a brand new user.
+
+
+                    user.classToken = newlink;
+
+                    user.save(function (err, user) {
+
+                        if (err) {
+                            callback(err, null)
+                        }
+
+                        //Add users questions to teacher
+                        teacherFunctions.addNewStudentsQuestionToTeacher(userId, newlink, function (err, worked) {
+
+                            if (err) {
+                                callback(err, null)
+                            }
+
+                            req.flash("LinkUpdated", "Your have been added to class " + newlink);
+                            callback(null, worked);
+
+                        })
+
+                    })
+                }
+
+
+            }
+
+
         })
+
+
     });
 };
 
@@ -42,7 +122,7 @@ exports.removeStudentLink = function (inputID, callback) {
             callback(err, null);
         }
 
-        user.classToken = 0;
+        user.classToken = "0";
 
         user.save(function (err, user) {
             callback();
@@ -156,20 +236,8 @@ exports.getTeacherQuestion = function (classToken, inputBaseQuestionID, callback
                 }
 
 
-            })
+            });
 
-
-            //if(teacher[0].questions == null){
-            //    console.log("error");
-            //    console.log("CLass token :"+ classToken + " inputQuestion: " + inputBaseQuestionID);
-            //    callback("teacher does not have questions", null);
-            //}
-            //
-            //teacher[0].questions.forEach(function(entry){
-            //    if (entry.baseQuestionID == inputBaseQuestionID) {
-            //        callback(null, entry._id.toString());
-            //    }
-            //});
         });
     });
 };
