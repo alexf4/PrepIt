@@ -126,9 +126,10 @@ module.exports = function (passport) {
         res.render('home', {user: req.user, Title: "Home"});
     });
 
-    /* GET Test Page*/
-    router.get('/testPage', function (req, res) {
-        res.render('testPage', {user: req.user, Title: 'TestPage'});
+    /* Handle Logout */
+    router.get('/signout', function (req, res) {
+        req.logout();
+        res.redirect('/');
     });
 
     /* Handle Logout */

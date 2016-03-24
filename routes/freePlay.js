@@ -2,6 +2,7 @@
  * Created by beckyedithbrooker on 7/18/15.
  */
 var freePlayLogic = require("../GameLogic/FreePlayLogic");
+var DBFunctions = require("../DBWork/DBFunctions.js");
 var userModel = require("../models/user");
 var category;
 
@@ -20,13 +21,19 @@ exports.startFreePlay = function(req, res) {
     //TODO: try to clean this up and not need it (figure out how to call category play)
     freePlayLogic.getQuestion(userId, function(question){
 
+        DBFunctions.getUserEmail(userId, function (err, email) {
+            userEmail = email;
+            req.session.userEmail = email;
 
-        res.render("FreePlayQuestion", {
-            question: question ,
-            questionID : question._id.toString(),
-            Title: "All Categories",
-            activeSection: "Freeplay",
-            activeSubsection: req.session.category});
+            res.render("FreePlayQuestion", {
+                question: question,
+                questionID: question._id.toString(),
+                Title: "All Categories",
+                activeSection: "Freeplay",
+                activeSubsection: req.session.category,
+                studentEmail: req.session.userEmail
+            });
+        });
     })
 
     //Pass the question to render
@@ -45,24 +52,37 @@ exports.startCategoryPlay = function(req, res){
 
         freePlayLogic.getQuestion(userId, function(question){
 
-            res.render("FreePlayQuestion", {
-                question: question ,
-                questionID : question._id.toString(),
-                Title: "All Categories",
-                activeSection: "Freeplay",
-                activeSubsection: req.session.category});
+            DBFunctions.getUserEmail(userId, function (err, email) {
+                userEmail = email;
+                req.session.userEmail = email;
 
+                res.render("FreePlayQuestion", {
+                    question: question,
+                    questionID: question._id.toString(),
+                    Title: "All Categories",
+                    activeSection: "Freeplay",
+                    activeSubsection: req.session.category,
+                    studentEmail: req.session.userEmail
+                });
+            });
         })
     }
     else {
         freePlayLogic.getQuestionFromCategory(userId, req.session.category, function (question) {
 
-            res.render("FreePlayQuestion", {
-                question: question,
-                questionID: question._id.toString(),
-                Title: req.session.category,
-                activeSection: "Freeplay",
-                activeSubsection: req.session.category});
+            DBFunctions.getUserEmail(userId, function (err, email) {
+                userEmail = email;
+                req.session.userEmail = email;
+
+                res.render("FreePlayQuestion", {
+                    question: question,
+                    questionID: question._id.toString(),
+                    Title: "Freeplay",
+                    activeSection: "Freeplay",
+                    activeSubsection: req.session.category,
+                    studentEmail: req.session.userEmail
+                });
+            });
 
         })
     }

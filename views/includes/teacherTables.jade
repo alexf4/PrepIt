@@ -19,7 +19,7 @@
                             thead
                                 tr
                                     th Question
-                                    th Mastered
+                                    th Knowledge Level
                                     th Missed
                             tbody
                                 - for (var i=0;i<10;i++)
@@ -45,7 +45,7 @@
                             tr
                                 th <br />#
                                 th <br />Student Username
-                                th Precent of<br />Questions mastered
+                                th Percent of<br />Questions Mastered
                         tbody
                             each studentObject, index in studentsList
                                 a(href='/teacherDrilldown/student/#{studentObject.email}')
@@ -73,7 +73,7 @@
                             thead
                                 tr
                                     th Question
-                                    th Mastered
+                                    th Knowledge Level
                                     th Missed
                             tbody
                                 - for (var i=0;i<10;i++)
@@ -98,7 +98,7 @@
                             tr
                                 th <br />#
                                 th <br />Student Username
-                                th Precent of<br />all Mastered
+                                th Percent of<br />all Mastered
                         tbody
                             each studentObject, index in studentsList
 
