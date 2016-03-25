@@ -32,8 +32,8 @@ exports.setQuestionText = function (questionText) {
     this.questionText = questionText;
 };
 
-var setUserEmail = function (userEmail) {
-    this.userEmail = userEmail;
+var setUserEmail = function (inputUserEmail) {
+    userEmail = inputUserEmail;
 };
 
 exports.emptyOutSessionData = function (req) {
@@ -58,7 +58,7 @@ exports.renderStudentList = function (req, res) {
                 activeSection: "Student_Analysis",
                 Title: "Student Analysis",
                 ClassCode: this.classToken,
-                userEmail: this.userEmail
+                userEmail: userEmail
             });
         });
 
@@ -220,7 +220,7 @@ exports.renderCategoryView = function (req, res) {
             Title: "Teacher Dashboard",
             ClassCode: this.classToken,
             Category: req.session.category,
-            userEmail: this.userEmail,
+            userEmail: userEmail,
             activeSection: "Main_View"
         });
     });
@@ -239,7 +239,7 @@ exports.renderQuestionView = function (req, res) {
             activeSection: "Question_Analysis",
             Title: "Question Responses",
             ClassCode: this.classToken,
-            userEmail: this.userEmail
+            userEmail: userEmail
         });
 
     })
@@ -272,7 +272,7 @@ exports.renderQuestionAnalysis = function (req, res) {
                     activeSection: "Question_Analysis",
                     Title: "Question Analysis",
                     ClassCode: this.classToken,
-                    userEmail: this.userEmail
+                    userEmail: userEmail
                 })
             })
 
@@ -320,7 +320,8 @@ exports.renderNewTeacher = function (req, res) {
 
     //TODO: Cody to create a new jade view that holds the jpg. The side nave header and footer should be the same
     //res.render();
-    var userEmail = "";
+
+
 
     userId = req.user._id.toString();
 
@@ -333,7 +334,7 @@ exports.renderNewTeacher = function (req, res) {
             this.classToken = classToken;
             res.render("newTeacher" , {
                 ClassCode: this.classToken,
-                userEmail: this.userEmail,
+                userEmail: userEmail,
                 newTeacher: true,
                 Title: "New Teacher Walkthrough",
                 activeSection: "Main_View"
@@ -461,7 +462,7 @@ exports.renderTeacherDashboard = function (req, res) {
                 Title: "Teacher Dashboard",
                 ClassCode: this.classToken,
                 Category: req.session.category,
-                userEmail: this.userEmail,
+                userEmail: userEmail,
                 activeSection: "Main_View",
                 newTeacher: null
             });
