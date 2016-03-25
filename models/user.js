@@ -37,7 +37,7 @@ userSchema.methods.validPassword = function (password) {
 userSchema.methods.countNumberOfQuestionsPerCategory = function (inputCategory) {
     var numberOfQuestions = 0;
 
-    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+    questionFunctions.findQuestionsForUser(this._id.toString(), function (err, questions) {
         if (err) {
             console.log(err);
         }
@@ -57,7 +57,7 @@ userSchema.methods.numberOfQuestionsCorrectPerCategory = function (inputCategory
     var numberOfQuestionsCorrect = 0;
 
 
-    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+    questionFunctions.findQuestionsForUser(this._id.toString(), function (err, questions) {
         if (err) {
             console.log(err);
         }
@@ -77,7 +77,7 @@ userSchema.methods.numberOfQuestionsCorrectPerCategory = function (inputCategory
 userSchema.methods.numberOfCorrectAnswersForUser = function () {
     var numberOfQuestionsRight = 0;
 
-    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+    questionFunctions.findQuestionsForUser(this._id.toString(), function (err, questions) {
         if (err) {
             console.log(err);
         }
@@ -147,7 +147,7 @@ userSchema.methods.findColdestQuestion = function () {
 userSchema.methods.findIncorrectQuestion = function (callback) {
     var possibleQuestions = [];
 
-    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+    questionFunctions.findQuestionsForUser(this._id.toString(), function (err, questions) {
         if (err) {
             callback(err, null);
         }
@@ -177,7 +177,7 @@ userSchema.methods.findIncorrectQuestion = function (callback) {
 userSchema.methods.findIncorrectQuestionFromCategory = function (inputCategory, callback) {
     var possibleQuestions = [];
 
-    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+    questionFunctions.findQuestionsForUser(this._id.toString(), function (err, questions) {
         if (err) {
             callback(err, null);
         }
@@ -209,7 +209,7 @@ userSchema.methods.findQuestionFromCategory = function (inputCategory, callback)
     var possibleQuestions = [];
 
 
-    questionFunctions.findQuestionsForUser(this.id, function (err, questions) {
+    questionFunctions.findQuestionsForUser(this._id.toString(), function (err, questions) {
         if (err) {
             callback(err, null);
         }

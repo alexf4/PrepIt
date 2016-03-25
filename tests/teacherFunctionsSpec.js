@@ -15,29 +15,29 @@ describe("Teacher Functions", function () {
 
     this.timeout(400000);
 
-    describe("#getClassAverageMasteryForQuestion()", function () {
-        it("will return the average mastery for a specific question", function (done) {
-
-            var teacherID = "5684903dab13621200fe364f";
-            var questionBaseID = "55b13ceb89484e1300065788";
-            var expectedResults = {
-                mastered: 50,
-                intermediate: 0,
-                novice: 50
-            }
-
-            teacherFunctions.getClassAverageMasteryForQuestion(teacherID, questionBaseID, function (err, scores) {
-
-                assert.equal(scores.mastered, expectedResults.mastered, "mastered should be 0");
-                assert.equal(scores.intermediate, expectedResults.intermediate, "intermediate should be 0");
-                assert.equal(scores.novice, expectedResults.novice, "novice should be 100");
-                done();
-            })
-
-
-        })
-
-    });
+    //describe("#getClassAverageMasteryForQuestion()", function () {
+    //    it("will return the average mastery for a specific question", function (done) {
+    //
+    //        var teacherID = "5684903dab13621200fe364f";
+    //        var questionBaseID = "55b13ceb89484e1300065788";
+    //        var expectedResults = {
+    //            mastered: 50,
+    //            intermediate: 0,
+    //            novice: 50
+    //        }
+    //
+    //        teacherFunctions.getClassAverageMasteryForQuestion(teacherID, questionBaseID, function (err, scores) {
+    //
+    //            assert.equal(scores.mastered, expectedResults.mastered, "mastered should be 0");
+    //            assert.equal(scores.intermediate, expectedResults.intermediate, "intermediate should be 0");
+    //            assert.equal(scores.novice, expectedResults.novice, "novice should be 100");
+    //            done();
+    //        })
+    //
+    //
+    //    })
+    //
+    //});
 
     describe("#getClassAverageMasteryForCategory()", function () {
         it("will return the average mastery for a specific category", function (done) {

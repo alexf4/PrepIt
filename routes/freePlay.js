@@ -54,7 +54,7 @@ exports.startCategoryPlay = function(req, res){
 
             DBFunctions.getUserEmail(userId, function (err, email) {
                 userEmail = email;
-                req.session.userEmail = email;
+
 
                 res.render("FreePlayQuestion", {
                     question: question,
@@ -68,11 +68,11 @@ exports.startCategoryPlay = function(req, res){
         })
     }
     else {
-        freePlayLogic.getQuestionFromCategory(userId, req.session.category, function (question) {
+        freePlayLogic.getQuestionFromCategory(userId, req.session.category, function (err, question) {
 
             DBFunctions.getUserEmail(userId, function (err, email) {
                 userEmail = email;
-                req.session.userEmail = email;
+
 
                 res.render("FreePlayQuestion", {
                     question: question,

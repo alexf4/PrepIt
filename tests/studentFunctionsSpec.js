@@ -29,19 +29,19 @@ describe ("Student Functions", function(){
         })
     });
 
-    describe("#getMasteryOfQuestion()", function (){
-
-        var studentID = "5684918fab13621200fe36bf";
-        var questionBaseID = "55b13ceb89484e1300065788";
-
-        it("should return the mastery of a single question", function(done){
-
-            studentFunctions.getMasteryOfQuestion(studentID , questionBaseID, function (err, scores){
-                assert.equal(scores, "mastered", "should be mastered");
-                done();
-            })
-        })
-    });
+    //describe.only("#getMasteryOfQuestion()", function (){
+    //
+    //    var studentID = "5684918fab13621200fe36bf";
+    //    var questionBaseID = "55b13ceb89484e1300065788";
+    //
+    //    it("should return the mastery of a single question", function(done){
+    //
+    //        studentFunctions.getMasteryOfQuestion(studentID , questionBaseID, function (err, scores){
+    //            assert.equal(scores, "mastered", "should be mastered");
+    //            done();
+    //        })
+    //    })
+    //});
 
     describe("#getUserScores()", function (){
 
