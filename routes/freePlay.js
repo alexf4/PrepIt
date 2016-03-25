@@ -6,6 +6,7 @@ var DBFunctions = require("../DBWork/DBFunctions.js");
 var userModel = require("../models/user");
 var category;
 
+
 exports.setCategory=function(category){
     this.category=category;
 };
@@ -23,7 +24,8 @@ exports.startFreePlay = function(req, res) {
 
         DBFunctions.getUserEmail(userId, function (err, email) {
             userEmail = email;
-            req.session.userEmail = email;
+
+
 
             res.render("FreePlayQuestion", {
                 question: question,
@@ -31,7 +33,7 @@ exports.startFreePlay = function(req, res) {
                 Title: "All Categories",
                 activeSection: "Freeplay",
                 activeSubsection: req.session.category,
-                studentEmail: req.session.userEmail
+                studentEmail: userEmail
             });
         });
     })
@@ -62,7 +64,7 @@ exports.startCategoryPlay = function(req, res){
                     Title: "All Categories",
                     activeSection: "Freeplay",
                     activeSubsection: req.session.category,
-                    studentEmail: req.session.userEmail
+                    studentEmail: userEmail
                 });
             });
         })
@@ -80,7 +82,7 @@ exports.startCategoryPlay = function(req, res){
                     Title: "Freeplay",
                     activeSection: "Freeplay",
                     activeSubsection: req.session.category,
-                    studentEmail: req.session.userEmail
+                    studentEmail: userEmail
                 });
             });
 
