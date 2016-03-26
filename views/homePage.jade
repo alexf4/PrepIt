@@ -45,11 +45,9 @@ head
 
                         a.navbar-brand(href='/login') Log In / Create Account
 
-                        // Use this later somehow
-                            a.navbar-wrapper(href='https://twitter.com/PrepITgov')
-                                i.fa.fa-twitter-square
                     #navbar.navbar-collapse.collapse
                         ul.nav.navbar-nav.navbar-right
+
                             li
                                 a.page-scroll(href='#page-top') Home
 
@@ -67,6 +65,8 @@ head
 
                             li
                                 a.page-scroll(href='#contact') Contact
+
+                        a.navbar-right.navbar-brand(href='http://www.patreon.com/prepit',target="_blank") Help Us Grow!
 
 
         #inSlider.carousel.slide.carousel-fade(data-ride='carousel').hidden-xs
@@ -168,7 +168,7 @@ head
 
                     p
                         a.navy-link(href='#', role='button') Details &raquo;
-        #myModal.modal.visible-xs.fade(role='dialog')
+        #myModal.modal.fade(role='dialog')  // this feature breaks the modal .visible-xs
             .modal-dialog
                 // Modal content
                 .modal-content
@@ -181,7 +181,7 @@ head
                         p Currently mobile is not supported. PrepIT is working on making mobile accessible as soon as possible.
 
                     .modal-footer
-                        button.btn.btn-default(type='button', data-dismiss='modal') Close
+                        button.btn.btn-default(type='button', data-dismiss='modal', data-target="#myModal") Close
         .row
             .col-lg-12.text-center
                 .navy-line
@@ -673,3 +673,7 @@ head
             $(document).ready(function () {
                 $("#myModal").modal('show');
             });
+        script(type='text/javascript').
+            $('#myModal').on('hidden.bs.modal', function () {
+                document.getElementById("myModal").disabled = true;
+            })

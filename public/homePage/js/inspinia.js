@@ -2,10 +2,10 @@
 $(document).ready(function () {
 
     // Highlight the top nav as scrolling
-    $('body').scrollspy({
+    /*$('body').scrollspy({
         target: '.navbar-fixed-top',
         offset: 80
-    })
+    })*/
 
     // Page scrolling feature
     $('a.page-scroll').bind('click', function(event) {
