@@ -168,20 +168,21 @@ head
 
                     p
                         a.navy-link(href='#', role='button') Details &raquo;
-        #myModal.modal.fade(role='dialog')  // this feature breaks the modal .visible-xs
-            .modal-dialog
-                // Modal content
-                .modal-content
-                    .modal-header
-                        button.close(type='button', data-dismiss='modal') &times;
+        div.visible-xs
+            #myModal.modal.fade(role='dialog')  // this feature breaks the modal .visible-xs
+                .modal-dialog
+                    // Modal content
+                    .modal-content
+                        .modal-header
+                            button.close(type='button', data-dismiss='modal') &times;
 
-                        h4.modal-title Info
+                            h4.modal-title Info
 
-                    .modal-body
-                        p Currently mobile is not supported. PrepIT is working on making mobile accessible as soon as possible.
+                        .modal-body
+                            p Currently mobile is not supported. PrepIT is working on making mobile accessible as soon as possible.
 
-                    .modal-footer
-                        button.btn.btn-default(type='button', data-dismiss='modal', data-target="#myModal") Close
+                        .modal-footer
+                            button.btn.btn-default(type='button', data-dismiss='modal', data-target="#myModal") Close
         .row
             .col-lg-12.text-center
                 .navy-line
