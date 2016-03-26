@@ -51,7 +51,7 @@ mixin TotalChart
                 .div
                     canvas#CUChart5(height='190')
 
-    else if Category =="Institutions of National Goverment"
+    else if Category =="Institutions of National Government"
         .panel.panel-primary
             .panel-heading.text-nowrap.text-center
                 | Institutions of National Government
@@ -148,8 +148,8 @@ mixin PublicPolicyChart
                 .panel-body
                     .div
                         canvas#CUChart5(height='220')
-mixin InstitutionsofNationalGovermentChart
-    if Category == "Institutions of National Goverment"
+mixin InstitutionsofNationalGovernmentChart
+    if Category == "Institutions of National Government"
         a(href='/teacherDrilldown/clear')
             .panel.panel-primary
                 .panel-heading.text-center
@@ -158,7 +158,7 @@ mixin InstitutionsofNationalGovermentChart
                     .div
                         canvas#TotalChart(height='220')
     else
-        a(href='teacherDrilldown/category/Institutions%20of%20National%20Goverment')
+        a(href='teacherDrilldown/category/Institutions%20of%20National%20Government')
             .panel.panel-primary
                 .panel-heading.text-nowrap.text-center
                     | Institutions of<br />National Government
@@ -253,8 +253,8 @@ mixin PublicPolicyChartxs
                 .panel-body
                     .div
                         canvas#CUChart5-xs(height='220')
-mixin InstitutionsofNationalGovermentChartxs
-    if Category == "Institutions of National Goverment"
+mixin InstitutionsofNationalGovernmentChartxs
+    if Category == "Institutions of National Government"
         a(href='/teacherDrilldown/clear')
             .panel.panel-primary
                 .panel-heading.text-center
@@ -263,7 +263,7 @@ mixin InstitutionsofNationalGovermentChartxs
                     .div
                         canvas#TotalChart-xs(height='220')
     else
-        a(href='teacherDrilldown/category/Institutions%20of%20National%20Goverment')
+        a(href='teacherDrilldown/category/Institutions%20of%20National%20Government')
             .panel.panel-primary
                 .panel-heading.text-nowrap.text-center
                     | Institutions of<br />National Government
