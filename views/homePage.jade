@@ -168,7 +168,7 @@ head
 
                     p
                         a.navy-link(href='#', role='button') Details &raquo;
-        div.visible-xs
+        //div.visible-xs
             #myModal.modal.fade(role='dialog')  // this feature breaks the modal .visible-xs
                 .modal-dialog
                     // Modal content
@@ -675,11 +675,16 @@ head
         script(src='homePage/js/cbpAnimatedHeader.js')
         script(src='homePage/js/wow.min.js')
         script(src='homePage/js/inspinia.js')
-        script(type='text/javascript').
+        //script(type='text/javascript').
             $(document).ready(function () {
-                $("#myModal").modal('show');
+                if (viewport.is('xs')) {
+                    $("#myModal").modal('show');
+                }
             });
-        script(type='text/javascript').
-            $('#myModal').on('hidden.bs.modal', function () {
-                document.getElementById("myModal").disabled = true;
-            })
+            $(window).resize(
+                    viewport.changed(function () {
+                        if (viewport.is('xs')) {
+                            $("#myModal").modal('show');
+                        }
+                    })
+            );
