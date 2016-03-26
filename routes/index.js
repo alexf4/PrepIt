@@ -65,6 +65,8 @@ module.exports = function (passport) {
         res.render('register', {message: req.flash('message'), Title: "Sign Up"});
     });
 
+    router.post('/removeStudent', isAuthenticated, teacher.removeStudent );
+
     /* Handle Registration POST */
     router.post('/signup', passport.authenticate('signup', {
         successRedirect: '/home',
@@ -124,9 +126,10 @@ module.exports = function (passport) {
         res.render('home', {user: req.user, Title: "Home"});
     });
 
-    /* GET Test Page*/
-    router.get('/testPage', function (req, res) {
-        res.render('testPage', {user: req.user, Title: 'TestPage'});
+    /* Handle Logout */
+    router.get('/signout', function (req, res) {
+        req.logout();
+        res.redirect('/');
     });
 
     /* Handle Logout */
@@ -189,7 +192,7 @@ module.exports = function (passport) {
 
 
     //handle the student list
-    router.get("/studentList", isAuthenticated, teacher.renderStudentList)
+    router.get("/studentList", isAuthenticated, teacher.renderStudentList);
 
 
     // route for facebook authentication and login

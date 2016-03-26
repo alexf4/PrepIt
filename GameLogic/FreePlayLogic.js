@@ -39,7 +39,7 @@ exports.getQuestionFromCategory = function (inputID, category, callback) {
 
         //Find a question that has an incorrect
         user.findNextQuestionFromCategory(category, function (err, foundQuestion) {
-            callback(foundQuestion);
+            callback(null, foundQuestion);
         });
 
 
@@ -80,7 +80,7 @@ exports.checkAnswer = function (inputId, userAnswer, questionID, callback) {
                  * adding new questions.
                  */
 
-                if (entry.baseQuestionID == questionID) {
+                if (entry._id.toString() == questionID) {
 
                     //Update the teachers question with metric data
                     if (!foundUser.isteacher && foundUser.classToken != 0) {
@@ -167,7 +167,7 @@ exports.updateTeacherData = function (inputClassToken, inputBaseQuestionID, user
                 }
                 else {
                     //The the check answer method from the teacher object to update it
-                    FreePlayLogic.checkAnswer(teacher[0]._id, userAnswer, inputBaseQuestionID, function (result) {
+                    FreePlayLogic.checkAnswer(teacher[0]._id, userAnswer, questionID, function (result) {
                         console.log("Question data added to teacher object");
                     })
                 }
