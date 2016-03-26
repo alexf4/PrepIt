@@ -139,7 +139,7 @@ exports.renderStudentView = function (req, res) {
                     activeSection: "Student_Analysis",
                     ClassCode: this.classToken,
                     studentEmail: req.session.studentEmail,
-                    userEmail: this.userEmail
+                    userEmail: userEmail
                 });
 
         })
