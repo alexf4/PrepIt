@@ -168,6 +168,20 @@ head
 
                     p
                         a.navy-link(href='#', role='button') Details &raquo;
+        #myModal.modal.visible-xs.fade(role='dialog')
+            .modal-dialog
+                // Modal content
+                .modal-content
+                    .modal-header
+                        button.close(type='button', data-dismiss='modal') &times;
+
+                        h4.modal-title Info
+
+                    .modal-body
+                        p Currently mobile is not supported. PrepIT is working on making mobile accessible as soon as possible.
+
+                    .modal-footer
+                        button.btn.btn-default(type='button', data-dismiss='modal') Close
         .row
             .col-lg-12.text-center
                 .navy-line
@@ -655,3 +669,7 @@ head
         script(src='homePage/js/cbpAnimatedHeader.js')
         script(src='homePage/js/wow.min.js')
         script(src='homePage/js/inspinia.js')
+        script(type='text/javascript').
+            $(document).ready(function () {
+                $("#myModal").modal('show');
+            });
