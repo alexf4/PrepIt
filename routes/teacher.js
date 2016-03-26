@@ -399,16 +399,7 @@ exports.renderTeacherDashboard = function (req, res) {
     questionList = null;
 
 
-    //https://github.com/caolan/async#waterfall
-
     async.waterfall([
-        function (callback) {
-            //TODO: Alex not needed
-            DBFunctions.getUserEmail(userId, function (err, email) {
-                //this.userEmail = email;
-                callback();
-            })
-        },
         function (callback) {
             //Get the teachers students scores/masteries
             teacherFunctions.getStudentsMasterys(userId, function (scores) {
