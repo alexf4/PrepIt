@@ -41,7 +41,19 @@ exports.studentPage = function (req, res) {
  * @param res
  */
 exports.renderNewStudent = function (req ,res) {
-    res.render("newStudent");
+    userId = req.user._id.toString();
+
+
+    DBFunctions.getUserEmail(userId, function (err, email) {
+
+
+        res.render("newStudent", {userEmail : email});
+
+
+    });
+
+
+
 };
 
 

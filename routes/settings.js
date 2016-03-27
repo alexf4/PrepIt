@@ -14,9 +14,14 @@ var userModel = require("../models/user");
 
 exports.settings = function (req, res) {
 
-    isTeacherData = false;
+    var isTeacherData = false;
+    var isNewTeacher = false;
 
-    userModel.findById(req.session.passport.user, function (err, user) {
+    var userEmail;
+
+    userId = req.user._id.toString();
+
+    userModel.findById(userId, function (err, user) {
         if (err) {
             //callback(err, null);
         }
@@ -25,34 +30,20 @@ exports.settings = function (req, res) {
             isTeacherData = true;
         }
 
-        //TODO: Alex please help
-        newTeacher=null;
-        var setNewTeacher =function (newTeacher){
-            if (newTeacher==false)
-            {
-                this.newTeacher=null;
-            }
-            else
-            {
-                this.newTeacher=newTeacher;
-            };
-        };
-        userId = req.user._id.toString();
+
+        userEmail = user.email;
+
         DBFunctions.isNewUser(userId, function (err, userStatus) {
-            setNewTeacher(userStatus);
+            isNewTeacher = userStatus;
 
-            DBFunctions.getUserEmail(userId, function (err, email) {
-                userEmail = email;
-                req.session.userEmail=email;
-
-                res.render("settings", {
-                    ClassCode: this.classToken,
-                    studentEmail: req.session.studentEmail,
-                    activeSection: "Settings",
-                    isTeacher: isTeacherData,
-                    newTeacher: newTeacher
-                });
+            res.render("settings", {
+                ClassCode: this.classToken,
+                userEmail: userEmail,
+                activeSection: "Settings",
+                isTeacher: isTeacherData,
+                newTeacher: isNewTeacher
             });
+
         });
 
     });
@@ -74,9 +65,9 @@ exports.updatePassword = function (req, res) {
     DBFunctions.updatePassword(req, userId, oldPassword, newPassword, function (err, done) {
 
         if (err) {
-            res.render( "settings", {error: req.flash("PasswordUpdateError"), success: req.flash("PasswordUpdated")});
+            res.render("settings", {error: req.flash("PasswordUpdateError"), success: req.flash("PasswordUpdated")});
         }
-        res.render( "settings", {error: req.flash("PasswordUpdateError"), success: req.flash("PasswordUpdated")});
+        res.render("settings", {error: req.flash("PasswordUpdateError"), success: req.flash("PasswordUpdated")});
     })
 
 

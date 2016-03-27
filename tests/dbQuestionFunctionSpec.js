@@ -32,7 +32,7 @@ describe("DB Functions", function () {
 
         it("Should find all the question of for a user that has been answered", function (done) {
             questionFunctions.findAnsweredQuestions(UserID, function (err, foundQuestions) {
-                assert.equal( foundQuestions.length, 21, "The number of questions user has answered");
+                assert.equal( foundQuestions.length, 18, "The number of questions user has answered");
                 done()
             })
         })

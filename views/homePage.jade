@@ -45,11 +45,9 @@ head
 
                         //a.navbar-brand(href='/login') Log In / Create Account
 
-                        // Use this later somehow
-                            a.navbar-wrapper(href='https://twitter.com/PrepITgov')
-                                i.fa.fa-twitter-square
                     #navbar.navbar-collapse.collapse
                         ul.nav.navbar-nav.navbar-right
+
                             li
                                 a.page-scroll(href='#page-top') Home
 
@@ -67,6 +65,8 @@ head
 
                             li
                                 a.page-scroll(href='#contact') Contact
+
+                        a.navbar-right.navbar-brand(href='http://www.patreon.com/prepit',target="_blank") Help Us Grow!
 
 
         #inSlider.carousel.slide.carousel-fade(data-ride='carousel').hidden-xs
@@ -168,6 +168,21 @@ head
 
                     p
                         a.navy-link(href='#', role='button') Details &raquo;
+        //div.visible-xs
+            #myModal.modal.fade(role='dialog')  // this feature breaks the modal .visible-xs
+                .modal-dialog
+                    // Modal content
+                    .modal-content
+                        .modal-header
+                            button.close(type='button', data-dismiss='modal') &times;
+
+                            h4.modal-title Info
+
+                        .modal-body
+                            p Currently mobile is not supported. PrepIT is working on making mobile accessible as soon as possible.
+
+                        .modal-footer
+                            button.btn.btn-default(type='button', data-dismiss='modal', data-target="#myModal") Close
         .row
             .col-lg-12.text-center
                 .navy-line
@@ -309,8 +324,13 @@ head
 
                                 p
                                     | Dive deeper into the data with the student and question analysis features.  See what questions Jonny is missing or what concepts about linkage institutions are stumping the class.
+
                                 br
 
+                                h2
+                                    a.btn.btn-primary.fa-youtube-play(href='https://www.youtube.com/watch?v=Myd1-tU7oPo',target='_newtab')
+                                        |  Teacher Dashboard Tutorial
+                                br
                 .col-lg-7.text-center.wow.fadeInRight
                     img.img-responsive.center-block(src='img/teacherDashboard.png', alt='dashboard')
 
@@ -655,3 +675,16 @@ head
         script(src='homePage/js/cbpAnimatedHeader.js')
         script(src='homePage/js/wow.min.js')
         script(src='homePage/js/inspinia.js')
+        //script(type='text/javascript').
+            $(document).ready(function () {
+                if (viewport.is('xs')) {
+                    $("#myModal").modal('show');
+                }
+            });
+            $(window).resize(
+                    viewport.changed(function () {
+                        if (viewport.is('xs')) {
+                            $("#myModal").modal('show');
+                        }
+                    })
+            );

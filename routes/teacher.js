@@ -32,8 +32,8 @@ exports.setQuestionText = function (questionText) {
     this.questionText = questionText;
 };
 
-var setUserEmail = function (userEmail) {
-    this.userEmail = userEmail;
+var setUserEmail = function (inputUserEmail) {
+    userEmail = inputUserEmail;
 };
 
 exports.emptyOutSessionData = function (req) {
@@ -58,7 +58,7 @@ exports.renderStudentList = function (req, res) {
                 activeSection: "Student_Analysis",
                 Title: "Student Analysis",
                 ClassCode: this.classToken,
-                userEmail: this.userEmail
+                userEmail: userEmail
             });
         });
 
@@ -139,7 +139,7 @@ exports.renderStudentView = function (req, res) {
                     activeSection: "Student_Analysis",
                     ClassCode: this.classToken,
                     studentEmail: req.session.studentEmail,
-                    userEmail: this.userEmail
+                    userEmail: userEmail
                 });
 
         })
@@ -220,7 +220,7 @@ exports.renderCategoryView = function (req, res) {
             Title: "Teacher Dashboard",
             ClassCode: this.classToken,
             Category: req.session.category,
-            userEmail: this.userEmail,
+            userEmail: userEmail,
             activeSection: "Main_View"
         });
     });
@@ -239,7 +239,7 @@ exports.renderQuestionView = function (req, res) {
             activeSection: "Question_Analysis",
             Title: "Question Responses",
             ClassCode: this.classToken,
-            userEmail: this.userEmail
+            userEmail: userEmail
         });
 
     })
@@ -272,7 +272,7 @@ exports.renderQuestionAnalysis = function (req, res) {
                     activeSection: "Question_Analysis",
                     Title: "Question Analysis",
                     ClassCode: this.classToken,
-                    userEmail: this.userEmail
+                    userEmail: userEmail
                 })
             })
 
@@ -320,7 +320,10 @@ exports.renderNewTeacher = function (req, res) {
 
     //TODO: Cody to create a new jade view that holds the jpg. The side nave header and footer should be the same
     //res.render();
-    var userEmail = "";
+
+
+
+    userId = req.user._id.toString();
 
 
     DBFunctions.getUserEmail(userId, function (err, email) {
@@ -331,7 +334,7 @@ exports.renderNewTeacher = function (req, res) {
             this.classToken = classToken;
             res.render("newTeacher" , {
                 ClassCode: this.classToken,
-                userEmail: this.userEmail,
+                userEmail: userEmail,
                 newTeacher: true,
                 Title: "New Teacher Walkthrough",
                 activeSection: "Main_View"
@@ -396,16 +399,7 @@ exports.renderTeacherDashboard = function (req, res) {
     questionList = null;
 
 
-    //https://github.com/caolan/async#waterfall
-
     async.waterfall([
-        function (callback) {
-            //TODO: Alex not needed
-            DBFunctions.getUserEmail(userId, function (err, email) {
-                //this.userEmail = email;
-                callback();
-            })
-        },
         function (callback) {
             //Get the teachers students scores/masteries
             teacherFunctions.getStudentsMasterys(userId, function (scores) {
@@ -459,7 +453,7 @@ exports.renderTeacherDashboard = function (req, res) {
                 Title: "Teacher Dashboard",
                 ClassCode: this.classToken,
                 Category: req.session.category,
-                userEmail: this.userEmail,
+                userEmail: userEmail,
                 activeSection: "Main_View",
                 newTeacher: null
             });

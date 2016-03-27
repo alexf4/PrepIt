@@ -223,14 +223,14 @@ function calculateMasterySectionScore(scores, sectionTitle) {
     var totalDataList = [];
 
     var masteredData = {
-        value: scores.mastered,
+        value: Math.round(scores.mastered),
         label: "Mastered",
         color: "#a3e1d4",
         highlight: "#1ab394"
     };
 
     var intermediateData = {
-        value: scores.intermediate,
+        value: Math.round(scores.intermediate),
         label: "Intermediate",
         color: "#777777",
         highlight: "#1ab394"
@@ -238,7 +238,7 @@ function calculateMasterySectionScore(scores, sectionTitle) {
 
 
     var noviceData = {
-        value: scores.novice,
+        value: Math.round(scores.novice),
         label: "Novice",
         color: "#FF0000",
         highlight: "#1ab394"
