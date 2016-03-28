@@ -110,6 +110,26 @@ describe ("DB Functions" , function (){
     })
 
 
+    //describe.only ("#adminPasswordReset()", function (){
+    //    it("reset the users password" , function(done){
+    //
+    //
+    //        var userID = "56f87d3581f8f10c00ae9e46";
+    //
+    //        var tempPassword = "election";
+    //
+    //        DBFunctions.adminPasswordReset(userID, tempPassword , function(err, saveduser){
+    //
+    //
+    //
+    //
+    //            done();
+    //        })
+    //
+    //    })
+    //});
+
+
 
     //describe("#updateteacherQuestionSet()", function(){
     //

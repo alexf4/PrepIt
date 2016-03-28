@@ -420,7 +420,6 @@ exports.removeQuestion = function (baseQuestionId, callback) {
             }
 
 
-
             user.save(function (error, data) {
             });
 
@@ -533,15 +532,15 @@ exports.updateCategoryCount = function (inputCategory, callback) {
  * @param classToken
  * @param callback
  */
-exports.checkClass = function(classToken, callback){
+exports.checkClass = function (classToken, callback) {
 
     var classFound = false;
 
 
-    userModel.find({"classToken" :classToken }, function(err, users){
+    userModel.find({"classToken": classToken}, function (err, users) {
 
-        users.forEach(function(user){
-            if(user.isteacher){
+        users.forEach(function (user) {
+            if (user.isteacher) {
                 classFound = true;
             }
         })
@@ -613,4 +612,24 @@ exports.generateQuestionsForUsers = function (callback) {
                 callback();
             })
     });
+}
+
+exports.adminPasswordReset = function (userID, tempPassword, callback) {
+    userModel.findById(userID, function (err, user) {
+        if (err) {
+            callback(err, null);
+        }
+
+
+        user.password = createHash(tempPassword);
+
+        user.save(function (err, product) {
+            if (err) throw err;
+
+
+            callback(null, "worked");
+
+        });
+
+    })
 }
