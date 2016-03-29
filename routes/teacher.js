@@ -211,7 +211,7 @@ exports.renderCategoryView = function (req, res) {
             Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
             Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
             Public_Policy_Data: chartData.Public_Policy_Data,
-            students: tstudentsList,
+            studentsList: tstudentsList,
             questions: questionList,
             Title: "Teacher Dashboard",
             ClassCode: this.classToken,
