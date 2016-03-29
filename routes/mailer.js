@@ -45,11 +45,11 @@ exports.sendmail = function(req, res ){
     //Need to send to thank you page
   });
 
-}
+};
 
 
 
 // Generates hash using bCrypt
 var createHash = function(password){
   return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-}
+};

@@ -128,7 +128,7 @@ exports.removeStudentLink = function (inputID, callback) {
             callback();
         })
     })
-}
+};
 
 /**
  * This method will return the scores dictionary for this student
@@ -167,7 +167,7 @@ exports.getUserScores = function (inputID, callback) {
 
             //Find how many questions there are
             foundUser = results[0];
-            categories = results[1];
+            var categories = results[1];
 
 
             categories.forEach(function (entry) {
@@ -217,7 +217,10 @@ exports.getTeacher = function (classToken, callback) {
 
 /**
  * This method will find the students teacher
- * @param teacherToken, the coresponding teacher token to check the tokens of all the users.
+ * @param classToken
+ * @param inputBaseQuestionID
+ * @param inputBaseQuestionID
+ * @param inputBaseQuestionID
  * @param callback
  */
 exports.getTeacherQuestion = function (classToken, inputBaseQuestionID, callback) {
@@ -254,7 +257,7 @@ exports.getMasterOfCategory = function (inputID, category, callback) {
         mastered: 0,
         intermediate: 0,
         novice: 0
-    }
+    };
 
 
     questionFunctions.findQuestionsForUser(inputID, function (err, questions) {
@@ -274,7 +277,7 @@ exports.getMasterOfCategory = function (inputID, category, callback) {
                     scores.novice++;
                 }
             }
-        })
+        });
 
         //find out the number of questions in that category
         DBFunctions.getNumberOfQuestionsPerCategory(category, function (err, questionCount) {
@@ -303,7 +306,7 @@ exports.getMasterOfCategoryInts = function (inputID, category, callback) {
         mastered: 0,
         intermediate: 0,
         novice: 0
-    }
+    };
 
 
     //Find all the questions from a specific category
@@ -326,7 +329,7 @@ exports.getMasterOfCategoryInts = function (inputID, category, callback) {
                     scores.novice++;
                 }
             }
-        })
+        });
 
         callback(null, scores);
     });
@@ -404,7 +407,7 @@ exports.getMasteryScores = function (studentID, routeCallback) {
 
             //Find how many questions there are
             foundUser = results[0];
-            categories = results[1];
+            var categories = results[1];
 
 
             async.forEachOf(categories, function (category, counter, callback) {
@@ -466,7 +469,7 @@ exports.getQuestionsForStudent = function (inputID, callback) {
             var questionData = {
                 questionString: entry.questionText,
                 questionMissed: entry.incorrectAttempts
-            }
+            };
 
             if (entry.comprehension.mastered) {
                 questionData.questionMastered = "Mastered";
@@ -483,7 +486,7 @@ exports.getQuestionsForStudent = function (inputID, callback) {
             retList.add(questionData);
 
 
-        })
+        });
 
 
         callback(null, retList.toJSON());

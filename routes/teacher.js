@@ -48,13 +48,13 @@ exports.emptyOutSessionData = function (req) {
 exports.renderStudentList = function (req, res) {
 
 
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
     //find the teachers class token
     teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
 
-        teacherFunctions.listStudents(classToken, function (err, studentsList) {
+        teacherFunctions.listStudents(classToken, function (err, tstudentsList) {
             res.render("studentList", {
-                students: studentsList,
+                studentsList: tstudentsList,
                 activeSection: "Student_Analysis",
                 Title: "Student Analysis",
                 ClassCode: this.classToken,
@@ -111,7 +111,7 @@ exports.renderStudentView = function (req, res) {
     var teacherEmail;
 
     studentFunctions.getStudentFromEmail(req.session.studentEmail, function (err, inputStudentID) {
-        studentID = inputStudentID
+        studentID = inputStudentID;
 
 
         studentFunctions.getMasteryScores(studentID, function (scores) {
@@ -154,18 +154,14 @@ exports.renderCategoryView = function (req, res) {
     //Render the teacher dashboard, but only focus on the category
 
 
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
+
+
+    var chartData;
+    var tstudentsList;
+    var questionList;
 
     async.waterfall([
-        function (callback) {
-
-            //TODO:This is not needed but I dont know how to get rid of properly
-            DBFunctions.getUserEmail(userId, function (err, email) {
-                // this is now reduntent and may mess up userEmail in future
-                // userEmail = email;
-                callback();
-            })
-        },
 
         function (callback) {
             //Get the teachers students scores/masteries
@@ -189,7 +185,7 @@ exports.renderCategoryView = function (req, res) {
 
             //create the list of the students in the class and provide the mastery of the category
             teacherFunctions.listStudentsAndCategoryMastery(classToken, req.session.category, function (err, students) {
-                studentsList = students;
+                tstudentsList = students;
                 callback(null)
             })
         },
@@ -215,7 +211,7 @@ exports.renderCategoryView = function (req, res) {
             Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
             Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
             Public_Policy_Data: chartData.Public_Policy_Data,
-            students: studentsList,
+            students: tstudentsList,
             questions: questionList,
             Title: "Teacher Dashboard",
             ClassCode: this.classToken,
@@ -254,7 +250,7 @@ exports.renderQuestionView = function (req, res) {
 exports.renderQuestionAnalysis = function (req, res) {
 
     //Get the users logged in id
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
     DBFunctions.isNewUser(userId, function (err, userStatus) {
         if (userStatus) {
@@ -292,7 +288,7 @@ exports.teacherPage = function (req, res) {
     teacher.emptyOutSessionData(req);
 
     //Get the users logged in id
-    userId = req.user._id.toString();
+   var userId = req.user._id.toString();
 
     DBFunctions.getUserEmail(req.user._id.toString(), function (err, FoundTeacherEmail) {
         setUserEmail(FoundTeacherEmail);
@@ -309,7 +305,7 @@ exports.teacherPage = function (req, res) {
             teacher.renderTeacherDashboard(req, res);
         }
     });
-}
+};
 
 /**
  * This method is used to show a new teacher the help diagram
@@ -322,8 +318,7 @@ exports.renderNewTeacher = function (req, res) {
     //res.render();
 
 
-
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
 
     DBFunctions.getUserEmail(userId, function (err, email) {
@@ -332,7 +327,7 @@ exports.renderNewTeacher = function (req, res) {
 
         teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
             this.classToken = classToken;
-            res.render("newTeacher" , {
+            res.render("newTeacher", {
                 ClassCode: this.classToken,
                 userEmail: userEmail,
                 newTeacher: true,
@@ -344,19 +339,14 @@ exports.renderNewTeacher = function (req, res) {
     })
 
 
-
-
-
-
-
 };
 
 
 exports.removeStudent = function (req, res) {
     //Get the student to remove
 
-    studentEmail = req.body.studentEmail;
-    userId = req.user._id.toString();
+    var studentEmail = req.body.studentEmail;
+    var userId = req.user._id.toString();
 
 
     teacherFunctions.removeStudentFromClass(userId, studentEmail, function (err, worked) {
@@ -369,7 +359,7 @@ exports.removeStudent = function (req, res) {
         teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
 
             teacherFunctions.listStudents(classToken, function (err, studentsList) {
-                teacher.teacherPage(req,res);
+                teacher.teacherPage(req, res);
 
                 //res.render("studentList", {students: studentsList});
             });
@@ -389,14 +379,14 @@ exports.removeStudent = function (req, res) {
 exports.renderTeacherDashboard = function (req, res) {
     //Get the users logged in id
 
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
 
-    chartData = null;
+    var chartData = null;
 
-    studentsList = null;
+    var tstudentsList = null;
 
-    questionList = null;
+    var questionList = null;
 
 
     async.waterfall([
@@ -423,7 +413,7 @@ exports.renderTeacherDashboard = function (req, res) {
 
             //create the list of the students in the class
             teacherFunctions.listStudents(classToken, function (err, students) {
-                studentsList = students;
+                tstudentsList = students;
                 callback(null)
             })
         },
@@ -448,7 +438,7 @@ exports.renderTeacherDashboard = function (req, res) {
                 Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
                 Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
                 Public_Policy_Data: chartData.Public_Policy_Data,
-                students: studentsList,
+                studentsList: tstudentsList,
                 questions: questionList,
                 Title: "Teacher Dashboard",
                 ClassCode: this.classToken,

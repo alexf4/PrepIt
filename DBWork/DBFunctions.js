@@ -36,21 +36,21 @@ exports.updatePassword = function (req, inputID, oldPassword, newPassword, callb
             user.save(function (err, product) {
                 if (err) throw err;
 
-                req.flash('PasswordUpdated', 'Password Updated')
+                req.flash('PasswordUpdated', 'Password Updated');
                 callback(null, "worked");
 
             });
         } else {
-            req.flash('PasswordUpdateError', 'Invalid Password')
+            req.flash('PasswordUpdateError', 'Invalid Password');
             callback("Didn't work", null);
         }
     })
 
-}
+};
 
 var createHash = function (password) {
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-}
+};
 
 exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
 
@@ -58,7 +58,7 @@ exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
         if (err) throw err;
 
         //save the question
-        foundQuestion = question;
+        var foundQuestion = question;
 
         //Get a list of all users
         // get all the users
@@ -95,7 +95,7 @@ exports.createQuestionsForAllUsers = function (baseQuestionID, callback) {
 
 
     });
-}
+};
 
 
 exports.addQuestionsToUser = function (inputID, callback) {
@@ -108,7 +108,7 @@ exports.addQuestionsToUser = function (inputID, callback) {
         questionModel.find({baseQuestionID: ""}, function (err, questionsList) {
             async.forEachOf(questionsList, function (question, key, sCallback) {
 
-                    newQuestion = new questionModel(question);
+                    var newQuestion = new questionModel(question);
                     newQuestion._id = mongoose.Types.ObjectId().toString();
                     newQuestion.baseQuestionID = question._id;
                     newQuestion.userID = inputID;
@@ -125,7 +125,7 @@ exports.addQuestionsToUser = function (inputID, callback) {
                 });
         })
     })
-}
+};
 
 
 /**
@@ -216,7 +216,7 @@ exports.getMissedQuestionsPerCategory = function (inputID, numberOfQuestions, in
         })
 
     });
-}
+};
 
 /**
  * Simple sort function. This proves that we need to move questions out of the user objects
@@ -263,7 +263,7 @@ exports.getAllQuestionsPerUser = function (inputID, callback) {
 
 /**
  * This method will return the number of questions in a category
- * @param category the category that is searched for
+ * @param inputCategory
  * @param callback the method that is called
  * @returns {number}
  */
@@ -275,7 +275,7 @@ exports.getNumberOfQuestionsPerCategory = function (inputCategory, callback) {
 
         callback(err, questions.length);
     })
-}
+};
 
 /**
  * This method will take a scores object and return the highest comprehension
@@ -311,7 +311,7 @@ exports.calculateComprehension = function (scores) {
 /**
  * This method will return the question data of an user
  * @param inputID the user, could be a teacher or student
- * @param questionText the string format of the question
+ * @param questionID
  * @param callback the simple callback.
  */
 exports.getQuestionData = function (inputID, questionID, callback) {
@@ -379,7 +379,7 @@ exports.isNewUser = function (inputID, callback) {
 
                 callback(null, !questionAttempted);
 
-            })
+            });
 
             ////Find all the questions from a specific category
             //user.questions.forEach(function (entry) {
@@ -418,7 +418,6 @@ exports.removeQuestion = function (baseQuestionId, callback) {
                     arr.splice(i, 1);
                 }
             }
-
 
 
             user.save(function (error, data) {
@@ -526,31 +525,31 @@ exports.updateCategoryCount = function (inputCategory, callback) {
 
         });
     })
-}
+};
 
 /**
  *
  * @param classToken
  * @param callback
  */
-exports.checkClass = function(classToken, callback){
+exports.checkClass = function (classToken, callback) {
 
     var classFound = false;
 
 
-    userModel.find({"classToken" :classToken }, function(err, users){
+    userModel.find({"classToken": classToken}, function (err, users) {
 
-        users.forEach(function(user){
-            if(user.isteacher){
+        users.forEach(function (user) {
+            if (user.isteacher) {
                 classFound = true;
             }
-        })
+        });
 
 
         callback(err, classFound);
 
     })
-}
+};
 
 /**
  * This is just a util script, it should not be called during app usage.
@@ -613,4 +612,24 @@ exports.generateQuestionsForUsers = function (callback) {
                 callback();
             })
     });
-}
+};
+
+exports.adminPasswordReset = function (userID, tempPassword, callback) {
+    userModel.findById(userID, function (err, user) {
+        if (err) {
+            callback(err, null);
+        }
+
+
+        user.password = createHash(tempPassword);
+
+        user.save(function (err, product) {
+            if (err) throw err;
+
+
+            callback(null, "worked");
+
+        });
+
+    })
+};

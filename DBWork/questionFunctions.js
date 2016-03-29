@@ -10,21 +10,22 @@ var list = require("collections/list");
 exports.findQuestionsForUser = function (inputID, callback) {
 
     questionModel.find({userID: inputID}, function (err, foundQuestions) {
-        if (err) {
-            callback(err, null);
+            if (err) {
+                callback(err, null);
+            }
+
+            callback(null, foundQuestions);
         }
+    )
 
-        callback(null, foundQuestions);
-    })
-
-}
+};
 
 /**
  * This method finds all questions that have been answered
  * @param inputID
  * @param callback
  */
-exports.findAnsweredQuestions = function(inputID, callback){
+exports.findAnsweredQuestions = function (inputID, callback) {
 
     var answeredQuestions = new list();
 
@@ -46,4 +47,4 @@ exports.findAnsweredQuestions = function(inputID, callback){
         callback(null, answeredQuestions);
     })
 
-}
+};
