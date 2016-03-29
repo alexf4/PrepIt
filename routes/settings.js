@@ -19,7 +19,7 @@ exports.settings = function (req, res) {
 
     var userEmail;
 
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
     userModel.findById(userId, function (err, user) {
         if (err) {
@@ -53,7 +53,7 @@ exports.settings = function (req, res) {
 exports.updatePassword = function (req, res) {
 
 
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
     //Grab the old password, confirm its correct
     var oldPassword = req.body.OldPassword;

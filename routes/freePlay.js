@@ -15,7 +15,7 @@ exports.startFreePlay = function(req, res) {
 
     //grab a question that the user has not gotten right
     //Get the users logged in id
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
     req.session.category="All Categories";
 
@@ -23,7 +23,7 @@ exports.startFreePlay = function(req, res) {
     freePlayLogic.getQuestion(userId, function(question){
 
         DBFunctions.getUserEmail(userId, function (err, email) {
-            userEmail = email;
+            var userEmail = email;
 
 
 
@@ -36,7 +36,7 @@ exports.startFreePlay = function(req, res) {
                 studentEmail: userEmail
             });
         });
-    })
+    });
 
     //Pass the question to render
 
@@ -45,7 +45,7 @@ exports.startFreePlay = function(req, res) {
 exports.startCategoryPlay = function(req, res){
     //grab a question that the user has not gotten right
     //Get the users logged in id
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
     //TODO: try to not make only one render call and add suport for highlighting what the current category is
     if (req.session.category===null||req.session.category==="All Categories")
@@ -55,7 +55,7 @@ exports.startCategoryPlay = function(req, res){
         freePlayLogic.getQuestion(userId, function(question){
 
             DBFunctions.getUserEmail(userId, function (err, email) {
-                userEmail = email;
+                var userEmail = email;
 
 
                 res.render("FreePlayQuestion", {
@@ -73,7 +73,7 @@ exports.startCategoryPlay = function(req, res){
         freePlayLogic.getQuestionFromCategory(userId, req.session.category, function (err, question) {
 
             DBFunctions.getUserEmail(userId, function (err, email) {
-                userEmail = email;
+                var userEmail = email;
 
 
                 res.render("FreePlayQuestion", {
@@ -88,13 +88,13 @@ exports.startCategoryPlay = function(req, res){
 
         })
     }
-}
+};
 
     exports.submitAnswer = function(req, res){
 
     //grab the questions correct answer
 
-        userId = req.user._id.toString();
+        var userId = req.user._id.toString();
 
     //compare to users input
 
