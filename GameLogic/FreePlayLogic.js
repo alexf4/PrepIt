@@ -12,15 +12,16 @@ var questionFunctions = require("../DBWork/questionFunctions.js");
 exports.getQuestion = function (inputID, callback) {
 
     userModel.findById(inputID, function (err, user) {
-        if (err) {
-            callback(err, null);
+            if (err) {
+                callback(err, null);
+            }
+
+            user.findNextQuestion(function (err, foundQuestion) {
+                callback(foundQuestion);
+            })
+
         }
-
-        user.findNextQuestion(function (err, foundQuestion) {
-            callback(foundQuestion);
-        })
-
-    });
+    );
 
 };
 
@@ -33,17 +34,17 @@ exports.getQuestion = function (inputID, callback) {
 exports.getQuestionFromCategory = function (inputID, category, callback) {
 
     userModel.findById(inputID, function (err, user) {
-        if (err) {
-            callback(err, null);
+            if (err) {
+                callback(err, null);
+            }
+
+            //Find a question that has an incorrect
+            user.findNextQuestionFromCategory(category, function (err, foundQuestion) {
+                    callback(null, foundQuestion);
+                }
+            );
         }
-
-        //Find a question that has an incorrect
-        user.findNextQuestionFromCategory(category, function (err, foundQuestion) {
-            callback(null, foundQuestion);
-        });
-
-
-    });
+    );
 };
 
 exports.getQuestionFromSubCategory = function (inputID, subCategory, callback) {
@@ -177,7 +178,7 @@ exports.updateTeacherData = function (inputClassToken, inputBaseQuestionID, user
         }
 
     });
-}
+};
 
 /**
  * This method will return an comprehension object

@@ -19,7 +19,7 @@ var student = require("./student");
 exports.studentPage = function (req, res) {
 
     //Get the users logged in id
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
     DBFunctions.isNewUser(userId, function (err, userStatus) {
         if (userStatus) {
@@ -41,7 +41,7 @@ exports.studentPage = function (req, res) {
  * @param res
  */
 exports.renderNewStudent = function (req ,res) {
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
 
     DBFunctions.getUserEmail(userId, function (err, email) {
@@ -64,7 +64,7 @@ exports.renderNewStudent = function (req ,res) {
  */
 exports.renderStudentPage = function(req, res){
     //Get the users logged in id
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
     var userEmail = "";
 
     /**

@@ -90,9 +90,9 @@ exports.addQuestion = function (req, res) {
 
     });
 
-}
+};
 
 exports.temp = function (req, res) {
 
     res.render("questionInput");
-}
+};

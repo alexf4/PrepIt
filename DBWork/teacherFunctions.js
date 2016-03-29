@@ -65,7 +65,7 @@ exports.removeStudentFromClass = function (teacherId, studentEmail, callback) {
     });
 
 
-}
+};
 
 /**
  * This method will remove an a students question data from the teachers question data.
@@ -95,7 +95,7 @@ exports.removeOldStudentQuestionsFromTeacher = function (teacherID, studentID, c
              */
                 function (wCallback) {
                 questionFunctions.findAnsweredQuestions(studentID, function (err, foundQuestions) {
-                    studentQuestions = foundQuestions;
+
                     studentQuestions = new List(foundQuestions);
                     wCallback();
                 })
@@ -304,6 +304,7 @@ exports.getClassAverageMasteryForQuestion = function (inputID, questionid, route
  * This method will return the class average master of a given category
  * @param inputID the userid
  * @param category the category to check
+ * @param routeCallback
  */
 exports.getClassAverageMasteryForCategory = function (inputID, category, routeCallback) {
 
@@ -480,9 +481,9 @@ exports.getStudentsScores = function (inputID, routeCallback) {
 exports.addStudentScoresToTotal = function (numStudents, totalScores, studentScore) {
 
     //Create an array of each key
-    keys = totalScores.keys();
+    var keys = totalScores.keys();
 
-    tempValue = null;
+    var tempValue = null;
 
     //get values for each key
     keys.forEach(function (entry) {
@@ -658,7 +659,7 @@ exports.getMissedQuestionsList = function (teacherID, routeCallback) {
             }
 
             retList.add(questionData);
-        })
+        });
 
         routeCallback(null, retList.toJSON());
     });
@@ -685,8 +686,7 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
     async.waterfall([
             function (wCallback) {
                 questionFunctions.findAnsweredQuestions(studentID, function (err, foundQuestions) {
-                    studentQuestions = foundQuestions;
-                    //newQuestions = foundQuestions;
+
                     studentQuestions = new List(foundQuestions);
                     wCallback();
                 })
@@ -779,7 +779,7 @@ exports.addNewStudentsQuestionToTeacher = function (studentID, classID, callback
         function () {
             callback(null, "worked");
         })
-}
+};
 
 /**
  * This method will add responses to a teachers question
@@ -824,7 +824,7 @@ exports.addResponsesHelper = function (teacherID, response, teacherQuestion, cou
         callback(null, savedQuestion);
     });
 
-}
+};
 
 
 /**
@@ -873,7 +873,7 @@ exports.removeResponsesHelper = function (teacherID, response, teacherQuestion, 
         callback(null, savedQuestion);
     });
 
-}
+};
 
 exports.getMissedQuestionsListPerCategory = function (inputTeacherID, category, routeCallback) {
     var retList = new list;
@@ -995,9 +995,9 @@ exports.getTeacherClassToken = function (inputID, callback) {
 exports.addStudentMasteryToTotal = function (numStudents, totalScores, studentScore) {
 
     //Create an array of each key
-    keys = totalScores.keys();
+    var keys = totalScores.keys();
 
-    tempValue = null;
+    var tempValue = null;
 
     //get values for each key
     keys.forEach(function (entry) {
@@ -1031,7 +1031,7 @@ exports.addStudentMasteryToTotal = function (numStudents, totalScores, studentSc
             var scores = {
                 mastered: (sectionScore.mastered / numStudents ) + runningTotalScore.mastered,
                 intermediate: (sectionScore.intermediate / numStudents ) + runningTotalScore.intermediate,
-                novice: (sectionScore.novice / numStudents ) + runningTotalScore.novice,
+                novice: (sectionScore.novice / numStudents ) + runningTotalScore.novice
             };
 
             totalScores.set(entry, scores);

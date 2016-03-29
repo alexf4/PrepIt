@@ -10,6 +10,8 @@ var mongoose = require('mongoose');
 // Connect to DB
 mongoose.connect(dbConfig.url);
 
+
+
 var app = express();
 app.set('port', process.env.PORT || 8080);
 
@@ -33,10 +35,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Configuring Passport
 var passport = require('passport');
 var expressSession = require('express-session');
-app.use(expressSession({secret: 'ThisIsAwesome'}));
+
+var MongoDBStore = require('connect-mongodb-session')(expressSession);
+
+var store = new MongoDBStore(
+    {
+        uri: 'mongodb://alexf4:1grinder@ds053448.mongolab.com:53448/authtest',
+        collection: 'mySessions'
+    });
+
+
+store.on('error', function(error) {
+    assert.ifError(error);
+    assert.ok(false);
+});
+
+
+app.use(require('express-session')({
+    secret: 'This is a secret',
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    },
+    store: store
+}));
+
+
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 
 

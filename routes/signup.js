@@ -33,7 +33,7 @@ exports.signup = function(req, res) {
             // set the user's local credentials
             //newUser.username = req.body.username;
             newUser.password = createHash(req.body.password);
-            newUser.email = req.param('email');
+            newUser.email = req.body.email;
             newUser.token = token;
 
 
@@ -76,4 +76,4 @@ exports.signup = function(req, res) {
         return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
     }
 
-}
+};

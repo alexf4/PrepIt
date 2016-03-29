@@ -203,7 +203,9 @@ userSchema.methods.findIncorrectQuestionFromCategory = function (inputCategory, 
 /**
  *
  * @param inputCategory
+ *
  * @returns {*}
+ * @param callback
  */
 userSchema.methods.findQuestionFromCategory = function (inputCategory, callback) {
     var possibleQuestions = [];
@@ -232,5 +234,5 @@ userSchema.methods.findQuestionFromCategory = function (inputCategory, callback)
     });
 };
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema);
 

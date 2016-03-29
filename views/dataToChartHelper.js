@@ -299,7 +299,7 @@ exports.createStudentMasteryChart = function (scores){
 
             if ((entry[0] != "totalQuestions") || (entry[0] != "totalCorrect")){
                 //if (entry[0] != "totalCorrect") {
-                    retDict.set(entry[0] + " Data", calculateMasterySectionScore(sectionData, entry[0]))
+                    retDict.set(entry[0] + " Data", calculateMasterySectionScore(sectionData, entry[0]));
                 //}
             }
 

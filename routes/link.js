@@ -8,7 +8,7 @@ var DBFunctions = require("../DBWork/DBFunctions.js");
 
 exports.StudentLink= function(req,res){
     //Get the users id
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
     DBFunctions.getUserEmail(userId, function (err, email) {
         res.render('StudentLink',{
@@ -16,7 +16,7 @@ exports.StudentLink= function(req,res){
             activeSection: "StudentLink",
             userEmail: email
         });
-    })
+    });
 
 
     //res.render('StudentLink',{
@@ -24,7 +24,7 @@ exports.StudentLink= function(req,res){
     //    activeSection: "StudentLink",
     //    userEmail: req.session.userEmail
     //});
-}
+};
 /**
  * This method will catch posts to update the student link to teachers
  * @param req
@@ -33,10 +33,10 @@ exports.StudentLink= function(req,res){
 exports.updateStudentLink = function(req, res) {
 
     //Get the users id
-    userId = req.user._id.toString();
+    var userId = req.user._id.toString();
 
     //Get the form data
-    link = req.body.TeacherID;
+    var link = req.body.TeacherID;
 
     //call the update
     studentFunctions.updateStudentLink( req , userId , link, function(err, worked){
@@ -51,5 +51,5 @@ exports.updateStudentLink = function(req, res) {
     })
 
 
-}
+};
 
