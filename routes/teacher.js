@@ -52,9 +52,9 @@ exports.renderStudentList = function (req, res) {
     //find the teachers class token
     teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
 
-        teacherFunctions.listStudents(classToken, function (err, studentsList) {
+        teacherFunctions.listStudents(classToken, function (err, tstudentsList) {
             res.render("studentList", {
-                students: studentsList,
+                studentsList: tstudentsList,
                 activeSection: "Student_Analysis",
                 Title: "Student Analysis",
                 ClassCode: this.classToken,
