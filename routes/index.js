@@ -29,6 +29,7 @@ module.exports = function (passport) {
 
     /* GET login page. */
     router.get('/', function (req, res) {
+
         // Display the Login page with any flash message, if any
         res.render('homePage', {Title: "Home"});
     });
@@ -124,12 +125,6 @@ module.exports = function (passport) {
     /* GET Home Page */
     router.get('/home', isAuthenticated, function (req, res) {
         res.render('home', {user: req.user, Title: "Home"});
-    });
-
-    /* Handle Logout */
-    router.get('/signout', function (req, res) {
-        req.logout();
-        res.redirect('/');
     });
 
     /* Handle Logout */
