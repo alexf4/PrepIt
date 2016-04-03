@@ -222,6 +222,10 @@ module.exports = function (passport) {
         res.render('twitter', {user: req.user, Title: "Twitter"});
     });
 
+    router.get('/testPage', function (req,res) {
+        res.render('testPage');
+    });
+
     return router;
 };
 

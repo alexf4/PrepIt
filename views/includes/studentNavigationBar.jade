@@ -68,45 +68,48 @@ mixin Settings
         i.fa.fa-th-large
         span.nav-label Settings
 
-nav.navbar-default.navbar-static-side(role='navigation')
-    .sidebar-collapse
-        ul#side-menu.nav
-            li.nav-header
-                .dropdown.profile-element
-                    a.dropdown-toggle(data-toggle='dropdown', href='#')
-                        span.clear
-                            span.block.m-t-xs
-                                strong.font-bold #{userEmail}
-                    ul.dropdown-menu.animated.fadeInRight.m-t-xs
-                        li
-                            a(href='/signout') Logout
-                .logo-element
-                    | PrepIT
-            if  activeSection == "Main View"
-                li.active
-                    mixin MainView
-            else
-                li
-                    mixin MainView
+//nav.navbar-default.navbar-static-side(role='navigation')
+//    .sidebar-collapse
+//        ul#side-menu.nav
 
-            if  activeSection=="Freeplay"
-                li.active
-                    mixin freeplay
-            else
-                li
-                    mixin freeplay
+#sidebar-wrapper
+    ul#side-menu.nav
+        li.nav-header
+            .dropdown.profile-element
+                a.dropdown-toggle(data-toggle='dropdown', href='#')
+                    span.clear
+                        span.block.m-t-xs
+                            strong.font-bold #{userEmail}
+                ul.dropdown-menu.animated.fadeInRight.m-t-xs
+                    li
+                        a(href='/signout') Logout
+            .logo-element
+                | PrepIT
+        if  activeSection == "Main View"
+            li.active
+                mixin MainView
+        else
+            li
+                mixin MainView
 
-            if  activeSection == "StudentLink"
-                li.active
-                    mixin StudentLink
-            else
-                li
-                    mixin StudentLink
+        if  activeSection=="Freeplay"
+            li.active
+                mixin freeplay
+        else
+            li
+                mixin freeplay
 
-            if  activeSection == "Settings"
-                li.active
-                    mixin Settings
-            else
-                li
-                    mixin Settings
+        if  activeSection == "StudentLink"
+            li.active
+                mixin StudentLink
+        else
+            li
+                mixin StudentLink
+
+        if  activeSection == "Settings"
+            li.active
+                mixin Settings
+        else
+            li
+                mixin Settings
 

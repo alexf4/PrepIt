@@ -6,7 +6,8 @@ html
         #wrapper
             //Side bar
             include ./includes/studentNavigationBar.jade
-            #page-wrapper.gray-bg
+            //#page-wrapper.gray-bg
+            #page-content-wrapper
                 include ./includes/topBar.jade
                 .wrapper.wrapper-content.animated.fadeInRight
                     //Main Charts
@@ -26,7 +27,13 @@ html
         script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js')
         //inline scrip because I can not get to work with js in external file. makes file cleaner
         include ./includes/chartJS.jade
-        script(type='text/javascript').
+        // Menu Toggle Script
+        script.
+            $("#menu-toggle").click(function(e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        //script(type='text/javascript').
             //include ../public/js/chartjs.js
             //var ctx = document.getElementById("TotalChart").getContext("2d");
             //var myNewChart = new Chart(ctx).Doughnut(!{JSON.stringify(totalData)}, !{JSON.stringify(totalOptions)});
