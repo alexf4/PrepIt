@@ -1,11 +1,8 @@
 mixin freeplay
     a(href='freeplay')
-        .hidden-xs
-            i.fa.fa-th-large
-            span.nav-label.visible Freeplay
-            span.fa.arrow
-        .visible-xs
-            p.nav-label Freeplay
+        i.fa.fa-th-large
+        span.nav-label.visible Freeplay
+        span.fa.arrow
     ul.nav.nav-second-level
         if activeSubsection=="All Categories"
             li.active
@@ -58,27 +55,21 @@ mixin freeplay
 
 mixin StudentLink
     a(href='StudentLink')
-        .hidden-xs
-            i.fa.fa-th-large
-            span.nav-label Join Class
-        .visible-xs
-            p.nav-label Join Class
+        i.fa.fa-th-large
+        span.nav-label.visible Join Class
 
 mixin MainView
     a(href='student')
-        .hidden-xs
-            i.fa.fa-th-large
-            span.nav-label Main view
-        .visible-xs
-            p.nav-label Main view
+        i.fa.fa-th-large
+        span.nav-label.visible Main view
 
 mixin Settings
     a(href='/settings')
         .hidden-xs
             i.fa.fa-th-large
-            span.nav-label Settings
+            span.nav-label.visible Settings
         .visible-xs
-            p.nav-label Settings
+            p.nav-label.visible Settings
 
 nav.navbar-default.navbar-static-side(role='navigation')
     .sidebar-collapse

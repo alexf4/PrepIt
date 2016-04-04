@@ -2,6 +2,11 @@ body.mini-navbar .profile-element.visible,
 body.mini-navbar .nav-label.visible,
 body.mini-navbar .navbar-default .nav li a span.visible{
     display: inline;
+    font-size: 14px;
+}
+
+body.mini-navbar .navbar-default .nav li i{
+    display: none;
 }
 
 .nav > li > a {
@@ -33,11 +38,4 @@ body.mini-navbar #page-wrapper {
 
 body.mini-navbar .navbar-static-side {
     width: 100px;
-}
-
-.fa.arrow:before {
-    content: "\f104";
-}
-.active > a > .fa.arrow:before {
-    content: "\f107";
 }

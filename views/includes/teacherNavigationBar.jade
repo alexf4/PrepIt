@@ -4,22 +4,22 @@
 mixin main
     a(href='/teacher')
         i.fa.fa-th-large
-        span.nav-label Main View
+        span.nav-label.visible Main View
 
 mixin Student_Analysis
     a(href='/studentList')
         i.fa.fa-th-large
-        span.nav-label Student Analysis
+        span.nav-label.visible Student Analysis
 
 mixin Question_Analysis
     a(href='/questionAnalysis')
         i.fa.fa-th-large
-        span.nav-label Question Analysis
+        span.nav-label.visible Question Analysis
 
 mixin settings
     a(href='/settings')
         i.fa.fa-th-large
-        span.nav-label Settings
+        span.nav-label.visible Settings
 
 nav.navbar-default.navbar-static-side(role='navigation')
     .sidebar-collapse
@@ -69,9 +69,9 @@ nav.navbar-default.navbar-static-side(role='navigation')
             li
                 a
                     i.fa.fa-info
-                    span.nav-label Class Code: #{ClassCode}
+                    span.nav-label.visible Class Code: #{ClassCode}
 
             li
                 a(href='https://www.youtube.com/watch?v=Myd1-tU7oPo',target="_blank")
                     i.fa.fa-youtube-play
-                    span.nav-label Teacher Dashboard Tutorial
+                    span.nav-label.visible Teacher Dashboard Tutorial
