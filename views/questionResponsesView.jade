@@ -113,6 +113,11 @@ html
                                                         h3.list-group-item-heading D 0 %
                                                             p.list-group-item-text
                                                                 | #{question.answers.d}
+                                                - var skipped = question.responses.a + question.responses.b + question.responses.c + question.responses.d
+                                               if(skipped < question.numberOfAttempts)
+                                                   a.list-group-item(href='#')
+                                                    h3.list-group-item-heading Skipped #{  (question.numberOfAttempts - skipped)  / question.numberOfAttempts * 100} %
+
                                     .row.text-center
                                         br
                                         strong
