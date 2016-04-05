@@ -1,0 +1,41 @@
+body.mini-navbar .profile-element.visible,
+body.mini-navbar .nav-label.visible,
+body.mini-navbar .navbar-default .nav li a span.visible{
+    display: inline;
+    font-size: 14px;
+}
+
+body.mini-navbar .navbar-default .nav li i{
+    display: none;
+}
+
+.nav > li > a {
+    color: #a7b1c2;
+    font-weight: 600;
+    padding: 14px 20px 14px 10px;
+}
+
+.nav > li.active > a {
+    padding: 14px 20px 14px 5px;
+}
+
+body.mini-navbar #page-wrapper {
+    margin: 0 0 0 100px;
+}
+
+.mini-navbar .nav-second-level {
+    position: absolute;
+    left: 100px;
+    top: 0px;
+    background-color: #2f4050;
+    padding: 10px 10px 10px 10px;
+    font-size: 12px;
+}
+
+.mini-navbar li.active .nav-second-level {
+    left: 95px;
+}
+
+body.mini-navbar .navbar-static-side {
+    width: 100px;
+}

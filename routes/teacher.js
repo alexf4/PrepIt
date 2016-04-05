@@ -14,6 +14,11 @@ var teacher = require("./teacher.js");
 
 var async = require('async');
 
+var PerfCollector = require('perfcollector.js');
+
+// Initialize a performance collector, enable it.
+var perfs = PerfCollector.create().enable();
+
 var category;
 var studentEmail;
 var questionText;
@@ -165,7 +170,9 @@ exports.renderCategoryView = function (req, res) {
 
         function (callback) {
             //Get the teachers students scores/masteries
+
             teacherFunctions.getStudentsMasterys(userId, function (scores) {
+
                 callback(null, scores)
             })
         },
@@ -392,36 +399,51 @@ exports.renderTeacherDashboard = function (req, res) {
     async.waterfall([
         function (callback) {
             //Get the teachers students scores/masteries
+            perfs.start('getStudentsMasteries');
             teacherFunctions.getStudentsMasterys(userId, function (scores) {
+                perfs.end('getStudentsMasteries');
+                perfs.logToConsole();
                 callback(null, scores)
             })
         },
         function (scores, callback) {
             //Convert the scores into a format the front end can consume
+            perfs.start('dataToChartHelper');
             chartData = dataToChartHelper.createStudentMasteryChart(scores);
+            perfs.end('dataToChartHelper');
+            perfs.logToConsole();
             callback(null)
         },
         function (callback) {
 
             //find the teachers class token
+            perfs.start('getTeacherClassToken');
             teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
                 this.classToken = classToken;
+                perfs.end('getTeacherClassToken');
+                perfs.logToConsole();
                 callback(null, classToken)
             })
         },
         function (classToken, callback) {
 
+            perfs.start('listStudents');
             //create the list of the students in the class
             teacherFunctions.listStudents(classToken, function (err, students) {
                 tstudentsList = students;
+                perfs.end('listStudents');
+                perfs.logToConsole();
                 callback(null)
             })
         },
         function (callback) {
 
+            perfs.start('getMissedQuestionsList');
             //create the list of missed questions
             teacherFunctions.getMissedQuestionsList(userId, function (err, questions) {
                 questionList = questions;
+                perfs.end('getMissedQuestionsList');
+                perfs.logToConsole();
                 callback(null);
             })
         }
