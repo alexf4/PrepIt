@@ -396,6 +396,10 @@ exports.renderTeacherDashboard = function (req, res) {
     var questionList = null;
 
 
+    perfs.start("Total");
+
+
+
     async.waterfall([
         function (callback) {
             //Get the teachers students scores/masteries
@@ -448,6 +452,10 @@ exports.renderTeacherDashboard = function (req, res) {
             })
         }
     ], function () {
+
+
+        perfs.end('Total');
+        perfs.logToConsole();
         //Send all the data to the front end.
         res.render("teacher",
             {

@@ -35,7 +35,7 @@ exports.updateStudentLink = function (req, userId, newlink, callback) {
                 callback("Student class token didnt work", null);
 
 
-            }else if(user.classToken == newlink){
+            } else if (user.classToken == newlink) {
                 req.flash("LinkUpdateError", "Already in that class " + newlink);
                 callback("Student class token didnt work", null);
             }
@@ -295,12 +295,11 @@ exports.getMasterOfCategory = function (inputID, category, callback) {
 
 /**
  *
- * @param inputID
- * @param category
- * @param callback
+ * @param inputID the id of the user
+ * @param category the category
+ * @param callback the callback
  */
 exports.getMasterOfCategoryInts = function (inputID, category, callback) {
-
 
     var scores = {
         mastered: 0,
@@ -308,17 +307,14 @@ exports.getMasterOfCategoryInts = function (inputID, category, callback) {
         novice: 0
     };
 
-
     //Find all the questions from a specific category
+    questionFunctions.findQuestionsForUserInCategory(inputID, category, function (err, questions) {
+            if (err) {
+                callback(err, null);
+            }
+            questions.forEach(function (entry) {
 
-    questionFunctions.findQuestionsForUser(inputID, function (err, questions) {
-        if (err) {
-            callback(err, null);
-        }
-        questions.forEach(function (entry) {
-
-            //For each question tally its comp score
-            if (entry.category == category) {
+                //For each question tally its comp score
                 if (entry.comprehension.mastered) {
                     scores.mastered++;
                 }
@@ -328,12 +324,11 @@ exports.getMasterOfCategoryInts = function (inputID, category, callback) {
                 else if (entry.comprehension.novice) {
                     scores.novice++;
                 }
-            }
-        });
+            });
 
-        callback(null, scores);
-    });
-
+            callback(null, scores);
+        }
+    );
 };
 
 /**
