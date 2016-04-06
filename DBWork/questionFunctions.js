@@ -20,6 +20,16 @@ exports.findQuestionsForUser = function (inputID, callback) {
 
 };
 
+exports.findQuestionsForUserInCategory = function (inputID, category, callback){
+    questionModel.find({userID: inputID , category : category}, function (err, foundQuestions){
+        if (err) {
+            callback(err, null);
+        }
+
+        callback(null, foundQuestions);
+    })
+}
+
 /**
  * This method finds all questions that have been answered
  * @param inputID
