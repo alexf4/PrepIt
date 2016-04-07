@@ -16,7 +16,7 @@ var db = function() {
         connect: function() {
             if(!mongoose.connection.db) {
                 //mongoose.connect("mongodb://" + dbConf.host + '/' + dbConf.database);
-                mongoose.connect("mongodb://alexf4:1grinder@ds019040-a0.mlab.com:19040,ds019040-a1.mlab.com:19040/authtest?replicaSet=rs-ds019040")
+                mongoose.connect('mongodb://alexf4:1grinder@ds019700-a0.mlab.com:19700,ds019700-a1.mlab.com:19700/authtest?connectTimeoutMS=120000&socketTimeoutMS=120000')
             }
         }
     };
