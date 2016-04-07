@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 var studentFunctions = require("../DBWork/studentFunctions.js");
 var assert = require('chai').assert;
 
-var db = require('../dbWork/db');
+var db = require('../DBWork/db');
 
 db.connect();
 describe ("Student Functions", function(){

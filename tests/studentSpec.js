@@ -7,7 +7,7 @@ var studentRoute = require("../routes/student");
 var DBFunctions = require("../DBWork/DBFunctions");
 var async = require('async');
 
-var db = require('../dbWork/db');
+var db = require('../DBWork/db');
 
 db.connect();
 

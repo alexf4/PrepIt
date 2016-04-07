@@ -3,7 +3,7 @@
  */
 
 var teacherFunctions = require("../DBWork/teacherFunctions");
-var cacheFunction = require("../DBWork/cacheFunctions");
+var cacheFunction = require("../DBWork/cacheFunctions.js");
 
 var dataToChartHelper = require("../views/dataToChartHelper");
 
