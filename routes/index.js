@@ -31,7 +31,7 @@ module.exports = function (passport) {
     router.get('/', function (req, res) {
 
         // Display the Login page with any flash message, if any
-        res.render('homePage', {Title: "Home"});
+        res.render('homePage', {Title: "AP Gov practice test"});
     });
 
 
