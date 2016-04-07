@@ -3,7 +3,7 @@ var DBFunctions = require("../DBWork/DBFunctions.js");
 var questionFunctions = require("../DBWork/questionFunctions");
 var assert = require('chai').assert;
 
-var db = require('../dbWork/db');
+var db = require('../DBWork/db');
 
 db.connect();
 
