@@ -69,11 +69,12 @@ module.exports = function (passport) {
     router.post('/removeStudent', isAuthenticated, teacher.removeStudent );
 
     /* Handle Registration POST */
-    router.post('/signup', passport.authenticate('signup', {
+    /*router.post('/signup', passport.authenticate('signup', {
         successRedirect: '/home',
         failureRedirect: '/signup',
         failureFlash: true
-    }));
+    })*/
+    );
 
     /**
      * Handle the student update link post
@@ -121,11 +122,6 @@ module.exports = function (passport) {
 
         })(req, res, next);
     }
-
-    /* GET Home Page */
-    router.get('/home', isAuthenticated, function (req, res) {
-        res.render('home', {user: req.user, Title: "Home"});
-    });
 
     /* Handle Logout */
     router.get('/signout', function (req, res) {
