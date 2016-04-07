@@ -44,8 +44,16 @@ exports.getTeacherData = function (userId, callback) {
 
 
 
-            cacheFunctions.updateTeacherDataCache(userId, function (err, done) {
+            cacheFunctions.updateTeacherDataCache(userId, function (err, data) {
+                var foundData = {
+                    chartData: JSON.stringify(data.chartData),
+                    studentsList: JSON.stringify(data.studentsList),
+                    questionList: JSON.stringify(data.questionList)
+                }
 
+                cacheFunctions.updateTeacherData(userId, data.chartData, data.studentsList, data.questionList, function (err, whocares) {
+                    // callback(null, foundData);
+                })
             })
 
             callback(null, foundData);
