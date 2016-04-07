@@ -67,15 +67,7 @@ module.exports = function (passport) {
     });
 
     router.post('/removeStudent', isAuthenticated, teacher.removeStudent );
-
-    /* Handle Registration POST */
-    /*router.post('/signup', passport.authenticate('signup', {
-        successRedirect: '/home',
-        failureRedirect: '/signup',
-        failureFlash: true
-    })*/
-    );
-
+    
     /**
      * Handle the student update link post
      */
