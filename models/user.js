@@ -164,6 +164,8 @@ userSchema.methods.findIncorrectQuestion = function (callback) {
 
         if (possibleQuestions.length > 0) {
             callback(null, possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)]);
+        }else{
+            callback(null, questions[Math.floor(Math.random() * questions.length)])
         }
 
         //return null;
@@ -186,6 +188,8 @@ userSchema.methods.findIncorrectQuestionFromCategory = function (inputCategory, 
             if (!entry.correct && entry.category == inputCategory) {
                 possibleQuestions.add(entry);
             }
+
+
         });
 
 
@@ -193,6 +197,16 @@ userSchema.methods.findIncorrectQuestionFromCategory = function (inputCategory, 
         //Randomly choose a question
 
         if (possibleQuestions.length > 0) {
+            callback(null, possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)]);
+        }
+        else{
+
+            questions.forEach(function (entry) {
+                if (entry.category == inputCategory) {
+                    possibleQuestions.add(entry);
+                }
+            });
+
             callback(null, possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)]);
         }
 
