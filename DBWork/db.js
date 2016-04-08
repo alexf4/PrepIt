@@ -16,7 +16,8 @@ var db = function() {
         connect: function() {
             if(!mongoose.connection.db) {
                 //mongoose.connect("mongodb://" + dbConf.host + '/' + dbConf.database);
-                mongoose.connect("mongodb://alexf4:1grinder@ds019040-a0.mlab.com:19040,ds019040-a1.mlab.com:19040/authtest?replicaSet=rs-ds019040")
+                // mongodb://alexf4:1grinder@ds021200-a0.mlab.com:21200,ds021200-a1.mlab.com:21200/authtest?connectTimeoutMS=120000&socketTimeoutMS=120000
+                mongoose.connect('mongodb://alexf4:1grinder@ds021200-a0.mlab.com:21200,ds021200-a1.mlab.com:21200/authtest?connectTimeoutMS=120000&socketTimeoutMS=120000')
             }
         }
     };

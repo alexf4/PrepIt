@@ -3,6 +3,7 @@
  */
 
 var teacherFunctions = require("../DBWork/teacherFunctions");
+var cacheFunction = require("../DBWork/cacheFunctions.js");
 
 var dataToChartHelper = require("../views/dataToChartHelper");
 
@@ -14,15 +15,6 @@ var teacher = require("./teacher.js");
 
 var async = require('async');
 
-var PerfCollector = require('perfcollector.js');
-
-// Initialize a performance collector, enable it.
-var perfs = PerfCollector.create().enable();
-
-var category;
-var studentEmail;
-var questionText;
-var classToken;
 var userEmail;
 
 exports.setCategory = function (category) {
@@ -388,88 +380,42 @@ exports.renderTeacherDashboard = function (req, res) {
 
     var userId = req.user._id.toString();
 
-
-    var chartData = null;
-
-    var tstudentsList = null;
-
-    var questionList = null;
-
-
-    perfs.start("Total");
-
+    var cacheData = null;
 
 
     async.waterfall([
         function (callback) {
-            //Get the teachers students scores/masteries
-            perfs.start('getStudentsMasteries');
-            teacherFunctions.getStudentsMasterys(userId, function (scores) {
-                perfs.end('getStudentsMasteries');
-                perfs.logToConsole();
-                callback(null, scores)
+
+            cacheFunction.getTeacherData(userId, function(err, foundData){
+                cacheData = foundData;
+                callback()
             })
         },
-        function (scores, callback) {
-            //Convert the scores into a format the front end can consume
-            perfs.start('dataToChartHelper');
-            chartData = dataToChartHelper.createStudentMasteryChart(scores);
-            perfs.end('dataToChartHelper');
-            perfs.logToConsole();
-            callback(null)
-        },
+
         function (callback) {
 
             //find the teachers class token
-            perfs.start('getTeacherClassToken');
             teacherFunctions.getTeacherClassToken(userId, function (err, classToken) {
                 this.classToken = classToken;
-                perfs.end('getTeacherClassToken');
-                perfs.logToConsole();
-                callback(null, classToken)
-            })
-        },
-        function (classToken, callback) {
-
-            perfs.start('listStudents');
-            //create the list of the students in the class
-            teacherFunctions.listStudents(classToken, function (err, students) {
-                tstudentsList = students;
-                perfs.end('listStudents');
-                perfs.logToConsole();
-                callback(null)
-            })
-        },
-        function (callback) {
-
-            perfs.start('getMissedQuestionsList');
-            //create the list of missed questions
-            teacherFunctions.getMissedQuestionsList(userId, function (err, questions) {
-                questionList = questions;
-                perfs.end('getMissedQuestionsList');
-                perfs.logToConsole();
-                callback(null);
+                callback()
             })
         }
+
     ], function () {
 
-
-        perfs.end('Total');
-        perfs.logToConsole();
-        //Send all the data to the front end.
         res.render("teacher",
             {
-                totalData: chartData.totalData,
-                totalOptions: chartData.totalOptions,
-                CUData: chartData.Constitutional_Underpinnings_Data,
-                SectionOptions: chartData.sectionOptions,
-                Civil_Rights_and_Liberties_Data: chartData.Civil_Rights_and_Liberties_Data,
-                Political_Beliefs_and_Behaviors_Data: chartData.Political_Beliefs_and_Behaviors_Data,
-                Linkage_Institutions_Data: chartData.Linkage_Institutions_Data,
-                Institutions_of_National_Government_Data: chartData.Institutions_of_National_Government_Data,
-                Public_Policy_Data: chartData.Public_Policy_Data,
-                studentsList: tstudentsList,
-                questions: questionList,
+                totalData: JSON.parse(cacheData.chartData).totalData,
+                totalOptions: JSON.parse(cacheData.chartData).totalOptions,
+                CUData: JSON.parse(cacheData.chartData).Constitutional_Underpinnings_Data,
+                SectionOptions: JSON.parse(cacheData.chartData).sectionOptions,
+                Civil_Rights_and_Liberties_Data: JSON.parse(cacheData.chartData).Civil_Rights_and_Liberties_Data,
+                Political_Beliefs_and_Behaviors_Data: JSON.parse(cacheData.chartData).Political_Beliefs_and_Behaviors_Data,
+                Linkage_Institutions_Data: JSON.parse(cacheData.chartData).Linkage_Institutions_Data,
+                Institutions_of_National_Government_Data: JSON.parse(cacheData.chartData).Institutions_of_National_Government_Data,
+                Public_Policy_Data: JSON.parse(cacheData.chartData).Public_Policy_Data,
+                studentsList: JSON.parse(cacheData.studentsList),
+                questions: JSON.parse(cacheData.questionList),
                 Title: "Teacher Dashboard",
                 ClassCode: this.classToken,
                 Category: req.session.category,

@@ -31,7 +31,7 @@ module.exports = function (passport) {
     router.get('/', function (req, res) {
 
         // Display the Login page with any flash message, if any
-        res.render('homePage', {Title: "Home"});
+        res.render('homePage', {Title: "AP Gov practice test"});
     });
 
 
@@ -67,14 +67,7 @@ module.exports = function (passport) {
     });
 
     router.post('/removeStudent', isAuthenticated, teacher.removeStudent );
-
-    /* Handle Registration POST */
-    router.post('/signup', passport.authenticate('signup', {
-        successRedirect: '/home',
-        failureRedirect: '/signup',
-        failureFlash: true
-    }));
-
+    
     /**
      * Handle the student update link post
      */
@@ -121,11 +114,6 @@ module.exports = function (passport) {
 
         })(req, res, next);
     }
-
-    /* GET Home Page */
-    router.get('/home', isAuthenticated, function (req, res) {
-        res.render('home', {user: req.user, Title: "Home"});
-    });
 
     /* Handle Logout */
     router.get('/signout', function (req, res) {

@@ -5,7 +5,7 @@ var assert = require('chai').assert;
 var async = require('async');
 var questionModel = require("../models/question");
 
-var db = require('../dbWork/db');
+var db = require('../DBWork/db');
 
 db.connect();
 
