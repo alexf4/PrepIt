@@ -115,7 +115,7 @@ exports.updateTeacherDataCache = function (userId, rCallback) {
             }
         ], function () {
 
-            console.log("got here");
+        
 
             var foundData = {
                 chartData: chartData,
