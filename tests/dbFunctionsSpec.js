@@ -110,11 +110,11 @@ describe ("DB Functions" , function (){
     })
 
 
-    //describe.only ("#adminPasswordReset()", function (){
+    // describe.only ("#adminPasswordReset()", function (){
     //    it("reset the users password" , function(done){
     //
     //
-    //        var userID = "56f87d3581f8f10c00ae9e46";
+    //        var userID = "570951d0fc66490b005be623";
     //
     //        var tempPassword = "election";
     //
@@ -127,7 +127,7 @@ describe ("DB Functions" , function (){
     //        })
     //
     //    })
-    //});
+    // });
 
 
 
