@@ -61,19 +61,56 @@ exports.updatePassword = function (req, res) {
     //update the password with the new one
     var newPassword = req.body.NewPassword;
 
-    //pass info back into deb functions
-    DBFunctions.updatePassword(req, userId, oldPassword, newPassword, function (err, done) {
+    var isUserTeacher = false;
+    var userEmail;
+    var classToken;
+    var isNewTeacher;
 
-        //TODO: Alex please add isTeacher to these renders with the appropreate true false values
+
+    userModel.findById(userId, function (err, user) {
         if (err) {
-            res.render("settings", {
-                error: req.flash("PasswordUpdateError"),
-                success: req.flash("PasswordUpdated")});
+            //callback(err, null);
         }
-        res.render("settings", {
-            error: req.flash("PasswordUpdateError"),
-            success: req.flash("PasswordUpdated")});
-    })
+
+        if (user.isteacher) {
+            isUserTeacher = true;
+        }
+
+        userEmail = user.email;
+        classToken = user.classToken;
+
+        DBFunctions.isNewUser(userId, function (err, userStatus) {
+            isNewTeacher = userStatus;
+
+            //pass info back into deb functions
+            DBFunctions.updatePassword(req, userId, oldPassword, newPassword, function (err, done) {
+                
+                if (err) {
+                    res.render("settings", {
+                        error: req.flash("PasswordUpdateError"),
+                        success: req.flash("PasswordUpdated"),
+                        isTeacher: isUserTeacher,
+                        ClassCode: classToken,
+                        userEmail: userEmail,
+                        activeSection: "Settings",
+                        newTeacher: isNewTeacher
+                    });
+                }
+                res.render("settings", {
+                    error: req.flash("PasswordUpdateError"),
+                    success: req.flash("PasswordUpdated"),
+                    isTeacher: isUserTeacher,
+                    ClassCode: classToken,
+                    userEmail: userEmail,
+                    activeSection: "Settings",
+                    newTeacher: isNewTeacher
+                });
+            })
+
+        });
+
+
+    });
 
 
 };
