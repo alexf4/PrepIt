@@ -25,14 +25,19 @@ html
                                     .form-group
                                         label.col-lg-2.control-label Current Password
                                         .col-lg-10
-                                            input.form-control(name="OldPassword", type='text', placeholder='Current Password')
+                                            input.form-control(name="OldPassword", type='password', placeholder='Current Password')
                                     .form-group
                                         label.col-lg-2.control-label New Password
                                         .col-lg-10
-                                            input.form-control(name = "NewPassword",type='text', placeholder='New Password')
+                                            input.form-control(id = "NewPassword",name = "NewPassword",type='password', placeholder='New Password')
+                                    .form-group
+                                        label.col-lg-2.control-label Confirm New Password
+                                        .col-lg-10
+                                            input.form-control(id = "ConfirmNewPassword", name = "ConfirmNewPassword",type='password', placeholder='Confirm New Password')
+                                            span(id='message')
                                     .form-group
                                         .col-lg-offset-2.col-lg-10
-                                            button.btn.btn-sm.btn-white(type='submit') Update Password
+                                            button.btn.btn-sm.btn-white(type='submit',id='myButon') Update Password
                             //footer
                 include ./includes/footer.jade
         // Mainly scripts
@@ -45,3 +50,13 @@ html
         script(src='js/inspinia.js')
         script(src='js/plugins/pace/pace.min.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js')
+
+        script(type='text/javascript').
+            $('#NewPassword, #ConfirmNewPassword').on('keyup', function () {
+                if ($('#NewPassword').val() == $('#ConfirmNewPassword').val()&&$('#ConfirmNewPassword').val()!="") {
+                    $('#message').html('Matching').css('color', 'green');
+                    $('myButton').prop('disabled', false);
+                } else
+                    $('#message').html('Not Matching').css('color', 'red');
+                    $('myButton').prop('disabled', true);
+            });
