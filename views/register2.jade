@@ -34,7 +34,11 @@ body.gray-bg
                input.form-control(type='email', name='email', placeholder='Email', required)
 
             .form-group
-               input.form-control(type='password', name='password' placeholder='Password', required=)
+               input.form-control(type='password', name='password' placeholder='Password', required, id = "Password")
+
+            .form-group
+               input.form-control(id = "ConfirmPassword", name = "ConfirmPassword",type='password', placeholder='Confirm Password')
+               span(id='message')
 
             .form-group
                input(type='radio', name='userType', value='teacher', required)
@@ -56,6 +60,17 @@ body.gray-bg
    script(src='js/bootstrap.min.js')
    // iCheck
    script(src='js/plugins/iCheck/icheck.min.js')
+
+   script(type = 'text/javascript').
+       $('#Password, #ConfirmPassword').on('keyup', function () {
+           if ($('#Password').val() == $('#ConfirmPassword').val() && $('#ConfirmPassword').val() != "") {
+               $('#message').html('Passwords Match').css('color', 'green');
+           } else if ($('#ConfirmPassword').val() != "") {
+               $('#message').html("Passwords Don't Match").css('color', 'red');
+           } else {
+               $('#message').html("").css('color', 'black');
+           }
+       });
 
    script.
       $(document).ready(function(){
