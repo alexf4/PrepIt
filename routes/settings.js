@@ -64,10 +64,15 @@ exports.updatePassword = function (req, res) {
     //pass info back into deb functions
     DBFunctions.updatePassword(req, userId, oldPassword, newPassword, function (err, done) {
 
+        //TODO: Alex please add isTeacher to these renders with the appropreate true false values
         if (err) {
-            res.render("settings", {error: req.flash("PasswordUpdateError"), success: req.flash("PasswordUpdated")});
+            res.render("settings", {
+                error: req.flash("PasswordUpdateError"),
+                success: req.flash("PasswordUpdated")});
         }
-        res.render("settings", {error: req.flash("PasswordUpdateError"), success: req.flash("PasswordUpdated")});
+        res.render("settings", {
+            error: req.flash("PasswordUpdateError"),
+            success: req.flash("PasswordUpdated")});
     })
 
 
