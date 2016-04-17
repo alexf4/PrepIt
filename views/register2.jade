@@ -65,10 +65,13 @@ body.gray-bg
        $('#Password, #ConfirmPassword').on('keyup', function () {
            if ($('#Password').val() == $('#ConfirmPassword').val() && $('#ConfirmPassword').val() != "") {
                $('#message').html('Passwords Match').css('color', 'green');
+               $(":submit").removeAttr("disabled");
            } else if ($('#ConfirmPassword').val() != "") {
                $('#message').html("Passwords Don't Match").css('color', 'red');
+               $(":submit").attr("disabled", true);
            } else {
                $('#message').html("").css('color', 'black');
+               $(":submit").attr("disabled", true);
            }
        });
 

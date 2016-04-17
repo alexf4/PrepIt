@@ -25,14 +25,19 @@ html
                                     .form-group
                                         label.col-lg-2.control-label Current Password
                                         .col-lg-10
-                                            input.form-control(name="OldPassword", type='text', placeholder='Current Password')
+                                            input.form-control(name="OldPassword", type='password', placeholder='Current Password')
                                     .form-group
                                         label.col-lg-2.control-label New Password
                                         .col-lg-10
-                                            input.form-control(name = "NewPassword",type='text', placeholder='New Password')
+                                            input.form-control(id = name = "NewPassword", name = "NewPassword",type='password', placeholder='New Password')
+                                    .form-group
+                                        label.col-lg-2.control-label Confirm New Password
+                                        .col-lg-10
+                                            input.form-control(id = "ConfirmNewPassword", name = "ConfirmNewPassword",type='password', placeholder='Confirm New Password')
+                                            span(id='message')
                                     .form-group
                                         .col-lg-offset-2.col-lg-10
-                                            button.btn.btn-sm.btn-white(type='submit') Update Password
+                                            button.btn.btn-sm.btn-white(type='submit', disabled=true) Update Password
                             //footer
                 include ./includes/footer.jade
         // Mainly scripts
@@ -45,3 +50,17 @@ html
         script(src='js/inspinia.js')
         script(src='js/plugins/pace/pace.min.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js')
+
+        script(type = 'text/javascript').
+            $('#NewPassword, #ConfirmNewPassword').on('keyup', function () {
+                if ($('#NewPassword').val() == $('#ConfirmNewPassword').val() && $('#ConfirmNewPassword').val() != "") {
+                    $('#message').html('Passwords Match').css('color', 'green');
+                    $(":submit").removeAttr("disabled");
+                } else if ($('#ConfirmNewPassword').val() != "") {
+                    $('#message').html("Passwords Don't Match").css('color', 'red');
+                    $(":submit").attr("disabled", true);
+                } else {
+                    $('#message').html("").css('color', 'black');
+                    $(":submit").attr("disabled", true);
+                }
+            });
