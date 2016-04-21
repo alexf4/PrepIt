@@ -17,7 +17,8 @@ var userSchema = new Schema({
     isteacher: Boolean,
     token: {type: String, unique: true},
     classToken: String,
-    questions: []
+    questions: [],
+    updated: { type: Date, default: Date.now },
 
 });
 

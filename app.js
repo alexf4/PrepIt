@@ -40,7 +40,7 @@ var MongoDBStore = require('connect-mongodb-session')(expressSession);
 
 var store = new MongoDBStore(
     {
-        uri: 'mongodb://alexf4:1grinder@ds053448.mongolab.com:53448/authtest',
+        uri: 'mongodb://alexf4:1grinder@ds021200-a0.mlab.com:21200,ds021200-a1.mlab.com:21200/authtest?connectTimeoutMS=120000&socketTimeoutMS=120000',
         collection: 'mySessions'
     });
 

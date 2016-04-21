@@ -39,6 +39,8 @@ module.exports = function(passport){
                             charset: 'hex'
                         });
 
+                        newUser.updated = new Date;
+
                         // save the user
                         newUser.save(function(err) {
                             if (err){
