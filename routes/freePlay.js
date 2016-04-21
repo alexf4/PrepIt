@@ -33,7 +33,7 @@ exports.startFreePlay = function(req, res) {
                 Title: "All Categories",
                 activeSection: "Freeplay",
                 activeSubsection: req.session.category,
-                studentEmail: userEmail
+                userEmail: userEmail
             });
         });
     });
@@ -64,7 +64,7 @@ exports.startCategoryPlay = function(req, res){
                     Title: "All Categories",
                     activeSection: "Freeplay",
                     activeSubsection: req.session.category,
-                    studentEmail: userEmail
+                    userEmail: userEmail
                 });
             });
         })
@@ -82,7 +82,7 @@ exports.startCategoryPlay = function(req, res){
                     Title: "Freeplay",
                     activeSection: "Freeplay",
                     activeSubsection: req.session.category,
-                    studentEmail: userEmail
+                    userEmail: userEmail
                 });
             });
 
